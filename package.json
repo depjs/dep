@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/watilde/bqv/issues"
   },
-  "homepage": "https://github.com/watilde/bqv#readme"
+  "homepage": "https://github.com/watilde/bqv#readme",
+  "dependencies": {
+    "yargs": "^8.0.1"
+  }
 }
