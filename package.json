@@ -10,8 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/watilde/bqv.git"
   },
+  "bin": {
+    "bqv": "./bin/bqv.js"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Daijiro Wachi",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/watilde/bqv/issues"
