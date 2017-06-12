@@ -1,5 +1,5 @@
 {
-  "name": "bqv",
+  "name": "dep",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -8,18 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/watilde/bqv.git"
+    "url": "git+https://github.com/watilde/dep.git"
   },
   "bin": {
-    "bqv": "./bin/bqv.js"
+    "dep": "./bin/dep.js"
   },
   "keywords": [],
   "author": "Daijiro Wachi",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/watilde/bqv/issues"
+    "url": "https://github.com/watilde/dep/issues"
   },
-  "homepage": "https://github.com/watilde/bqv#readme",
+  "homepage": "https://github.com/watilde/dep#readme",
   "dependencies": {
     "require-directory": "^2.1.1",
     "semver": "^5.3.0",
