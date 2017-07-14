@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --napi-modules
 
 if (Number(process.version.substr(1, 1)) < 8) {
   console.error('N-API is available in Node.js 8.0')
