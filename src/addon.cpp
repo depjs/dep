@@ -12,7 +12,7 @@ Napi::Value Test(const CallbackInfo& info) {
 }
 
 void Init(Env env, Object exports, Object module) {
-	exports.Set("test", Function::New(env, Test));
+  exports.Set("test", Function::New(env, Test));
 }
 
 NODE_API_MODULE(addon, Init);
