@@ -8,7 +8,7 @@ if (Number(process.version.substr(1, 1)) < 8) {
 const yargs = require('yargs')
 const requireDirectory = require('require-directory')
 const commands = requireDirectory(module, '../lib/', {exclude: /utils/})
-const pkgJSON = require('../package')
+const pkgJSON = require('../package.json')
 
 yargs.usage(pkgJSON.description)
 
