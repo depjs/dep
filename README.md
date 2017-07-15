@@ -2,5 +2,6 @@
 Simple dependency installer for Node.js
 
 ## Feature
-+ Easy to learn: dep has only install and lock
-+ No cache: cache and size are always coherent
++ Less is more: dep has only install and lock
++ Lock node_modules: dep locks the tree in the node_modules
++ No cache: dep doesn't make the cache files
