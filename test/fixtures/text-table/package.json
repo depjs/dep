@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "test",
+  "version": "1.0.0",
+  "description": "test",
+  "author": "depjs",
+  "license": "MIT",
+  "dependencies": {
+    "text-table": "^0.2.0"
+  }
+}
