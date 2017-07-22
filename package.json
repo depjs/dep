@@ -6,8 +6,7 @@
   "scripts": {
     "configure": "node-gyp configure",
     "build": "node-gyp rebuild --release",
-    "test": "ava",
-    "pretest": "standard"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -34,7 +33,8 @@
   },
   "devDependencies": {
     "ava": "^0.21.0",
-    "standard": "^10.0.2"
+    "standard": "^10.0.2",
+    "strong-npm-ls": "^1.0.10"
   },
   "engine": {
     "node": ">=8.0.0"

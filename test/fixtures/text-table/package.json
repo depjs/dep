@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "test",
+  "name": "test-text-table",
   "version": "1.0.0",
   "description": "test",
   "author": "depjs",
   "license": "MIT",
   "dependencies": {
-    "text-table": "^0.2.0"
+    "text-table": "0.2.0"
   }
 }
