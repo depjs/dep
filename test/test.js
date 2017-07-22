@@ -6,15 +6,22 @@ const test = require('ava')
 const fixtures = fs.readdirSync(path.join(__dirname, 'fixtures'))
 
 test.cb(t => {
-  let count = fixtures.length
+  let items = 2
+  let count = fixtures.length * items
 	t.plan(count)
   fixtures.forEach(fixture => {
     const bin = path.join(__dirname, '..', 'bin', 'dep.js')
     const pkg = path.join(__dirname, 'fixtures', fixture)
+    const fix = fs.readFileSync(
+      path.join(__dirname, `fixtures/${fixture}/tree`),
+      'utf8'
+    )
     exec(`node ${bin} install`, {cwd: pkg}, (err, stdout, stderr) => {
-      count -= 1
-      tree.read(pkg, (e, d) => {
-        t.ifError(e)
+      tree.read(pkg, (err, out) => {
+        count -= items
+        const deps = tree.printable(out,  Number.MAX_VALUE)
+        t.ifError(err)
+        t.is(deps, fix)
         if (count === 0) t.end()
       })
     })
