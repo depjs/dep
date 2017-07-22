@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "ava": "^0.21.0",
+    "rimraf": "^2.6.1",
     "standard": "^10.0.2",
     "strong-npm-ls": "^1.0.10"
   },
