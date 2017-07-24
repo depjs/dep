@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/watilde/dep#readme",
   "dependencies": {
+    "fs-extra": "^4.0.0",
     "mkdirp": "^0.5.1",
     "node-addon-api": "^0.4.0",
     "npm-package-arg": "^5.1.2",
