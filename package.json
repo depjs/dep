@@ -28,7 +28,6 @@
     "fs-extra": "^4.0.0",
     "gunzip-maybe": "^1.4.1",
     "mkdirp": "^0.5.1",
-    "node-addon-api": "^0.4.0",
     "node-gyp": "^3.6.2",
     "npm-package-arg": "^5.1.2",
     "request": "^2.81.0",
@@ -46,6 +45,6 @@
     "strong-npm-ls": "^1.0.10"
   },
   "engine": {
-    "node": ">=8.0.0"
+    "node": ">=4.8.4"
   }
 }

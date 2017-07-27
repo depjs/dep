@@ -1,14 +1,16 @@
-#!/usr/bin/env node --napi-modules
+#!/usr/bin/env node
 
-if (Number(process.version.substr(1, 1)) < 8) {
-  console.error('N-API is available in Node.js 8.0')
-  process.exit(1)
-}
-
+const semver = require('semver')
 const yargs = require('yargs')
 const requireDirectory = require('require-directory')
 const commands = requireDirectory(module, '../lib/', {exclude: /utils/})
 const pkgJSON = require('../package.json')
+
+if (!semver.satisfies(process.version, pkgJSON.engine.node)) {
+  console.error('dep works only on Node.js LTS versions')
+  console.error('See the schedule: https://github.com/nodejs/LTS#lts-schedule1')
+  process.exit(1)
+}
 
 yargs.usage(pkgJSON.description)
 
