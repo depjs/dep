@@ -37,7 +37,6 @@
     "yargs": "^8.0.2"
   },
   "devDependencies": {
-    "ava": "^0.21.0",
     "rimraf": "^2.6.1",
     "standard": "^10.0.2",
     "standard-version": "^4.2.0",
