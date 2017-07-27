@@ -56,6 +56,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
-# Native build
-build
