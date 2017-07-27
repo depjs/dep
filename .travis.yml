@@ -2,4 +2,7 @@ language: node_js
 node_js:
   - "6"
   - "4"
+os:
+  - linux
+  - osx
 sudo: false
