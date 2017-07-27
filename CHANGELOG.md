@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file. See [standa
 * **dep:** install tape ([2946548](https://github.com/watilde/dep/commit/2946548))
 * **dep:** remove build scripts ([48207ee](https://github.com/watilde/dep/commit/48207ee))
 * **dep:** uninstall ava ([396874c](https://github.com/watilde/dep/commit/396874c))
-* **dep:** update semver[@5](https://github.com/5).4.1 from 5.3.0 ([e1b741d](https://github.com/watilde/dep/commit/e1b741d))
+* **dep:** update semver@5.4.1 from 5.3.0 ([e1b741d](https://github.com/watilde/dep/commit/e1b741d))
 * **refactor:** add existsSync in npmrc ([4163485](https://github.com/watilde/dep/commit/4163485))
 * **refactor:** make dep run on Node.js v4 ([ba9cfaf](https://github.com/watilde/dep/commit/ba9cfaf))
 * **refactor:** replace PWD with process.cwd() ([b4ce500](https://github.com/watilde/dep/commit/b4ce500))
