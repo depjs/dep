@@ -7,7 +7,7 @@ const rimraf = require('rimraf')
 const fixtures = fs.readdirSync(path.join(__dirname, 'fixtures'))
 
 test((t) => {
-  let count = fixtures.length
+  var count = fixtures.length
   t.plan(count)
   fixtures.forEach(fixture => {
     const modules = path.join(__dirname, 'fixtures', fixture, 'node_modules')
@@ -20,8 +20,8 @@ test((t) => {
 })
 
 test((t) => {
-  let items = 3
-  let count = fixtures.length * items
+  var items = 3
+  var count = fixtures.length * items
   t.plan(count)
   fixtures.forEach(fixture => {
     const bin = path.join(__dirname, '..', 'bin', 'dep.js')
