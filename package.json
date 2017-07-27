@@ -4,6 +4,7 @@
   "description": "Simple dependency installer for Node.js",
   "main": "index.js",
   "scripts": {
+    "release": "standard-version",
     "configure": "node-gyp configure",
     "build": "node-gyp rebuild --release",
     "pretest": "standard",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "ava": "^0.21.0",
     "standard": "^10.0.2",
+    "standard-version": "^4.2.0",
     "strong-npm-ls": "^1.0.10"
   },
   "engine": {
