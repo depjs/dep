@@ -6,7 +6,11 @@
   "scripts": {
     "release": "standard-version",
     "pretest": "standard lib bin test/*js",
-    "test": "tape 'test/*.js'"
+    "test": "tap 'test/*.js'",
+    "test-ci": "istanbul cover tap 'test/*.js'",
+    "posttest-ci": "npm run coverage",
+    "coverage": "cat coverage/lcov.info | coveralls",
+    "postcoverage": "rm -rf coverage"
   },
   "repository": {
     "type": "git",
@@ -37,10 +41,13 @@
     "yargs": "^8.0.2"
   },
   "devDependencies": {
+    "coveralls": "^2.13.1",
+    "istanbul": "^0.4.5",
     "rimraf": "^2.6.1",
     "standard": "^10.0.2",
     "standard-version": "^4.2.0",
-    "tape": "^4.7.0"
+    "strong-npm-ls": "^1.0.10",
+    "tap": "^10.7.0"
   },
   "engine": {
     "node": ">=4.0.0"

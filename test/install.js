@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
-const test = require('tape')
+const test = require('tap').test
 const fixtures = fs.readdirSync(path.join(__dirname, 'fixtures'))
 
 test((t) => {

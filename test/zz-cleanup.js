@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const test = require('tape')
+const test = require('tap').test
 const rimraf = require('rimraf')
 const fixtures = fs.readdirSync(path.join(__dirname, 'fixtures'))
 
