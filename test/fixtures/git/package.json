@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "git",
+  "version": "1.0.0",
+  "dependencies": {
+    "happy-birthday": "git+https://github.com/watilde/happy-birthday.git"
+  }
+}

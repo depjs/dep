@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "url",
+  "version": "1.0.0",
+  "dependencies": {
+    "happy-birthday": "https://github.com/watilde/happy-birthday/archive/0.6.0.tar.gz"
+  }
+}

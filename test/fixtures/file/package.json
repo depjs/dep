@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "file",
+  "version": "1.0.0",
+  "dependencies": {
+    "happy-birthday": "./happy-birthday-0.6.0"
+  }
+}
