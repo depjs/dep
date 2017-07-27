@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/watilde/dep/compare/v0.5.0...v0.5.1) (2017-07-27)
+
+
+### Bug Fixes
+
+* **dep:** install --save-dev rimraf ([d9118e9](https://github.com/watilde/dep/commit/d9118e9))
+* **dep:** install --save-dev standard-version ([98b7900](https://github.com/watilde/dep/commit/98b7900))
+* **dep:** install tape ([2946548](https://github.com/watilde/dep/commit/2946548))
+* **dep:** remove build scripts ([48207ee](https://github.com/watilde/dep/commit/48207ee))
+* **dep:** uninstall ava ([396874c](https://github.com/watilde/dep/commit/396874c))
+* **dep:** update semver[@5](https://github.com/5).4.1 from 5.3.0 ([e1b741d](https://github.com/watilde/dep/commit/e1b741d))
+* **refactor:** add existsSync in npmrc ([4163485](https://github.com/watilde/dep/commit/4163485))
+* **refactor:** make dep run on Node.js v4 ([ba9cfaf](https://github.com/watilde/dep/commit/ba9cfaf))
+* **refactor:** replace PWD with process.cwd() ([b4ce500](https://github.com/watilde/dep/commit/b4ce500))
+* **refactor:** stop using destructuring assignment ([97780f3](https://github.com/watilde/dep/commit/97780f3))
+* **refactor:** use request instead of https module ([b606b4d](https://github.com/watilde/dep/commit/b606b4d))
+* **test:** add .travis.yml ([937a08b](https://github.com/watilde/dep/commit/937a08b))
+* **test:** add appveyor.yml ([d1037d7](https://github.com/watilde/dep/commit/d1037d7))
+* **test:** cache node_modules in travis ([b5cecbc](https://github.com/watilde/dep/commit/b5cecbc))
+* **test:** replace let with var ([d4308eb](https://github.com/watilde/dep/commit/d4308eb))
+* **test:** sudo should be false on ci ([0e52953](https://github.com/watilde/dep/commit/0e52953))
+* **test:** support only active LTS versions ([8011d5d](https://github.com/watilde/dep/commit/8011d5d))
+* **test:** test on mac/linux with travis ([9cbbfd7](https://github.com/watilde/dep/commit/9cbbfd7))
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/watilde/dep/compare/v0.4.1...v0.5.0) (2017-07-27)
 
