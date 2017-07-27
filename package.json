@@ -6,7 +6,7 @@
   "scripts": {
     "release": "standard-version",
     "pretest": "standard",
-    "test": "ava"
+    "test": "tape 'test/*.js'"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,8 @@
     "rimraf": "^2.6.1",
     "standard": "^10.0.2",
     "standard-version": "^4.2.0",
-    "strong-npm-ls": "^1.0.10"
+    "strong-npm-ls": "^1.0.10",
+    "tape": "^4.7.0"
   },
   "engine": {
     "node": ">=4.8.4"

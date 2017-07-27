@@ -2,11 +2,11 @@ const fs = require('fs')
 const path = require('path')
 const { exec } = require('child_process')
 const tree = require('strong-npm-ls')
-const test = require('ava')
+const test = require('tape')
 const rimraf = require('rimraf')
 const fixtures = fs.readdirSync(path.join(__dirname, 'fixtures'))
 
-test.cb.before(t => {
+test((t) => {
   let count = fixtures.length
   t.plan(count)
   fixtures.forEach(fixture => {
@@ -19,7 +19,7 @@ test.cb.before(t => {
   })
 })
 
-test.cb(t => {
+test((t) => {
   let items = 3
   let count = fixtures.length * items
   t.plan(count)
@@ -36,19 +36,6 @@ test.cb(t => {
         t.is(deps, fix)
         if (count === 0) t.end()
       })
-    })
-  })
-})
-
-test.cb.after(t => {
-  let count = fixtures.length
-  t.plan(count)
-  fixtures.forEach(fixture => {
-    const modules = path.join(__dirname, 'fixtures', fixture, 'node_modules')
-    rimraf(modules, _ => {
-      count -= 1
-      t.pass()
-      if (count === 0) t.end()
     })
   })
 })
