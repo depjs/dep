@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { exec } = require('child_process')
+const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
 const test = require('tape')
 const rimraf = require('rimraf')
