@@ -1,5 +1,13 @@
 # dep
-Node.js dependency installer
+
+A little Node.js dependency installer with the bare minimum of features for module **end-users**.
+
+## Features
++ Installs the dependencies defined in a local package.json.
++ Follows most of the standard logic found today in npm install.
++ Lock the dependencies installed in a local node_modules.
+
+## Scope
 
 | Mac/Linux | Windows | Node.js LTS | Coverage |
 | :-: | :-: | :-: | :-: |
