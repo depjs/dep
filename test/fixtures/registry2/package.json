@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "registry2",
+  "version": "1.0.0",
+  "dependencies": {
+    "agreed-client": "^2.0.0",
+    "agreed-server": "^2.0.0"
+  }
+}

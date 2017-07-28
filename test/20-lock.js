@@ -16,7 +16,7 @@ test((t) => {
       t.ifError(err, `${pkgJSON.name}: lock ran without error`)
       const lock = require(path.join(pkg, 'node_modules.json'))
       const deps = lock.dependencies
-      t.is(Object.keys(deps).length, 2, `${pkgJSON.name}: two deps are installed`)
+      t.ok(Object.keys(deps).length, `${pkgJSON.name}: deps are locked`)
       if (count === 0) t.end()
     })
   })
