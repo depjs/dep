@@ -6,13 +6,12 @@ const fixtures = fs.readdirSync(path.join(__dirname, 'fixtures'))
 
 test((t) => {
   var count = fixtures.length
-  t.plan(count)
   fixtures.forEach(fixture => {
     const modules = path.join(__dirname, 'fixtures', fixture, 'node_modules')
-    rimraf(modules, _ => {
-      count -= 1
-      t.pass()
-      if (count === 0) t.end()
-    })
+    const lock = path.join(__dirname, 'fixtures', fixture, 'node_modules.json')
+    rimraf.sync(modules)
+    rimraf.sync(lock)
+    count -= 1
+    if (count === 0) t.end()
   })
 })
