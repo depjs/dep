@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "registry2",
+  "name": "registry-resolver",
   "version": "1.0.0",
   "dependencies": {
     "agreed-client": "^2.0.0",
