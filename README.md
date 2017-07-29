@@ -1,6 +1,6 @@
 # dep
 
-A little Node.js dependency installer with the bare minimum of features for module **end-users**.
+A little Node.js dependency installer with the bare minimum features for module **end-users**.
 
 ## Features
 + Installs the dependencies defined in a local package.json.
