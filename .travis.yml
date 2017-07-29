@@ -4,8 +4,17 @@ matrix:
   include:
     - node_js: "6"
       script: npm run test-ci
+      os:
+        - linux
+    - node_js: "6"
+      script: npm test
+      os:
+        - osx
     - node_js: "4"
       script: npm test
+      os:
+        - linux
+        - osx
       env:
         - CXX=g++-4.8
       addons:
@@ -14,10 +23,6 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.8
-os:
-  - linux
-  # Currently, osx takes too long time to run tests on travis
-  # - osx
 cache:
   directories:
     - node_modules
