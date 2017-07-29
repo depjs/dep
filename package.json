@@ -6,7 +6,7 @@
   "scripts": {
     "release": "standard-version",
     "pretest": "standard lib bin test/*js",
-    "test": "tap 'test/*.js'",
+    "test": "tap \"test/*.js\"",
     "test-ci": "nyc tap 'test/*.js'",
     "posttest-ci": "npm run coverage",
     "precoverage": "nyc report --reporter=text-lcov > coverage.lcov",
