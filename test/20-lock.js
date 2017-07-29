@@ -3,13 +3,13 @@ const path = require('path')
 const exec = require('child_process').exec
 const test = require('tap').test
 const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
+const bin = path.join(__dirname, '..', 'bin', 'dep.js')
 
 test((t) => {
   var items = 2
   var count = fixtures.length * items
   t.plan(count)
   fixtures.forEach(fixture => {
-    const bin = path.join(__dirname, '..', 'bin', 'dep.js')
     const pkg = path.join(__dirname, 'deps', fixture)
     const pkgJSON = require(path.join(pkg, 'package.json'))
     exec(`node ${bin} lock`, {cwd: pkg}, (err, stdout, stderr) => {
