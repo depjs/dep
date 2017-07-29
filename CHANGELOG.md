@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.2"></a>
+## [0.5.2](https://github.com/watilde/dep/compare/v0.5.1...v0.5.2) (2017-07-29)
+
+
+### Bug Fixes
+
+* **dep:** add native-build package ([249b777](https://github.com/watilde/dep/commit/249b777))
+* **dep:** install --save-dev tap-spec ([7e93d42](https://github.com/watilde/dep/commit/7e93d42))
+* **dep:** install nyc --save-dev ([87e7cb9](https://github.com/watilde/dep/commit/87e7cb9))
+* **dep:** uninstall istanbul ([7dce735](https://github.com/watilde/dep/commit/7dce735))
+* **dep:** uninstall tape-spec ([f56f18f](https://github.com/watilde/dep/commit/f56f18f))
+* **dep:** use tap instead of tape and coverage ([78df61e](https://github.com/watilde/dep/commit/78df61e))
+* **gitignore:** no need to ignore build dir ([8d7dff8](https://github.com/watilde/dep/commit/8d7dff8))
+* **lock:** use path.sep instead of `/` ([fe210a3](https://github.com/watilde/dep/commit/fe210a3))
+* **refactor:** add catch to the main Promise ([c6a6e87](https://github.com/watilde/dep/commit/c6a6e87))
+* **test:** add a quoted string ([0aa9b30](https://github.com/watilde/dep/commit/0aa9b30))
+* **test:** add a test for lock ([de8ecaa](https://github.com/watilde/dep/commit/de8ecaa))
+* **test:** add all type of deps ([e49a833](https://github.com/watilde/dep/commit/e49a833))
+* **test:** add git tests and rename names ([c4396b1](https://github.com/watilde/dep/commit/c4396b1))
+* **test:** add test to resolve complex tree ([6b404d5](https://github.com/watilde/dep/commit/6b404d5))
+* **test:** drop native build ([fadfa86](https://github.com/watilde/dep/commit/fadfa86))
+* **test:** extracted path.sep is always `/` ([ca748d3](https://github.com/watilde/dep/commit/ca748d3))
+* **test:** fix test-ci script ([7e218d7](https://github.com/watilde/dep/commit/7e218d7))
+* **test:** replace istanbul with nyc ([3d3779c](https://github.com/watilde/dep/commit/3d3779c))
+* **test:** replace single quotes with double ([5d49cfb](https://github.com/watilde/dep/commit/5d49cfb))
+* **test:** test help and version ([fdd4277](https://github.com/watilde/dep/commit/fdd4277))
+* **test:** test unhandled help ([7e6a238](https://github.com/watilde/dep/commit/7e6a238))
+* **test:** update help test ([ea9f596](https://github.com/watilde/dep/commit/ea9f596))
+* **travis:** add addons and env for node-gyp ([e1b3192](https://github.com/watilde/dep/commit/e1b3192))
+* **travis:** add env and addon to v4 ([3a45971](https://github.com/watilde/dep/commit/3a45971))
+* **travis:** disable email notification ([e372291](https://github.com/watilde/dep/commit/e372291))
+* **travis:** exclude osx for a while ([ed99f31](https://github.com/watilde/dep/commit/ed99f31))
+* **travis:** get rid of addons on osx ([cbb227b](https://github.com/watilde/dep/commit/cbb227b))
+* **travis:** run test-ci only on v6 ([1ea8682](https://github.com/watilde/dep/commit/1ea8682))
+* **travis:** use test-ci script ([557acc2](https://github.com/watilde/dep/commit/557acc2))
+
+
+
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/watilde/dep/compare/v0.5.0...v0.5.1) (2017-07-27)
 
