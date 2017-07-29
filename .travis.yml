@@ -5,14 +5,15 @@ matrix:
       script: npm run test-ci
     - node_js: "4"
       script: npm test
-env:
-  - CXX=g++-4.8
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
+      # https://github.com/lovell/sharp/issues/253
+      env:
+        - CXX=g++-4.8
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.8
 os:
   - linux
   # Currently, osx takes too long time to run tests on travis
