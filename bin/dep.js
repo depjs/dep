@@ -3,13 +3,19 @@
 const semver = require('semver')
 const yargs = require('yargs')
 const requireDirectory = require('require-directory')
+const updateNotifier = require('update-notifier')
 const commands = requireDirectory(module, '../lib/', {exclude: /utils/})
 const pkgJSON = require('../package.json')
+const notifier = updateNotifier({pkg: pkgJSON})
 
 if (!semver.satisfies(process.version, pkgJSON.engine.node)) {
   console.error('dep works only on Node.js LTS versions')
   console.error('See the schedule: https://github.com/nodejs/LTS#lts-schedule1')
   process.exit(1)
+}
+
+if (notifier.update) {
+  notifier.notify()
 }
 
 yargs.usage(pkgJSON.description)
