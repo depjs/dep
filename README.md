@@ -4,8 +4,8 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 ## Features
 + Installs the dependencies defined in a local package.json.
-+ Follows most of the standard logic found today in npm install.
 + Lock the dependencies installed in a local node_modules.
++ Run an arbitrary command in package.json scripts.
 
 ## Scope
 
