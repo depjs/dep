@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/watilde/dep/compare/v0.5.2...v0.6.0) (2017-07-30)
+
+
+### Bug Fixes
+
+* **dep:** install --save cross-spawn ([caf560b](https://github.com/watilde/dep/commit/caf560b))
+* **dep:** install --save npm-path ([a4a9016](https://github.com/watilde/dep/commit/a4a9016))
+* **run:** exclude stderr ([b03fe83](https://github.com/watilde/dep/commit/b03fe83))
+* **run:** replace spawn with cross-spawn ([ce0fc62](https://github.com/watilde/dep/commit/ce0fc62))
+* **run:** use `process.env` as the context ([614e787](https://github.com/watilde/dep/commit/614e787))
+* **test:** add double quotes ([d4236a8](https://github.com/watilde/dep/commit/d4236a8))
+* **test:** increase test coverage of run ([6a10926](https://github.com/watilde/dep/commit/6a10926))
+
+
+### Features
+
+* **run:** add `dep run` ([6cf3174](https://github.com/watilde/dep/commit/6cf3174))
+
+
+
 <a name="0.5.2"></a>
 ## [0.5.2](https://github.com/watilde/dep/compare/v0.5.1...v0.5.2) (2017-07-29)
 
