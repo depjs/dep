@@ -41,6 +41,7 @@
     "semver": "^5.4.1",
     "tar-fs": "^1.15.3",
     "tar-stream": "^1.5.4",
+    "update-notifier": "^2.2.0",
     "which": "^1.2.14",
     "yargs": "^8.0.2"
   },
