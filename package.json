@@ -37,6 +37,7 @@
     "npm-path": "^2.0.3",
     "request": "^2.81.0",
     "require-directory": "^2.1.1",
+    "rimraf": "^2.6.1",
     "semver": "^5.4.1",
     "tar-fs": "^1.15.3",
     "tar-stream": "^1.5.4",
@@ -46,7 +47,6 @@
   "devDependencies": {
     "coveralls": "^2.13.1",
     "nyc": "^11.0.3",
-    "rimraf": "^2.6.1",
     "standard": "^10.0.2",
     "standard-version": "^4.2.0",
     "strong-npm-ls": "^1.0.10",
