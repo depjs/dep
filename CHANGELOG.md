@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/watilde/dep/compare/v0.6.1...v0.7.0) (2017-07-31)
+
+
+### Bug Fixes
+
+* **dep:** install update-notifier --save ([a0b0259](https://github.com/watilde/dep/commit/a0b0259))
+* **resolver:** use fetchSpec to follow npm ([12b2c68](https://github.com/watilde/dep/commit/12b2c68))
+
+
+### Features
+
+* **notifier:** add update-notifier ([1ba0023](https://github.com/watilde/dep/commit/1ba0023))
+
+
+
 <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/watilde/dep/compare/v0.6.0...v0.6.1) (2017-07-30)
 
