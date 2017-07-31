@@ -21,9 +21,9 @@ $ dep -h
 A little Node.js dependency installer
 
 Commands:
-  install  Install dependencies defined in package.json.            [aliases: i]
-  lock     Lock dependencies installed in node_modules.             [aliases: l]
-  run      Run an arbitrary command from scripts in package.json.   [aliases: r]
+  install  Install dependencies defined in package.json             [aliases: i]
+  lock     Lock dependencies installed in node_modules              [aliases: l]
+  run      Run an arbitrary command from scripts in package.json    [aliases: r]
 
 Options:
   --help, -h     Show help                                             [boolean]
