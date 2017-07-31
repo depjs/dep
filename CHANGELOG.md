@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.1"></a>
+## [0.7.1](https://github.com/watilde/dep/compare/v0.7.0...v0.7.1) (2017-07-31)
+
+
+### Bug Fixes
+
+* **install:** fix the logic to get the hash at git resolver ([e2ceb04](https://github.com/watilde/dep/commit/e2ceb04))
+
+
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/watilde/dep/compare/v0.6.1...v0.7.0) (2017-07-31)
 
