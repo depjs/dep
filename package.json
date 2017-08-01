@@ -29,7 +29,7 @@
   "homepage": "https://github.com/watilde/dep#readme",
   "dependencies": {
     "cross-spawn": "^5.1.0",
-    "fs-extra": "^4.0.0",
+    "fs-extra": "^4.0.1",
     "gunzip-maybe": "^1.4.1",
     "mkdirp": "^0.5.1",
     "node-gyp": "^3.6.2",
