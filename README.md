@@ -73,6 +73,6 @@ This table is about what dep is caring.
 [c-img]: https://img.shields.io/coveralls/watilde/dep/master.svg
 [c-url]: https://coveralls.io/github/watilde/dep
 [npm]: https://github.com/npm/npm
-[dat]: https://datproject.org/g
+[dat]: https://datproject.org/
 [emoji-cli]: https://datproject.org/watilde/emoji-cli
 [git repository]: https://github.com/watilde/emoji-cli
