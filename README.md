@@ -5,6 +5,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 ### Table of Contents
 
 <li><a href="#features">Features</a></li>
+<li><a href="#dep--dat">dep ♥ dat</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#scope">Scope</a></li>
@@ -14,6 +15,23 @@ A little Node.js dependency installer with the bare minimum features for module 
 + **Install** the dependencies defined in a local package.json.
 + **Lock** the dependencies installed in a local node_modules.
 + **Run** an arbitrary command from scripts in a local package.json.
+
+## dep ♥ [dat]
+This feature is **experimental**.
+
+You can provide a [dat] link as a dependency source.
+A dat link is like an `http:// link`, but with special properties.
+
+Here is an example package.json with a dat called [emoji-cli]. It just contains the package data as like its [git repository].
+```json
+{
+  "name": "an-app",
+  "description": "an example app",
+  "dependencies": {
+    "emoji-cli": "dat://7fdbb7b4ea8be0e5d9c1469aa4056377a092d8787b6e3452faf0ce8390098d02"
+  }
+}
+```
 
 ## Usage
 ```console
@@ -55,3 +73,6 @@ This table is about what dep is caring.
 [c-img]: https://img.shields.io/coveralls/watilde/dep/master.svg
 [c-url]: https://coveralls.io/github/watilde/dep
 [npm]: https://github.com/npm/npm
+[dat]: https://datproject.org/g
+[emoji-cli]: https://datproject.org/watilde/emoji-cli
+[git repository]: https://github.com/watilde/emoji-cli
