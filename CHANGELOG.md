@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/watilde/dep/compare/v0.9.1...v0.10.0) (2017-08-02)
+
+
+### Bug Fixes
+
+* **dep:** install --save is-root ([1e08875](https://github.com/watilde/dep/commit/1e08875))
+* **install:** does not allow root users to run lifecycle scripts ([d38ac94](https://github.com/watilde/dep/commit/d38ac94))
+* **install:** fix installer if the lifecycle is empty ([0bc7d59](https://github.com/watilde/dep/commit/0bc7d59))
+* **install:** minor tweak to the log message ([9287673](https://github.com/watilde/dep/commit/9287673))
+
+
+### Features
+
+* **install:** support install scripts ([6f8bd84](https://github.com/watilde/dep/commit/6f8bd84))
+
+
+
 <a name="0.9.1"></a>
 ## [0.9.1](https://github.com/watilde/dep/compare/v0.9.0...v0.9.1) (2017-08-02)
 
