@@ -2,24 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="0.10.0"></a>
-# [0.10.0](https://github.com/watilde/dep/compare/v0.8.0...v0.10.0) (2017-08-02)
-
-
-### Bug Fixes
-
-* **dep:** install --save promise-each ([218d67e](https://github.com/watilde/dep/commit/218d67e))
-* **install:** remove tmp file when resolver is finished ([ca50e62](https://github.com/watilde/dep/commit/ca50e62))
-* **test:** add a test for pre/post script ([bab58b5](https://github.com/watilde/dep/commit/bab58b5))
-* **test:** fix lint errors ([2447b47](https://github.com/watilde/dep/commit/2447b47))
-
-
-### Features
-
-* **run:** support pre/post script ([656d70d](https://github.com/watilde/dep/commit/656d70d))
-
-
-
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/watilde/dep/compare/v0.8.0...v0.9.0) (2017-08-02)
 
