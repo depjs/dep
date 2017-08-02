@@ -5,7 +5,6 @@ A little Node.js dependency installer with the bare minimum features for module 
 ### Table of Contents
 
 <li><a href="#features">Features</a></li>
-<li><a href="#dep--dat">dep ♥ dat</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#scope">Scope</a></li>
@@ -16,7 +15,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 + **Lock** the dependencies installed in a local node_modules.
 + **Run** an arbitrary command from scripts in a local package.json.
 
-## dep ♥ [dat]
+### dep ♥ [dat]
 This feature is **experimental**.
 
 You can provide a [dat] link as a dependency source.
