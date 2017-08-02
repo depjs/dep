@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/watilde/dep/compare/v0.7.1...v0.9.0) (2017-08-02)
+
+
+### Bug Fixes
+
+* **dep:** install --save promise-each ([218d67e](https://github.com/watilde/dep/commit/218d67e))
+* **dep:** install dat-node --save ([b2e0883](https://github.com/watilde/dep/commit/b2e0883))
+* **dep:** update fs-extra to 4.0.1 ([4b4bc9e](https://github.com/watilde/dep/commit/4b4bc9e))
+* **dep:** update which to 1.3.0 ([932ad96](https://github.com/watilde/dep/commit/932ad96))
+* **install:** remove tmp file when resolver is finished ([ca50e62](https://github.com/watilde/dep/commit/ca50e62))
+* **test:** add a test for pre/post script ([bab58b5](https://github.com/watilde/dep/commit/bab58b5))
+* **test:** fix lint errors ([2447b47](https://github.com/watilde/dep/commit/2447b47))
+
+
+### Features
+
+* **dat:** support dat dependency as an experimental feature ([7001781](https://github.com/watilde/dep/commit/7001781))
+* **run:** support pre/post script ([656d70d](https://github.com/watilde/dep/commit/656d70d))
+
+
+
 <a name="0.8.0"></a>
 # [0.8.0](https://github.com/watilde/dep/compare/v0.7.0...v0.8.0) (2017-08-01)
 
