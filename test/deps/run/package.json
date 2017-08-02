@@ -3,7 +3,9 @@
   "name": "registry",
   "version": "1.0.0",
   "scripts": {
-    "test": "happy-birthday --you=dep"
+    "pretest": "happy-birthday --you=pretest",
+    "test": "happy-birthday --you=test",
+    "posttest": "happy-birthday --you=posttest"
   },
   "dependencies": {
     "happy-birthday": "0.6.0"
