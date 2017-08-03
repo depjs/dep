@@ -7,7 +7,6 @@ A little Node.js dependency installer with the bare minimum features for module 
 <li><a href="#features">Features</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#scope">Scope</a></li>
 <li><a href="#license">License</a></li>
 
 ## Features
