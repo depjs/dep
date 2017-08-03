@@ -15,6 +15,23 @@ A little Node.js dependency installer with the bare minimum features for module 
 + **Lock** the dependencies installed in a local node_modules.
 + **Run** an arbitrary command from scripts in a local package.json.
 
+dep is trying to have a similar/same interface of the features with npm, but there are some slightly different implementations internally.
+
+### Avoid from risks
+To avoid from the risks related the lifecycle install scripts of the package while installing, dep doesn't allow you to run them if you are running `dep install` as a root user.
+
+### Save spaces
+Speed and local disk capacity are a trade-off. To take the both benefits, it would be better to have the cache in somewhere proxy layer instead of local.
+
+Therefore, dep does not make cache files in a local disc for now.
+
+### Stability
+Stability is a core value. Having a small set makes keeping the green badges easier.
+
+| Mac/Linux | Windows | Node.js LTS | Coverage |
+| :-: | :-: | :-: | :-: |
+| [![travis][t-img]][t-url] | [![appveyor][a-img]][a-url] | [![Node.js LTS][n-img]][n-url] | [![coverage][c-img]][c-url] |
+
 ### dep ♥ [dat]
 This feature is **experimental**.
 
@@ -52,13 +69,6 @@ Currently, [npm] is the only way to install dep:
 ```console
 $ npm install -g dep
 ```
-
-## Scope
-This table is about what dep is caring.
-
-| Mac/Linux | Windows | Node.js LTS | Coverage |
-| :-: | :-: | :-: | :-: |
-| [![travis][t-img]][t-url] | [![appveyor][a-img]][a-url] | [![Node.js LTS][n-img]][n-url] | [![coverage][c-img]][c-url] |
 
 ## License
 [MIT](./LICENSE)
