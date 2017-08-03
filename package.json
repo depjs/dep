@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "release": "standard-version",
-    "pretest": "standard lib/**/*.js bin/*.js test/*js",
+    "pretest": "standard \"lib/**/*.js\" \"bin/*.js\" \"test/*js\"",
     "test": "tap \"test/*.js\"",
     "test-ci": "nyc tap 'test/*.js'",
     "posttest-ci": "npm run coverage",
