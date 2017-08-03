@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.10.1"></a>
+## [0.10.1](https://github.com/watilde/dep/compare/v0.10.0...v0.10.1) (2017-08-03)
+
+
+### Bug Fixes
+
+* **install:** fix process.stderr ([1bbd3ad](https://github.com/watilde/dep/commit/1bbd3ad))
+* **install:** rm node_modules when install starts ([c845e5a](https://github.com/watilde/dep/commit/c845e5a))
+* **meta:** add a meta keyword to package.json ([6187674](https://github.com/watilde/dep/commit/6187674))
+* **refactor:** replace console.error with process.stderr ([ad5df92](https://github.com/watilde/dep/commit/ad5df92))
+* **run:** support multiple commands ([0e5b51d](https://github.com/watilde/dep/commit/0e5b51d))
+* **test:** add double quotes to wrap file names ([6be34e2](https://github.com/watilde/dep/commit/6be34e2))
+* **test:** fix lint errors ([e2443ad](https://github.com/watilde/dep/commit/e2443ad))
+
+
+
 <a name="0.10.0"></a>
 # [0.10.0](https://github.com/watilde/dep/compare/v0.9.1...v0.10.0) (2017-08-02)
 
