@@ -20,7 +20,9 @@
   "bin": {
     "dep": "./bin/dep.js"
   },
-  "keywords": [],
+  "keywords": [
+    "npm"
+  ],
   "author": "Daijiro Wachi",
   "license": "MIT",
   "bugs": {
