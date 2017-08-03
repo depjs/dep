@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.10.2"></a>
+## [0.10.2](https://github.com/watilde/dep/compare/v0.10.1...v0.10.2) (2017-08-03)
+
+
+### Bug Fixes
+
+* **dep:** downgrade cross-spawn version because of a regression ([0f59e46](https://github.com/watilde/dep/commit/0f59e46))
+* **dep:** uninstall --save cross-spawn ([82ebdbd](https://github.com/watilde/dep/commit/82ebdbd))
+* **dep:** upgrade cross-spawn version because of a regression ([74e8fa3](https://github.com/watilde/dep/commit/74e8fa3))
+* **run:** detached is flase on win32 ([4010a60](https://github.com/watilde/dep/commit/4010a60))
+* **run:** shell is false on win32 ([8a14105](https://github.com/watilde/dep/commit/8a14105))
+* **run:** use {shell: true} ([a5706ce](https://github.com/watilde/dep/commit/a5706ce))
+* **test:** fix lint errors ([e2a6236](https://github.com/watilde/dep/commit/e2a6236))
+
+
+
 <a name="0.10.1"></a>
 ## [0.10.1](https://github.com/watilde/dep/compare/v0.10.0...v0.10.1) (2017-08-03)
 
