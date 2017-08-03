@@ -16,7 +16,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 dep is trying to have a similar/same interface of the features with npm, but there are some slightly different implementations internally.
 
-### Avoid from risks
+### Right permission
 To avoid from the risks related the lifecycle install scripts of the package while installing, dep doesn't allow you to run them if you are running `dep install` as a root user.
 
 ### Save spaces
