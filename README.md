@@ -7,6 +7,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 <li><a href="#features">Features</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#installation">Installation</a></li>
+<li><a href="#chat">Chat</a></li>
 <li><a href="#license">License</a></li>
 
 ## Features
@@ -69,6 +70,19 @@ Currently, [npm] is the only way to install dep:
 $ npm install -g dep
 ```
 
+## Bug report
+When you find issues, please report them:
++ https://github.com/watilde/dep/issues/new
+
+Be sure to follow the issue template.
+
+
+## Feature request
+We're trying to find out the bare minimum features for end users. That means it is very reluctant to add new features, but having a discussion is useful for clarifying the minimum definitions.
+
+Feel free to ask us in #dep-js on https://package.community/ or on [twitter].
+
+
 ## License
 [MIT](./LICENSE)
 
@@ -84,3 +98,4 @@ $ npm install -g dep
 [dat]: https://datproject.org/
 [emoji-cli]: https://datproject.org/watilde/emoji-cli
 [git repository]: https://github.com/watilde/emoji-cli
+[twitter]: https://twitter.com/watilde
