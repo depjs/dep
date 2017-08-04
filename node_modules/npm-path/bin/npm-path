@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+const npmPath = require('../')
+
+console.log(npmPath())
