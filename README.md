@@ -13,7 +13,8 @@ A little Node.js dependency installer with the bare minimum features for module 
 <li><a href="#features">Features</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#chat">Chat</a></li>
+<li><a href="#bug-report">Bug report</a></li>
+<li><a href="#feature-request">Feature request</a></li>
 <li><a href="#license">License</a></li>
 
 ## Features
