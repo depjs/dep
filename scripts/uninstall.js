@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const execFile = require('child_process').execFile
 const path = require('path')
 const rimraf = require('rimraf')
 const execPath = process.execPath
