@@ -12,6 +12,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 <li><a href="#features">Features</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#installation">Installation</a></li>
+<li><a href="#uninstallation">Uninstallation</a></li>
 <li><a href="#bug-report">Bug report</a></li>
 <li><a href="#feature-request">Feature request</a></li>
 <li><a href="#license">License</a></li>
@@ -71,9 +72,29 @@ Options:
 ```
 
 ## Installation
-Currently, [npm] is the only way to install dep:
+Since dep works independently of npm, dep has a standalone script to install.
+
+### Standalone script
 ```console
-$ npm install -g dep
+$ curl -L https://github.com/watilde/dep/raw/master/scripts/install.js | node
+```
+
+### via npm
+```console
+$ npm install --global dep
+```
+
+## Uninstallation
+Also for uninstallation.
+
+### Standalone script
+```console
+$ curl -L https://github.com/watilde/dep/raw/master/scripts/uninstall.js | node
+```
+
+### via npm
+```console
+$ npm install --global dep
 ```
 
 ## Bug report
