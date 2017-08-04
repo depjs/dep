@@ -29,6 +29,26 @@
     "url": "https://github.com/watilde/dep/issues"
   },
   "homepage": "https://github.com/watilde/dep#readme",
+  "bundleDependencies": [
+    "dat-node",
+    "fs-extra",
+    "gunzip-maybe",
+    "is-root",
+    "mkdirp",
+    "node-gyp",
+    "npm-package-arg",
+    "npm-path",
+    "promise-each",
+    "request",
+    "require-directory",
+    "rimraf",
+    "semver",
+    "tar-fs",
+    "tar-stream",
+    "update-notifier",
+    "which",
+    "yargs"
+  ],
   "dependencies": {
     "dat-node": "^3.5.1",
     "fs-extra": "^4.0.1",
