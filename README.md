@@ -6,6 +6,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 + Stand alone installer
 + Follow the spec of npm's [package-lock.json]
 + `install <pkg> [--save|--save-dev|--global]`
++ Installing packages in multiple forked clusters?
 
 ### Table of Contents
 
