@@ -2,6 +2,11 @@
 
 A little Node.js dependency installer with the bare minimum features for module **end-users**.
 
+###### Roadmap to v1.0.0
++ Stand alone installer
++ Follow the spec of npm's [package-lock.json]
++ `install <pkg> [--save|--save-dev|--global]`
+
 ### Table of Contents
 
 <li><a href="#features">Features</a></li>
@@ -99,3 +104,4 @@ Feel free to ask us in #dep-js on https://package.community/ or on [twitter].
 [emoji-cli]: https://datproject.org/watilde/emoji-cli
 [git repository]: https://github.com/watilde/emoji-cli
 [twitter]: https://twitter.com/watilde
+[package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
