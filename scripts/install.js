@@ -1,5 +1,4 @@
 const exec = require('child_process').exec
-const execFile = require('child_process').execFile
 const path = require('path')
 const fs = require('fs')
 const execPath = process.execPath
@@ -8,7 +7,7 @@ const nodeModules = path.join(execPath, '../../lib/node_modules/dep')
 const datNode = path.join(nodeModules, 'node_modules/dat-node')
 const repository = 'https://github.com/watilde/dep.git'
 const bin = path.join(nodeModules, 'bin/dep.js')
-const nodeGyp = reuqire(path.join(nodeModules, 'lib/utils/node-gyp'))
+const nodeGyp = require(path.join(nodeModules, 'lib/utils/node-gyp'))
 
 process.stdout.write(
   'exec: git' + [' clone', repository, nodeModules].join(' ') + '\n'
