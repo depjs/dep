@@ -16,13 +16,18 @@ exec('git clone ' + repository + ' ' + nodeModules, (e) => {
   process.stdout.write('link: ' + bin + '\n')
   process.stdout.write(' => ' + path.join(binPath, 'dep') + '\n')
   fs.link(bin, path.join(binPath, 'dep'), (e) => {
+    if (e) throw e
     const nodeGyp = require(path.join(nodeModules, 'lib/utils/node-gyp'))
     const sodium = path.join(datNode, 'node_modules/sodium-native')
-    const utp = path.join(datNode, 'node_modules/utp-native')
-    if (e) throw e
-    process.stdout.write('install: dat-node\n')
+    process.stdout.write('build: ' + sodium + '\n')
     try {
       nodeGyp({cwd: sodium})
+    } catch (e) {
+      throw e
+    }
+    const utp = path.join(datNode, 'node_modules/utp-native')
+    process.stdout.write('build: ' + utp + '\n')
+    try {
       nodeGyp({cwd: utp})
       process.stdout.write('dep was installed successfully\n')
     } catch (e) {
