@@ -58,7 +58,6 @@ typings/
 .env
 
 # bundleDependencies
-!node_modules/dat-node
 !node_modules/fs-extra
 !node_modules/gunzip-maybe
 !node_modules/is-root
