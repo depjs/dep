@@ -73,7 +73,7 @@
   "devDependencies": {
     "coveralls": "^2.13.1",
     "nyc": "^11.0.3",
-    "standard": "^10.0.2",
+    "standard": "^10.0.3",
     "standard-version": "^4.2.0",
     "strong-npm-ls": "^1.0.10",
     "tap": "^10.7.0"
