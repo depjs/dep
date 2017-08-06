@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.10.3"></a>
+## [0.10.3](https://github.com/watilde/dep/compare/v0.10.2...v0.10.3) (2017-08-06)
+
+
+### Bug Fixes
+
+* **dep:** add .npmignore ([b4bcd03](https://github.com/watilde/dep/commit/b4bcd03))
+* **dep:** add bundleDependencies ([f4b592e](https://github.com/watilde/dep/commit/f4b592e))
+* **dep:** add dat-node ([8c68afb](https://github.com/watilde/dep/commit/8c68afb))
+* **dep:** add unbuild modules to dat-node ([23c405d](https://github.com/watilde/dep/commit/23c405d))
+* **dep:** ignore node_modules in dat-node ([ef25188](https://github.com/watilde/dep/commit/ef25188))
+* **dep:** make dat-node optional ([fb1bc71](https://github.com/watilde/dep/commit/fb1bc71))
+* **dep:** put bundleDependencies ([90163ff](https://github.com/watilde/dep/commit/90163ff))
+* **dep:** remove bundle deps of dat-node ([9dd0675](https://github.com/watilde/dep/commit/9dd0675))
+* **dep:** update dat version ([22c6722](https://github.com/watilde/dep/commit/22c6722))
+* **dep:** update dat-node files ([130e879](https://github.com/watilde/dep/commit/130e879))
+* **dep:** update standard version ([51481ac](https://github.com/watilde/dep/commit/51481ac))
+* **gitignore:** put bundleDependencies ([638dd6e](https://github.com/watilde/dep/commit/638dd6e))
+* **gitignore:** tweak the scope of dat-node ([a76904e](https://github.com/watilde/dep/commit/a76904e))
+* **install:** add dat fixture ([35a88f6](https://github.com/watilde/dep/commit/35a88f6))
+* **install:** fix rimraf call ([c2e4b00](https://github.com/watilde/dep/commit/c2e4b00))
+* **install:** fix the path of node-gyp ([5fe9988](https://github.com/watilde/dep/commit/5fe9988))
+* **install:** replace the path of node-gyp ([e7cbe95](https://github.com/watilde/dep/commit/e7cbe95))
+* **refactor:** use arrow function ([88f67cb](https://github.com/watilde/dep/commit/88f67cb))
+* **scirpts:** update install build process ([bfa004e](https://github.com/watilde/dep/commit/bfa004e))
+* **script:** add stand alone install/uninstall script ([fb1cdcc](https://github.com/watilde/dep/commit/fb1cdcc))
+* **script:** fix uninstall/install scripts ([16ba314](https://github.com/watilde/dep/commit/16ba314))
+* **scripts:** add handling dat-node ([dc16b74](https://github.com/watilde/dep/commit/dc16b74))
+* **scripts:** add native build processes to install script ([cf13f4b](https://github.com/watilde/dep/commit/cf13f4b))
+* **scripts:** change the order to install nodeGyp ([90f82c0](https://github.com/watilde/dep/commit/90f82c0))
+* **scripts:** fix lint errors in the install script ([e9306e6](https://github.com/watilde/dep/commit/e9306e6))
+* **scripts:** fix the install script to make a symlink ([ea50cdc](https://github.com/watilde/dep/commit/ea50cdc))
+* **scripts:** improve the logs ([5a1b218](https://github.com/watilde/dep/commit/5a1b218))
+* **test:** check scripts and fix lint errors ([91b30eb](https://github.com/watilde/dep/commit/91b30eb))
+* **util:** change node-gyp path ([f447d44](https://github.com/watilde/dep/commit/f447d44))
+
+
+
 <a name="0.10.2"></a>
 ## [0.10.2](https://github.com/watilde/dep/compare/v0.10.1...v0.10.2) (2017-08-03)
 
