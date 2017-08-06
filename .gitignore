@@ -59,8 +59,7 @@ typings/
 
 # dat-node
 !node_modules/dat-node
-node_modules/dat-node/node_modules/sodium-native/build
-node_modules/dat-node/node_modules/utp-native/build
+node_modules/dat-node/node_modules
 
 # bundleDependencies
 !node_modules/fs-extra
