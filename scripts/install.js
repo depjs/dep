@@ -4,7 +4,7 @@ const fs = require('fs')
 const execPath = process.execPath
 const binPath = path.dirname(execPath)
 const nodeModules = path.join(execPath, '../../lib/node_modules/dep')
-const datNode = path.join(nodeModules, 'node_modules/dat-node')
+const datModules = path.join(nodeModules, 'node_modules/dat-node/node_modules')
 const repository = 'https://github.com/watilde/dep.git'
 const bin = path.join(nodeModules, 'bin/dep.js')
 
@@ -15,16 +15,16 @@ exec('git clone ' + repository + ' ' + nodeModules, (e) => {
   if (e) throw e
   process.stdout.write('link: ' + bin + '\n')
   process.stdout.write(' => ' + path.join(binPath, 'dep') + '\n')
-  fs.link(bin, path.join(binPath, 'dep'), (e) => {
+  fs.symlink(bin, path.join(binPath, 'dep'), (e) => {
     if (e) throw e
     const nodeGyp = require(path.join(nodeModules, 'lib/utils/node-gyp'))
-    const nodeGypBuild = require(path.join(datNode, '.bin/node-gyp-build'))
-    const sodium = path.join(datNode, 'node_modules/sodium-native')
+    const nodeGypBuild = path.join(datModules, '.bin/node-gyp-build')
+    const sodium = path.join(datModules, 'sodium-native')
     const sodiumBuild = nodeGypBuild + ' "node preinstall.js" "node postinstall.js"'
     process.stdout.write('build: ' + sodium + '\n')
     exec(sodiumBuild, {cwd: sodium}, (e) => {
       if (e) throw e
-      const utp = path.join(datNode, 'node_modules/utp-native')
+      const utp = path.join(datModules, 'utp-native')
       process.stdout.write('build: ' + utp + '\n')
       try {
         nodeGyp({cwd: utp})
