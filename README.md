@@ -94,7 +94,7 @@ $ curl -L https://github.com/watilde/dep/raw/master/scripts/uninstall.js | node
 
 ### via npm
 ```console
-$ npm install --global dep
+$ npm uninstall --global dep
 ```
 
 ## Bug report
