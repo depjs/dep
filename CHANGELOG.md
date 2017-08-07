@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/watilde/dep/compare/v0.10.3...v0.11.0) (2017-08-07)
+
+
+### Bug Fixes
+
+* **scripts:** use --only option ([2c49f00](https://github.com/watilde/dep/commit/2c49f00))
+
+
+### Features
+
+* **install:** add --only option ([caba701](https://github.com/watilde/dep/commit/caba701))
+
+
+
 <a name="0.10.3"></a>
 ## [0.10.3](https://github.com/watilde/dep/compare/v0.10.2...v0.10.3) (2017-08-06)
 
