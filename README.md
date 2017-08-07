@@ -4,7 +4,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 ###### Roadmap to v1.0.0
 + Follow the spec of npm's [package-lock.json]
-+ `install <pkg> [--save|--save-dev|--global]`
++ `install [--save|--save-dev|--global]`
 + Installing packages in multiple forked clusters?
 
 ### Table of Contents
