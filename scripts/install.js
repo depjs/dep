@@ -18,7 +18,7 @@ exec('git clone ' + repository + ' ' + dep, (e) => {
   process.stdout.write(' => ' + path.join(binPath, 'dep') + '\n')
   fs.symlink(bin, path.join(binPath, 'dep'), (e) => {
     if (e) throw e
-    execFile(bin, ['install'], {cwd: datNode}, (e) => {
+    execFile(bin, ['install', '--only=prod'], {cwd: datNode}, (e) => {
       if (e) throw e
     })
   })
