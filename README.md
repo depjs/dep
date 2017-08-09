@@ -4,7 +4,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 ###### Roadmap to v1.0.0
 + Follow the spec of npm's [package-lock.json]
-+ `install [--save|--save-dev|--global]`
++ `install [--global]`
 + Installing packages in multiple forked clusters?
 
 ### Table of Contents
@@ -23,6 +23,13 @@ A little Node.js dependency installer with the bare minimum features for module 
 + **Run** an arbitrary command from scripts in a local package.json.
 
 dep is trying to have a similar/same interface of the features with npm, but there are some slightly different implementations internally.
+
+### Install
+**Options**
++ `--only= dev || prod`
++ `--save= dev || prod`
+
+## Concepts
 
 ### Right permission
 To avoid from the risks related the lifecycle install scripts of the package while installing, dep doesn't allow you to run them if you are running `dep install` as a root user.
