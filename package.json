@@ -18,7 +18,8 @@
     "url": "git+https://github.com/watilde/dep.git"
   },
   "bin": {
-    "dep": "./bin/dep.js"
+    "dep": "./bin/dep.js",
+    "depjs": "./bin/dep.js"
   },
   "keywords": [
     "npm"
