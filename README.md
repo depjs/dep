@@ -11,6 +11,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 <li><a href="#features">Features</a></li>
 <li><a href="#usage">Usage</a></li>
+<li><a href="#concepts">Concepts</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#uninstallation">Uninstallation</a></li>
 <li><a href="#bug-report">Bug report</a></li>
@@ -85,6 +86,21 @@ dep run test:
   tap "test/*.js"
 ```
 
+## Usage
+```console
+$ dep -h
+A little Node.js dependency installer
+
+Commands:
+  install  Install dependencies defined in package.json             [aliases: i]
+  lock     Lock dependencies installed in node_modules              [aliases: l]
+  run      Run an arbitrary command from scripts in package.json    [aliases: r]
+
+Options:
+  --help, -h     Show help                                             [boolean]
+  --version, -v  Show version information                              [boolean]
+```
+
 ## Concepts
 
 ### End users
@@ -120,21 +136,6 @@ Here is an example package.json with a dat called [emoji-cli]. It just contains 
     "emoji-cli": "dat://7fdbb7b4ea8be0e5d9c1469aa4056377a092d8787b6e3452faf0ce8390098d02"
   }
 }
-```
-
-## Usage
-```console
-$ dep -h
-A little Node.js dependency installer
-
-Commands:
-  install  Install dependencies defined in package.json             [aliases: i]
-  lock     Lock dependencies installed in node_modules              [aliases: l]
-  run      Run an arbitrary command from scripts in package.json    [aliases: r]
-
-Options:
-  --help, -h     Show help                                             [boolean]
-  --version, -v  Show version information                              [boolean]
 ```
 
 ## Installation
