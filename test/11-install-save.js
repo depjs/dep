@@ -7,7 +7,6 @@ const bin = path.join(__dirname, '..', 'bin', 'dep.js')
 const pkg = path.join(__dirname, 'deps/registry')
 const pkgJSON = require(path.join(pkg, 'package.json'))
 
-
 test((t) => {
   exec(`node ${bin} install --save=prod text-table`, {cwd: pkg}, (err, stdout, stderr) => {
     t.ifError(err, `${pkgJSON.name}: install ran without error`)
@@ -31,7 +30,6 @@ test((t) => {
     })
   })
 })
-
 
 test((t) => {
   var data = pkgJSON
