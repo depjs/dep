@@ -18,9 +18,9 @@ A little Node.js dependency installer with the bare minimum features for module 
 <li><a href="#license">License</a></li>
 
 ## Features
-+ **Install** the dependencies defined in a local package.json.
-+ **Lock** the dependencies installed in a local node_modules.
-+ **Run** an arbitrary command from scripts in a local package.json.
++ **<a href="#install">Install</a>** the dependencies defined in a local package.json.
++ **<a href="#lock">Lock</a>** the dependencies installed in a local node_modules.
++ **<a href=#run>Run</a>** an arbitrary command from scripts in a local package.json.
 
 dep is trying to have a similar/same interface of the features with npm, but there are some slightly different implementations internally.
 
