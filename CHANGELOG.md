@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.13.2"></a>
+## [0.13.2](https://github.com/watilde/dep/compare/v0.13.1...v0.13.2) (2017-08-12)
+
+
+### Bug Fixes
+
+* **install:** mkdirp node_modules/.bin ([bdfb743](https://github.com/watilde/dep/commit/bdfb743))
+* **test:** add test for `install --save` ([679b21b](https://github.com/watilde/dep/commit/679b21b))
+* **test:** fix lint errors ([69acbd0](https://github.com/watilde/dep/commit/69acbd0))
+
+
+
 <a name="0.13.1"></a>
 ## [0.13.1](https://github.com/watilde/dep/compare/v0.13.0...v0.13.1) (2017-08-10)
 
