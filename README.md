@@ -25,11 +25,70 @@ A little Node.js dependency installer with the bare minimum features for module 
 dep is trying to have a similar/same interface of the features with npm, but there are some slightly different implementations internally.
 
 ### Install
-**Options**
-+ `--only= dev || prod`
-+ `--save= dev || prod`
+#### `dep install`
+Install all the dependencies defined in a local package.json.
+
+#### `dep install <package name>(@{version|resource})`
+You can install a package as like `npm install`.
+
+```console
+$ dep install webpack
+```
+
+#### `dep install --save={dev|prod} <package name>(@{version|resource})`
+You can install the package and save it to either `dependencies` or `devDependencies` by using `--only={dev|prod}`.
+
+```console
+$ dep install webpack --save=dev
+```
+
+#### `dep install --only={dev|prod}`
+You can install either only `dependencies` or `devDependencies` by using `--only={dev|prod}`.
+
+```console
+$ dep install --only=prod
+```
+
+#### `dep install --global`
+ToDo.
+
+### Lock
+#### `dep lock`
+ToDo.
+
+It will follow the spec of npm's [package-lock.json].
+
+### Run
+#### `dep run [script] -- <args>`
+This command will take the matched key with provided  `[script]` among the scripts field defined in package.json and execute the value.
+
+```console
+$ dep run test
+```
+
+You also can provide additional arguments by putting `--`.
+
+```console
+$ dep run build -- dist/bundle.js
+```
+
+#### `dep run`
+If you do not give an arbitrary [script] to `dep run`, it lists all of the commands from scripts in a local package.json.
+
+```console
+$ dep run
+Available scripts via `dep run`
+
+dep run build:
+  webpack src/index.js
+dep run test:
+  tap "test/*.js"
+```
 
 ## Concepts
+
+### End users
+The target user is always module **end-user** who makes something with `node_modules` and doesn't make packages. And the goal of this project is to **reproduce** most of the features that the end-users use to build their stuff on daily basis.
 
 ### Right permission
 To avoid from the risks related the lifecycle install scripts of the package while installing, dep doesn't allow you to run them if you are running `dep install` as a root user.
