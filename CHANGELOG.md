@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.13.3"></a>
+## [0.13.3](https://github.com/watilde/dep/compare/v0.13.2...v0.13.3) (2017-08-15)
+
+
+### Bug Fixes
+
+* **test:** add test for install --only ([5580fe6](https://github.com/watilde/dep/commit/5580fe6))
+* **test:** fix lint errors ([5ace741](https://github.com/watilde/dep/commit/5ace741))
+
+
+
 <a name="0.13.2"></a>
 ## [0.13.2](https://github.com/watilde/dep/compare/v0.13.1...v0.13.2) (2017-08-12)
 
