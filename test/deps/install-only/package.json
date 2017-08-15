@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "install-only",
+  "version": "1.0.0",
+  "dependencies": {
+    "happy-birthday": "0.6.0"
+  },
+  "devDependencies": {
+    "quack-array": "0.0.1"
+  }
+}
