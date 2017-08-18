@@ -2,10 +2,10 @@
 
 A little Node.js dependency installer with the bare minimum features for module **end-users**.
 
-###### Roadmap to v1.0.0
+###### ToDo
 + Follow the spec of npm's [package-lock.json]
 + `install [--global]`
-+ Installing packages in multiple forked clusters?
++ Installing packages in multiple forked clusters
 
 ### Table of Contents
 
