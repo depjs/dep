@@ -5,7 +5,6 @@ const fs = require('fs')
 const execPath = process.execPath
 const binPath = path.dirname(execPath)
 const dep = path.join(execPath, '../../lib/node_modules/dep')
-const datNode = path.join(dep, 'node_modules/dat-node')
 const repository = 'https://github.com/watilde/dep.git'
 const bin = path.join(dep, 'bin/dep.js')
 
@@ -18,7 +17,7 @@ exec('git clone ' + repository + ' ' + dep, (e) => {
   process.stdout.write(' => ' + path.join(binPath, 'dep') + '\n')
   fs.symlink(bin, path.join(binPath, 'dep'), (e) => {
     if (e) throw e
-    execFile(bin, ['install', '--only=prod'], {cwd: datNode}, (e) => {
+    execFile(bin, ['install', 'dat-node', '--only=prod'], {cwd: dep}, (e) => {
       if (e) throw e
     })
   })

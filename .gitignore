@@ -57,10 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
-# dat-node
-!node_modules/dat-node
-node_modules/dat-node/node_modules
-
 # bundleDependencies
 !node_modules/fs-extra
 !node_modules/gunzip-maybe
