@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.13.4"></a>
+## [0.13.4](https://github.com/watilde/dep/compare/v0.13.3...v0.13.4) (2017-08-19)
+
+
+### Bug Fixes
+
+* **install:** fix dat install logic ([76e3281](https://github.com/watilde/dep/commit/76e3281))
+* **install:** fix dat install process ([5a630bb](https://github.com/watilde/dep/commit/5a630bb))
+
+
+
 <a name="0.13.3"></a>
 ## [0.13.3](https://github.com/watilde/dep/compare/v0.13.2...v0.13.3) (2017-08-15)
 
