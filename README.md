@@ -106,9 +106,6 @@ Options:
 ### End users
 The target user is always module **end-user** who makes something with `node_modules` and doesn't make packages. And the goal of this project is to **reproduce** most of the features that the end-users use to build their stuff on daily basis.
 
-### Right permission
-To avoid from the risks related the lifecycle install scripts of the package while installing, dep doesn't allow you to run them if you are running `dep install` as a root user.
-
 ### Save spaces
 Speed and local disk capacity are a trade-off. To take the both benefits, it would be better to have the cache in somewhere proxy layer instead of local.
 
