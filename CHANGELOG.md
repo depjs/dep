@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.14.0"></a>
+# [0.14.0](https://github.com/watilde/dep/compare/v0.13.6...v0.14.0) (2017-08-25)
+
+
+### Bug Fixes
+
+* **install:** add error handling to installer ([bbfd4b8](https://github.com/watilde/dep/commit/bbfd4b8))
+* **install:** grammer fix ([e4028fc](https://github.com/watilde/dep/commit/e4028fc))
+* **utils:** exit when couldn't drop privilege ([bbc4190](https://github.com/watilde/dep/commit/bbc4190))
+
+
+### Features
+
+* **install:** drop privileges instead of exit ([2a81a03](https://github.com/watilde/dep/commit/2a81a03))
+
+
+
 <a name="0.13.6"></a>
 ## [0.13.6](https://github.com/watilde/dep/compare/v0.13.5...v0.13.6) (2017-08-19)
 
