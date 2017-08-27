@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.14.1"></a>
+## [0.14.1](https://github.com/watilde/dep/compare/v0.14.0...v0.14.1) (2017-08-27)
+
+
+### Bug Fixes
+
+* **install:** read package.json in the method ([a94dbe8](https://github.com/watilde/dep/commit/a94dbe8))
+
+
+
 <a name="0.14.0"></a>
 # [0.14.0](https://github.com/watilde/dep/compare/v0.13.6...v0.14.0) (2017-08-25)
 
