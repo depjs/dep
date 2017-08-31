@@ -114,7 +114,7 @@ Therefore, dep does not make cache files in a local disc for now.
 ### Stability
 Stability is a core value. Having a small set makes keeping the green badges easier.
 
-| Mac/Linux | Windows | Node.js LTS | Coverage |
+| Linux | Windows | Node.js LTS | Coverage |
 | :-: | :-: | :-: | :-: |
 | [![travis][t-img]][t-url] | [![appveyor][a-img]][a-url] | [![Node.js LTS][n-img]][n-url] | [![coverage][c-img]][c-url] |
 
