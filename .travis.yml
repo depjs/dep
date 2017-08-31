@@ -6,10 +6,10 @@ matrix:
       script: npm run test-ci
       os:
         - linux
-    - node_js: "6"
-      script: npm test
-      os:
-        - osx
+    # - node_js: "6"
+    #   script: npm test
+    #   os:
+    #     - osx
     - node_js: "4"
       script: npm test
       os:
@@ -22,10 +22,10 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.8
-    - node_js: "4"
-      script: npm test
-      os:
-        - osx
+    # - node_js: "4"
+    #   script: npm test
+    #   os:
+    #     - osx
 cache:
   directories:
     - node_modules
