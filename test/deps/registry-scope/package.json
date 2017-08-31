@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "install-scope",
+  "version": "1.0.0",
+  "dependencies": {
+    "@watilde/hello-scoped-package": "^1.0.1"
+  }
+}
