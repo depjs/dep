@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.14.2"></a>
+## [0.14.2](https://github.com/watilde/dep/compare/v0.14.1...v0.14.2) (2017-08-31)
+
+
+### Bug Fixes
+
+* **install:** escape the name of scoped packages ([6dad6e7](https://github.com/watilde/dep/commit/6dad6e7))
+* **install:** tree setter should handle scoped package ([e10a011](https://github.com/watilde/dep/commit/e10a011))
+* **lock:** support scoped packages ([18f6557](https://github.com/watilde/dep/commit/18f6557))
+* **test:** skip mac on the ci for a while ([48e919e](https://github.com/watilde/dep/commit/48e919e))
+
+
+
 <a name="0.14.1"></a>
 ## [0.14.1](https://github.com/watilde/dep/compare/v0.14.0...v0.14.1) (2017-08-27)
 
