@@ -13,8 +13,7 @@ Everyone has their good points beyond your imagination. It is rare that imaginat
 ### 2. Use positive words
 It's better not to prattle on about meaningless things.
 
-
-We have passion for the same field, but our backgrounds where we were born and raised are disjointed. There is a culture that says straight. There is a culture that beats around the bush. There is a culture compares an opion to something. There is a culture that makes sarcastic to tell something. I think of the differences as an impossible thing to bridge the difference. So let's use a positive word at least. Let's say thank you to people who took their time for making improvements.
+We have a passion for the same field, but our backgrounds where we were born and raised are disjointed. There is a culture that says straight. There is a culture that beats around the bush. There is a culture compares an opion to something. There is a culture that makes sarcastic to tell something. I think of the differences as an impossible thing to bridge the difference. So let's use a positive word at least. Let's say thank you to people who took their time for making improvements.
 
 
 Also in the case of opposing opinions, let's use positive expressions too. That's true sometimes your opinion does not pass, but there is nothing to be pessimistic about. The scope of this project is small and the code base is also small. At such 
