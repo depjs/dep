@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.14.3"></a>
+## [0.14.3](https://github.com/watilde/dep/compare/v0.14.2...v0.14.3) (2017-09-06)
+
+
+### Bug Fixes
+
+* **deps:** remove coveralls and nyc ([a0a7103](https://github.com/watilde/dep/commit/a0a7103))
+* **deps:** stop using rimraf ([89252d8](https://github.com/watilde/dep/commit/89252d8))
+* **gitignore:** ignore mkdirp ([2375194](https://github.com/watilde/dep/commit/2375194))
+* **install:** update removing file at dat fetcher ([e8ad5b9](https://github.com/watilde/dep/commit/e8ad5b9))
+* **refactor:** stop using mkdirp ([53400c6](https://github.com/watilde/dep/commit/53400c6))
+* **test:** add tests for dat dependency ([2391142](https://github.com/watilde/dep/commit/2391142))
+* **test:** fix coverage settings ([f0efd42](https://github.com/watilde/dep/commit/f0efd42))
+* **travis:** use the env at travis ([dd9c2cf](https://github.com/watilde/dep/commit/dd9c2cf))
+
+
+
 <a name="0.14.2"></a>
 ## [0.14.2](https://github.com/watilde/dep/compare/v0.14.1...v0.14.2) (2017-08-31)
 
