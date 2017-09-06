@@ -3,8 +3,9 @@ const path = require('path')
 const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
 const test = require('tap').test
-const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
 const bin = path.join(__dirname, '..', 'bin', 'dep.js')
+const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
+  .filter((name) => { return name !== 'dat' })
 
 test((t) => {
   var items = 3

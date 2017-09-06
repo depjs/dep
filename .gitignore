@@ -57,6 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# test
+test/deps/dat/happy-birthday-0.6.0/.dat/
+
 # bundleDependencies
 !node_modules/fs-extra
 !node_modules/gunzip-maybe
