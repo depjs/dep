@@ -7,11 +7,7 @@
     "release": "standard-version",
     "pretest": "standard \"lib/**/*.js\" \"bin/*.js\" \"test/*js\" \"scripts/*.js\"",
     "test": "tap \"test/*.js\"",
-    "test-ci": "nyc tap 'test/*.js'",
-    "posttest-ci": "npm run coverage",
-    "precoverage": "nyc report --reporter=text-lcov > coverage.lcov",
-    "coverage": "cat coverage.lcov | coveralls",
-    "postcoverage": "rm coverage.lcov"
+    "test-ci": "tap --nyc-arg='--cache' --coverage \"test/*.js\""
   },
   "repository": {
     "type": "git",

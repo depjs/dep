@@ -6,6 +6,8 @@ matrix:
       script: npm run test-ci
       os:
         - linux
+      env: COVERALLS_REPO_TOKEN="$COVERALLS_OPTIONAL_TOKEN"
+
     # - node_js: "6"
     #   script: npm test
     #   os:
