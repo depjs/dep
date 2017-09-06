@@ -71,7 +71,6 @@ test/deps/dat/happy-birthday-0.6.0/.dat/
 !node_modules/promise-each
 !node_modules/request
 !node_modules/require-directory
-!node_modules/rimraf
 !node_modules/semver
 !node_modules/tar-fs
 !node_modules/tar-stream
