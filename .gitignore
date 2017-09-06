@@ -64,7 +64,6 @@ test/deps/dat/happy-birthday-0.6.0/.dat/
 !node_modules/fs-extra
 !node_modules/gunzip-maybe
 !node_modules/is-root
-!node_modules/mkdirp
 !node_modules/node-gyp
 !node_modules/npm-package-arg
 !node_modules/npm-path
