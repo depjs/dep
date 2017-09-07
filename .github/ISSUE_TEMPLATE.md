@@ -1,5 +1,5 @@
 <!--
-Be sure to follow the issue template.
+Please be sure to follow the following issue template.
 This template is really helpful to each of us to not make back and forth.
 
 e.g.
@@ -13,8 +13,10 @@ please drop your thoughts on the repository.
 Let's make improvement together.
 
 
-Thanks for reading this message and your contribution<3
+Thanks for reading this message and your contribution.
 -->
+### Summary
+Write here.
 
 ### Steps to reproduce behavior
 Write here.
