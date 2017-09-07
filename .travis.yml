@@ -1,8 +1,8 @@
-sudo: false
 language: node_js
 matrix:
   include:
     - node_js: "6"
+      sudo: true
       script: npm run test-ci
       os:
         - linux
@@ -11,6 +11,7 @@ matrix:
     #   os:
     #     - osx
     - node_js: "4"
+      sudo: false
       script: npm test
       os:
         - linux
