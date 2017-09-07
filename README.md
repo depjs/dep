@@ -14,8 +14,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 <li><a href="#concepts">Concepts</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#uninstallation">Uninstallation</a></li>
-<li><a href="#bug-report">Bug report</a></li>
-<li><a href="#feature-request">Feature request</a></li>
+<li><a href="#contributing">Contributing</a></li>
 <li><a href="#license">License</a></li>
 
 ## Features
@@ -161,18 +160,8 @@ $ curl -L https://github.com/watilde/dep/raw/master/scripts/uninstall.js | node
 $ npm uninstall --global dep
 ```
 
-## Bug report
-When you find issues, please report them:
-+ https://github.com/watilde/dep/issues/new
-
-Be sure to follow the issue template.
-
-
-## Feature request
-We're trying to find out the bare minimum features for end users. That means it is very reluctant to add new features, but having a discussion is useful for clarifying the minimum definitions.
-
-Feel free to ask us in #dep-js on https://package.community/ or on [twitter].
-
+## Contributing
+See [CONTRIBUTING.mg][]
 
 ## License
 [MIT](./LICENSE)
@@ -191,3 +180,4 @@ Feel free to ask us in #dep-js on https://package.community/ or on [twitter].
 [git repository]: https://github.com/watilde/emoji-cli
 [twitter]: https://twitter.com/watilde
 [package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
+[CONTRIBUTING.mg]: .github/CONTRIBUTING.md
