@@ -1,6 +1,6 @@
 {
   "name": "dep",
-  "version": "0.14.4",
+  "version": "0.14.5",
   "description": "A little Node.js dependency installer",
   "main": "index.js",
   "scripts": {

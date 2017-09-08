@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.14.5"></a>
+## [0.14.5](https://github.com/watilde/dep/compare/v0.14.4...v0.14.5) (2017-09-08)
+
+
+### Bug Fixes
+
+* **run:** update the defualt value of the cwd ([b64c200](https://github.com/watilde/dep/commit/b64c200))
+
+
+
 <a name="0.14.4"></a>
 ## [0.14.4](https://github.com/watilde/dep/compare/v0.14.3...v0.14.4) (2017-09-08)
 
