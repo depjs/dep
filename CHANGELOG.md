@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.15.0"></a>
+# [0.15.0](https://github.com/watilde/dep/compare/v0.14.6...v0.15.0) (2017-09-09)
+
+
+### Bug Fixes
+
+* **test:** add test for the deprecated message ([633e457](https://github.com/watilde/dep/commit/633e457))
+
+
+### Features
+
+* **install:** display deprecated message ([eb9eced](https://github.com/watilde/dep/commit/eb9eced))
+
+
+
 <a name="0.14.6"></a>
 ## [0.14.6](https://github.com/watilde/dep/compare/v0.14.5...v0.14.6) (2017-09-09)
 
