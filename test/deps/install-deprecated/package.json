@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "install-deprecated",
+  "version": "1.0.0",
+  "dependencies": {
+    "minimatch": "0.0.1"
+  }
+}
