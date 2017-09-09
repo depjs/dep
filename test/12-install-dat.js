@@ -3,12 +3,12 @@ const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
 const test = require('tap').test
 const Dat = require('dat-node')
-const pkg = path.join(__dirname, 'deps/dat')
+const pkg = path.join(__dirname, 'deps/custom/dat')
 const bin = path.join(__dirname, '..', 'bin', 'dep.js')
 const pkgJSON = require(path.join(pkg, 'package.json'))
 
 test((t) => {
-  Dat(path.join(__dirname, 'deps/dat/happy-birthday-0.6.0'), function (err, dat) {
+  Dat(path.join(__dirname, 'deps/custom/dat/happy-birthday-0.6.0'), function (err, dat) {
     t.ifError(err)
     dat.importFiles()
     dat.joinNetwork()

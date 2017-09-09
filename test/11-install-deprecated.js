@@ -3,7 +3,7 @@ const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
 const test = require('tap').test
 const bin = path.join(__dirname, '..', 'bin', 'dep.js')
-const pkg = path.join(__dirname, 'deps/install-deprecated')
+const pkg = path.join(__dirname, 'deps/custom/install-deprecated')
 const pkgJSON = require(path.join(pkg, 'package.json'))
 
 test((t) => {
