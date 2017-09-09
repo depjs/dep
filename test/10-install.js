@@ -4,15 +4,14 @@ const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
 const test = require('tap').test
 const bin = path.join(__dirname, '..', 'bin', 'dep.js')
-const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
-  .filter((name) => { return name !== 'dat' })
+const fixtures = fs.readdirSync(path.join(__dirname, 'deps/default'))
 
 test((t) => {
   var items = 3
   var count = fixtures.length * items
   t.plan(count)
   fixtures.forEach(fixture => {
-    const pkg = path.join(__dirname, 'deps', fixture)
+    const pkg = path.join(__dirname, 'deps/default', fixture)
     const pkgJSON = require(path.join(pkg, 'package.json'))
     exec(`node ${bin} install`, {cwd: pkg}, (err, stdout, stderr) => {
       t.ifError(err, `${pkgJSON.name}: install ran without error`)

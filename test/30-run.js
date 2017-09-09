@@ -1,7 +1,7 @@
 const path = require('path')
 const exec = require('child_process').exec
 const test = require('tap').test
-const pkg = path.join(__dirname, 'deps', 'run')
+const pkg = path.join(__dirname, 'deps/default', 'run')
 const bin = path.join(__dirname, '..', 'bin', 'dep.js')
 
 test((t) => {
