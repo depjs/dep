@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.14.6"></a>
+## [0.14.6](https://github.com/watilde/dep/compare/v0.14.5...v0.14.6) (2017-09-09)
+
+
+### Bug Fixes
+
+* **install:** change the permission of bin file ([17f3fb6](https://github.com/watilde/dep/commit/17f3fb6))
+
+
+
 <a name="0.14.5"></a>
 ## [0.14.5](https://github.com/watilde/dep/compare/v0.14.4...v0.14.5) (2017-09-08)
 
