@@ -139,7 +139,7 @@ Since dep works independently of npm, dep has a standalone script to install.
 
 ### Standalone script
 ```console
-$ curl -L https://github.com/watilde/dep/raw/master/scripts/install.js | node
+$ curl -L https://github.com/depjs/dep/raw/master/scripts/install.js | node
 ```
 
 ### via npm
@@ -152,7 +152,7 @@ Also for uninstallation.
 
 ### Standalone script
 ```console
-$ curl -L https://github.com/watilde/dep/raw/master/scripts/uninstall.js | node
+$ curl -L https://github.com/depjs/dep/raw/master/scripts/uninstall.js | node
 ```
 
 ### via npm
@@ -166,14 +166,14 @@ See [CONTRIBUTING.mg][]
 ## License
 [MIT](./LICENSE)
 
-[t-img]: https://img.shields.io/travis/watilde/dep/master.svg
-[t-url]: https://travis-ci.org/watilde/dep
-[a-img]: https://img.shields.io/appveyor/ci/watilde/dep/master.svg
-[a-url]: https://ci.appveyor.com/project/watilde/dep/branch/master
+[t-img]: https://img.shields.io/travis/depjs/dep/master.svg
+[t-url]: https://travis-ci.org/depjs/dep
+[a-img]: https://img.shields.io/appveyor/ci/depjs/dep/master.svg
+[a-url]: https://ci.appveyor.com/project/depjs/dep/branch/master
 [n-img]: https://img.shields.io/node/v/lts.svg
 [n-url]: https://github.com/nodejs/LTS#lts-schedule1
-[c-img]: https://img.shields.io/coveralls/watilde/dep/master.svg
-[c-url]: https://coveralls.io/github/watilde/dep
+[c-img]: https://img.shields.io/coveralls/depjs/dep/master.svg
+[c-url]: https://coveralls.io/github/depjs/dep
 [npm]: https://github.com/npm/npm
 [dat]: https://datproject.org/
 [emoji-cli]: https://datproject.org/watilde/emoji-cli

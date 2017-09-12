@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/watilde/dep.git"
+    "url": "git+https://github.com/depjs/dep.git"
   },
   "bin": {
     "dep": "./bin/dep.js",
@@ -23,9 +23,9 @@
   "author": "Daijiro Wachi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/watilde/dep/issues"
+    "url": "https://github.com/depjs/dep/issues"
   },
-  "homepage": "https://github.com/watilde/dep#readme",
+  "homepage": "https://github.com/depjs/dep#readme",
   "bundleDependencies": [
     "fs-extra",
     "gunzip-maybe",

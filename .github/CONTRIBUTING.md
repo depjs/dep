@@ -1,7 +1,7 @@
 # Contributing
 ## Bug report
 When you find issues, please report them:
-+ https://github.com/watilde/dep/issues/new
++ https://github.com/depjs/dep/issues/new
 
 Be sure to follow the issue template.
 

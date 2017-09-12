@@ -5,7 +5,7 @@ const fs = require('fs')
 const execPath = process.execPath
 const binPath = path.dirname(execPath)
 const dep = path.join(execPath, '../../lib/node_modules/dep')
-const repository = 'https://github.com/watilde/dep.git'
+const repository = 'https://github.com/depjs/dep.git'
 const bin = path.join(dep, 'bin/dep.js')
 
 process.stdout.write(
