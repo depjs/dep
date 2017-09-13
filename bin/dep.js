@@ -2,9 +2,12 @@
 
 const semver = require('semver')
 const yargs = require('yargs')
-const requireDirectory = require('require-directory')
 const updateNotifier = require('update-notifier')
-const commands = requireDirectory(module, '../lib/', {exclude: /utils/})
+const commands = {
+  install: require('../lib/install'),
+  lock: require('../lib/lock'),
+  run: require('../lib/run')
+}
 const pkgJSON = require('../package.json')
 const notifier = updateNotifier({pkg: pkgJSON})
 
