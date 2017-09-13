@@ -1,3 +1,4 @@
+const fs = require('fs-extra')
 const path = require('path')
 const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
@@ -23,6 +24,7 @@ test((t) => {
           const deps = out.dependencies
           t.ok(deps['happy-birthday'], `${pkgJSON.name}: deps are installed`)
           t.ifError(err)
+          fs.removeSync(path.join(pkg, '.dat'))
           t.end()
         })
       })
