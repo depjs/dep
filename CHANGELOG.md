@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.16.0"></a>
+# [0.16.0](https://github.com/depjs/dep/compare/v0.15.0...v0.16.0) (2017-09-13)
+
+
+### Bug Fixes
+
+* **deps:** remove is-root ([da453d0](https://github.com/depjs/dep/commit/da453d0))
+* **deps:** remove reuqire-directory ([d2c8db2](https://github.com/depjs/dep/commit/d2c8db2))
+* **install:** install path directly ([b1a71ee](https://github.com/depjs/dep/commit/b1a71ee))
+* **install:** path is already resolved by fetchSpec ([4e7aae1](https://github.com/depjs/dep/commit/4e7aae1))
+* **install:** update the switch in saver ([efd88b9](https://github.com/depjs/dep/commit/efd88b9))
+* **test:** add timeout to test cmd ([b6ffc36](https://github.com/depjs/dep/commit/b6ffc36))
+* **test:** rm `.dat` dir after testing ([7952355](https://github.com/depjs/dep/commit/7952355))
+* **test:** save the file deps in tests ([ff05b3f](https://github.com/depjs/dep/commit/ff05b3f))
+* **test:** update directory tree in tests ([1b42853](https://github.com/depjs/dep/commit/1b42853))
+
+
+### Features
+
+* **meta:** transfer the repository to an org ([4dcb286](https://github.com/depjs/dep/commit/4dcb286))
+
+
+
 <a name="0.15.0"></a>
 # [0.15.0](https://github.com/watilde/dep/compare/v0.14.6...v0.15.0) (2017-09-09)
 
