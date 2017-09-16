@@ -2,6 +2,8 @@
 
 A little Node.js dependency installer with the bare minimum features for module **end-users**.
 
+[<img src="https://raw.githubusercontent.com/depjs/artwork/master/logo-500x500.png" align="right" width="140">](https://github.com/depjs/dep)
+
 ###### ToDo
 + Follow the spec of npm's [package-lock.json]
 + `install [--global]`
