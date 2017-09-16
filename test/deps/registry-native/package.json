@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "name": "install-native",
+  "version": "1.0.0",
+  "dependencies": {
+    "native-hello-world": "^1.0.0"
+  }
+}
