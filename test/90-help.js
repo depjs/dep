@@ -1,10 +1,10 @@
 const path = require('path')
-const execFile = require('child_process').execFile
+const exec = require('child_process').exec
 const test = require('tap').test
 const bin = path.join(__dirname, '..', 'bin', 'dep.js')
 
 test((t) => {
-  execFile(bin, ['-h'], (err, stdout, stderr) => {
+  exec(`node ${bin} -h`, (err, stdout, stderr) => {
     t.ifError(err, 'help ran without error')
     t.ok(stdout, 'help displayed a message')
     t.end()
@@ -12,7 +12,7 @@ test((t) => {
 })
 
 test((t) => {
-  execFile(bin, (err, stdout, stderr) => {
+  exec(`node ${bin}`, (err, stdout, stderr) => {
     t.ifError(err, 'help ran without error')
     t.ok(stderr, 'help displayed a message')
     t.end()

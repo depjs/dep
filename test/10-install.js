@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const execFile = require('child_process').execFile
+const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
 const test = require('tap').test
 const skip = [
@@ -21,7 +21,7 @@ test((t) => {
   fixtures.forEach(fixture => {
     const pkg = path.join(__dirname, 'deps', fixture)
     const pkgJSON = require(path.join(pkg, 'package.json'))
-    execFile(bin, ['install'], {cwd: pkg}, (err, stdout, stderr) => {
+    exec(`node ${bin} install`, {cwd: pkg}, (err, stdout, stderr) => {
       t.ifError(err, `${pkgJSON.name}: install ran without error`)
       tree.read(pkg, (err, out) => {
         t.ifError(err, `${pkgJSON.name}: tree could be read`)
