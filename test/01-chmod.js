@@ -5,9 +5,9 @@ const isRoot = require('../lib/utils/is-root')
 
 test((t) => {
   if (!isRoot()) return t.end()
-  fs.chmodSync(path.join(__dirname, '../.nyc_output'), '0755')
+  fs.chmodSync(path.join(__dirname, '../.nyc_output'), '0777')
   const files = fs.readdirSync(path.join(__dirname, '../.nyc_output'))
   files.forEach((file) => {
-    fs.chmodSync(path.join(__dirname, `../.nyc_output/${file}`), '0755')
+    fs.chmodSync(path.join(__dirname, `../.nyc_output/${file}`), '0777')
   })
 })
