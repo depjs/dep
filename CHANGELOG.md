@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.16.1"></a>
+## [0.16.1](https://github.com/depjs/dep/compare/v0.16.0...v0.16.1) (2017-09-17)
+
+
+### Bug Fixes
+
+* **install:** fix to drop privilege ([3f57f04](https://github.com/depjs/dep/commit/3f57f04))
+* **test:** add `t.end` at 01 test ([958ea3e](https://github.com/depjs/dep/commit/958ea3e))
+* **test:** add a test for native-module ([01f44a5](https://github.com/depjs/dep/commit/01f44a5))
+* **test:** fix lint errors ([732ccfd](https://github.com/depjs/dep/commit/732ccfd))
+* **test:** remove debug log ([49d57c4](https://github.com/depjs/dep/commit/49d57c4))
+* **test:** update the permision of nyc ([7a736b1](https://github.com/depjs/dep/commit/7a736b1))
+* **test:** use exec for Windows ([5f75b3e](https://github.com/depjs/dep/commit/5f75b3e))
+* **test:** use execFile ([f9ccb47](https://github.com/depjs/dep/commit/f9ccb47))
+* **test:** use root user at ci ([e3ef948](https://github.com/depjs/dep/commit/e3ef948))
+
+
+
 <a name="0.16.0"></a>
 # [0.16.0](https://github.com/depjs/dep/compare/v0.15.0...v0.16.0) (2017-09-13)
 
