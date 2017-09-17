@@ -10,4 +10,5 @@ test((t) => {
   files.forEach((file) => {
     fs.chmodSync(path.join(__dirname, `../.nyc_output/${file}`), '0777')
   })
+  t.end()
 })
