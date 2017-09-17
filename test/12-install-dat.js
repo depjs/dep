@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const exec = require('child_process').exec
+const execFile = require('child_process').execFile
 const tree = require('strong-npm-ls')
 const test = require('tap').test
 const Dat = require('dat-node')
@@ -14,7 +14,7 @@ test((t) => {
     dat.importFiles()
     dat.joinNetwork()
     const datLink = 'dat://' + dat.key.toString('hex')
-    exec(`node ${bin} install happy-birthday@${datLink}`, {cwd: pkg}, (err, stdout, stderr) => {
+    execFile(bin, ['install', `happy-birthday@${datLink}`], {cwd: pkg}, (err, stdout, stderr) => {
       t.ifError(err, `${pkgJSON.name}: install ran without error`)
       dat.close((err) => {
         dat.leaveNetwork()

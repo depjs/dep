@@ -1,5 +1,5 @@
 const path = require('path')
-const exec = require('child_process').exec
+const execFile = require('child_process').execFile
 const tree = require('strong-npm-ls')
 const test = require('tap').test
 const bin = path.join(__dirname, '..', 'bin', 'dep.js')
@@ -7,7 +7,7 @@ const pkg = path.join(__dirname, 'deps/install-only')
 const pkgJSON = require(path.join(pkg, 'package.json'))
 
 test((t) => {
-  exec(`node ${bin} install --only=prod`, {cwd: pkg}, (err, stdout, stderr) => {
+  execFile(bin, ['install', '--only=prod'], {cwd: pkg}, (err, stdout, stderr) => {
     t.ifError(err, `${pkgJSON.name}: install ran without error`)
     tree.read(pkg, (err, out) => {
       t.ifError(err, `${pkgJSON.name}: tree could be read`)
@@ -19,7 +19,7 @@ test((t) => {
 })
 
 test((t) => {
-  exec(`node ${bin} install --only=dev`, {cwd: pkg}, (err, stdout, stderr) => {
+  execFile(bin, ['install', '--only=dev'], {cwd: pkg}, (err, stdout, stderr) => {
     t.ifError(err, `${pkgJSON.name}: install ran without error`)
     tree.read(pkg, (err, out) => {
       t.ifError(err, `${pkgJSON.name}: tree could be read`)
