@@ -7,7 +7,7 @@
     "release": "standard-version",
     "pretest": "standard \"lib/**/*.js\" \"bin/*.js\" \"test/*js\" \"scripts/*.js\"",
     "test": "tap \"test/*.js\" --timeout 600",
-    "test-ci": "tap --nyc-arg='--cache' --coverage \"test/*.js\""
+    "test-ci": "tap --coverage \"test/*.js\""
   },
   "repository": {
     "type": "git",
