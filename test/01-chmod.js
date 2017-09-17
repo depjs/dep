@@ -8,7 +8,7 @@ test((t) => {
   files.forEach((file) => {
     fs.chmodSync(path.join(__dirname, `../.nyc_output/${file}`), '7777')
   })
-  require('child_process').exec('ls -la .nyc_output', (e, out)=> {
+  require('child_process').exec('ls -la .nyc_output', (e, out) => {
     console.log('ls -la')
     console.log(out)
     t.end()
