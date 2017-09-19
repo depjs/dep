@@ -166,7 +166,7 @@ $ npm uninstall --global dep
 See [CONTRIBUTING.mg][]
 
 ## License
-[MIT](./LICENSE)
+[MIT][]
 
 [t-img]: https://img.shields.io/travis/depjs/dep/master.svg
 [t-url]: https://travis-ci.org/depjs/dep
@@ -182,4 +182,5 @@ See [CONTRIBUTING.mg][]
 [git repository]: https://github.com/watilde/emoji-cli
 [twitter]: https://twitter.com/watilde
 [package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
-[CONTRIBUTING.mg]: .github/CONTRIBUTING.md
+[CONTRIBUTING.mg]: https://github.com/depjs/dep/blob/master/.github/CONTRIBUTING.md
+[MIT]: https://github.com/depjs/dep/blob/master/LICENSE
