@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.17.0"></a>
+# [0.17.0](https://github.com/depjs/dep/compare/v0.16.1...v0.17.0) (2017-09-26)
+
+
+### Bug Fixes
+
+* **deps:** add missing node-gyp files ([8325654](https://github.com/depjs/dep/commit/8325654))
+* **install:** use `--quiet` in git processes ([bbdf942](https://github.com/depjs/dep/commit/bbdf942))
+
+
+### Features
+
+* **install:** support git submodule ([1d410f4](https://github.com/depjs/dep/commit/1d410f4))
+
+
+
 <a name="0.16.1"></a>
 ## [0.16.1](https://github.com/depjs/dep/compare/v0.16.0...v0.16.1) (2017-09-17)
 
