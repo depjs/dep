@@ -163,7 +163,7 @@ $ npm uninstall --global dep
 ```
 
 ## Contributing
-See [CONTRIBUTING.mg][]
+See [CONTRIBUTING.md][]
 
 ## License
 [MIT][]
@@ -182,5 +182,5 @@ See [CONTRIBUTING.mg][]
 [git repository]: https://github.com/watilde/emoji-cli
 [twitter]: https://twitter.com/watilde
 [package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
-[CONTRIBUTING.mg]: https://github.com/depjs/dep/blob/master/.github/CONTRIBUTING.md
+[CONTRIBUTING.md]: https://github.com/depjs/dep/blob/master/.github/CONTRIBUTING.md
 [MIT]: https://github.com/depjs/dep/blob/master/LICENSE
