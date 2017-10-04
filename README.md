@@ -19,6 +19,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 <li><a href="#installation">Installation</a></li>
 <li><a href="#uninstallation">Uninstallation</a></li>
 <li><a href="#contributing">Contributing</a></li>
+<li><a href="#support">Support</a></li>
 <li><a href="#license">License</a></li>
 
 ## Features
@@ -167,20 +168,20 @@ $ npm uninstall --global dep
 ## Contributing
 See [CONTRIBUTING.md][]
 
-## Contributors
+## Support
+
+### Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
 <a href="graphs/contributors"><img src="https://opencollective.com/dep/contributors.svg?width=890" /></a>
 
-
-## Backers
+### Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/dep#backer)]
 
 <a href="https://opencollective.com/dep#backers" target="_blank"><img src="https://opencollective.com/dep/backers.svg?width=890"></a>
 
-
-## Sponsors
+### Sponsors
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/dep#sponsor)]
 
@@ -194,8 +195,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/dep/sponsor/7/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/dep/sponsor/8/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/dep/sponsor/9/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/9/avatar.svg"></a>
-
-
 
 ## License
 [MIT][]
