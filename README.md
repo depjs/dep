@@ -19,7 +19,6 @@ A little Node.js dependency installer with the bare minimum features for module 
 <li><a href="#installation">Installation</a></li>
 <li><a href="#uninstallation">Uninstallation</a></li>
 <li><a href="#contributing">Contributing</a></li>
-<li><a href="#support">Support</a></li>
 <li><a href="#license">License</a></li>
 
 ## Features
@@ -166,24 +165,17 @@ $ npm uninstall --global dep
 ```
 
 ## Contributing
-See [CONTRIBUTING.md][]
 
-## Support
+See [CONTRIBUTING.md][] for more info.
 
 ### Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
+The core code of this project exists thanks to all the contributors.
 <a href="graphs/contributors"><img src="https://opencollective.com/dep/contributors.svg?width=890" /></a>
-
-### Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/dep#backer)]
-
-<a href="https://opencollective.com/dep#backers" target="_blank"><img src="https://opencollective.com/dep/backers.svg?width=890"></a>
 
 ### Sponsors
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/dep#sponsor)]
+Be a sponsor and give us a high motivation. [[Become a sponsor](https://opencollective.com/dep#sponsor)]
 
 <a href="https://opencollective.com/dep/sponsor/0/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/dep/sponsor/1/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/1/avatar.svg"></a>
@@ -195,6 +187,22 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/dep/sponsor/7/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/dep/sponsor/8/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/dep/sponsor/9/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/9/avatar.svg"></a>
+
+### Backers
+
+Become a backer and buy us a coffee every month.
+[[Become a backer](https://opencollective.com/dep#backer)]
+
+<a href="https://opencollective.com/dep/backer/0/website" target="_blank"><img src="https://opencollective.com/dep/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/1/website" target="_blank"><img src="https://opencollective.com/dep/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/2/website" target="_blank"><img src="https://opencollective.com/dep/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/3/website" target="_blank"><img src="https://opencollective.com/dep/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/4/website" target="_blank"><img src="https://opencollective.com/dep/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/5/website" target="_blank"><img src="https://opencollective.com/dep/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/6/website" target="_blank"><img src="https://opencollective.com/dep/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/7/website" target="_blank"><img src="https://opencollective.com/dep/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/8/website" target="_blank"><img src="https://opencollective.com/dep/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/dep/backer/9/website" target="_blank"><img src="https://opencollective.com/dep/backer/9/avatar.svg"></a>
 
 ## License
 [MIT][]
