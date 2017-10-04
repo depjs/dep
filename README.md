@@ -171,38 +171,20 @@ See [CONTRIBUTING.md][] for more info.
 ### Contributors
 
 The core code of this project exists thanks to all the contributors.
+
 <a href="graphs/contributors"><img src="https://opencollective.com/dep/contributors.svg?width=890" /></a>
 
 ### Sponsors
 
-Be a sponsor and give us a high motivation. [[Become a sponsor](https://opencollective.com/dep#sponsor)]
+Be a sponsor and give us a high motivation. [[Become a sponsor][]]
 
-<a href="https://opencollective.com/dep/sponsor/0/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/1/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/2/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/3/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/4/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/5/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/6/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/7/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/8/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/dep/sponsor/9/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/9/avatar.svg"></a>
+<a href="graphs/contributors"><img src="https://opencollective.com/dep/sponsors.svg?width=890" /></a>
 
 ### Backers
 
-Become a backer and buy us a coffee every month.
-[[Become a backer](https://opencollective.com/dep#backer)]
+Become a backer and buy us a coffee every month. [[Become a backer][]]
 
-<a href="https://opencollective.com/dep/backer/0/website" target="_blank"><img src="https://opencollective.com/dep/backer/0/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/1/website" target="_blank"><img src="https://opencollective.com/dep/backer/1/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/2/website" target="_blank"><img src="https://opencollective.com/dep/backer/2/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/3/website" target="_blank"><img src="https://opencollective.com/dep/backer/3/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/4/website" target="_blank"><img src="https://opencollective.com/dep/backer/4/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/5/website" target="_blank"><img src="https://opencollective.com/dep/backer/5/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/6/website" target="_blank"><img src="https://opencollective.com/dep/backer/6/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/7/website" target="_blank"><img src="https://opencollective.com/dep/backer/7/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/8/website" target="_blank"><img src="https://opencollective.com/dep/backer/8/avatar.svg"></a>
-<a href="https://opencollective.com/dep/backer/9/website" target="_blank"><img src="https://opencollective.com/dep/backer/9/avatar.svg"></a>
+<a href="graphs/contributors"><img src="https://opencollective.com/dep/backers.svg?width=890" /></a>
 
 ## License
 [MIT][]
@@ -223,3 +205,5 @@ Become a backer and buy us a coffee every month.
 [package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
 [CONTRIBUTING.md]: https://github.com/depjs/dep/blob/master/.github/CONTRIBUTING.md
 [MIT]: https://github.com/depjs/dep/blob/master/LICENSE
+[Become a sponsor]: https://opencollective.com/dep#sponsor
+[Become a backer]: https://opencollective.com/dep#backer
