@@ -7,7 +7,8 @@
     "release": "standard-version",
     "pretest": "standard \"lib/**/*.js\" \"bin/*.js\" \"test/*js\" \"scripts/*.js\"",
     "test": "tap \"test/*.js\" --timeout 600",
-    "test-ci": "tap --coverage \"test/*.js\""
+    "test-ci": "tap --coverage \"test/*.js\"",
+    "postinstall": "opencollective postinstall"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,7 @@
     "node-gyp": "^3.6.2",
     "npm-package-arg": "^5.1.2",
     "npm-path": "^2.0.3",
+    "opencollective": "^1.0.3",
     "promise-each": "^2.2.0",
     "request": "^2.81.0",
     "semver": "^5.4.1",
@@ -67,5 +69,10 @@
   },
   "engine": {
     "node": ">=4.0.0"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/dep",
+    "logo": "https://opencollective.com/opencollective/logo.txt"
   }
 }

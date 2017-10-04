@@ -2,6 +2,8 @@
 
 A little Node.js dependency installer with the bare minimum features for module **end-users**.
 
+<a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/dep/backers/badge.svg" /></a> <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/dep/sponsors/badge.svg" />
+
 [<img src="https://raw.githubusercontent.com/depjs/artwork/master/logo-500x500.png" align="right" width="140">](https://github.com/depjs/dep)
 
 ###### ToDo
@@ -164,6 +166,36 @@ $ npm uninstall --global dep
 
 ## Contributing
 See [CONTRIBUTING.md][]
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
+<a href="graphs/contributors"><img src="https://opencollective.com/dep/contributors.svg?width=890" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/dep#backer)]
+
+<a href="https://opencollective.com/dep#backers" target="_blank"><img src="https://opencollective.com/dep/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/dep#sponsor)]
+
+<a href="https://opencollective.com/dep/sponsor/0/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/1/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/2/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/3/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/4/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/5/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/6/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/7/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/8/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/dep/sponsor/9/website" target="_blank"><img src="https://opencollective.com/dep/sponsor/9/avatar.svg"></a>
+
+
 
 ## License
 [MIT][]
