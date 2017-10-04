@@ -172,19 +172,19 @@ See [CONTRIBUTING.md][] for more info.
 
 The core code of this project exists thanks to all the contributors.
 
-<a href="graphs/contributors"><img src="https://opencollective.com/dep/contributors.svg?width=890" /></a>
+<a href="https://github.com/depjs/dep/graphs/contributors"><img src="https://opencollective.com/dep/contributors.svg?width=890" /></a>
 
 ### Sponsors
 
 Be a sponsor and give us a high motivation. [[Become a sponsor][]]
 
-<a href="graphs/contributors"><img src="https://opencollective.com/dep/sponsors.svg?width=890" /></a>
+<a href="https://github.com/depjs/dep/graphs/contributors"><img src="https://opencollective.com/dep/sponsors.svg?width=890" /></a>
 
 ### Backers
 
 Become a backer and buy us a coffee every month. [[Become a backer][]]
 
-<a href="graphs/contributors"><img src="https://opencollective.com/dep/backers.svg?width=890" /></a>
+<a href="https://github.com/depjs/dep/graphs/contributors"><img src="https://opencollective.com/dep/backers.svg?width=890" /></a>
 
 ## License
 [MIT][]
