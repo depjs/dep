@@ -2,7 +2,7 @@
 
 A little Node.js dependency installer with the bare minimum features for module **end-users**.
 
-<a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/xcproj/backers/badge.svg" /></a> <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/xcproj/sponsors/badge.svg" />
+<a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/dep/backers/badge.svg" /></a> <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/dep/sponsors/badge.svg" />
 
 [<img src="https://raw.githubusercontent.com/depjs/artwork/master/logo-500x500.png" align="right" width="140">](https://github.com/depjs/dep)
 
