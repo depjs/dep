@@ -26,6 +26,3 @@ Write here.
 
 ### Actual behavior
 Write here.
-
-<!-- Love dep? Please consider supporting our collective:
-👉  https://opencollective.com/dep/donate -->
