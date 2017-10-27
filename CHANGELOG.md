@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.17.1"></a>
+## [0.17.1](https://github.com/depjs/dep/compare/v0.17.0...v0.17.1) (2017-10-27)
+
+
+### Bug Fixes
+
+* **deps:** update tar-fs ([fdd4146](https://github.com/depjs/dep/commit/fdd4146))
+
+
+
 <a name="0.17.0"></a>
 # [0.17.0](https://github.com/depjs/dep/compare/v0.16.1...v0.17.0) (2017-09-26)
 
