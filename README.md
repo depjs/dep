@@ -121,23 +121,6 @@ Stability is a core value. Having a small set makes keeping the green badges eas
 | :-: | :-: | :-: | :-: |
 | [![travis][t-img]][t-url] | [![appveyor][a-img]][a-url] | [![Node.js LTS][n-img]][n-url] | [![coverage][c-img]][c-url] |
 
-### dep ♥ [dat]
-This feature is **experimental**.
-
-You can provide a [dat] link as a dependency source.
-A dat link is like an `http:// link`, but with special properties.
-
-Here is an example package.json with a dat called [emoji-cli]. It just contains the package data as like its [git repository].
-```json
-{
-  "name": "an-app",
-  "description": "an example app",
-  "dependencies": {
-    "emoji-cli": "dat://7fdbb7b4ea8be0e5d9c1469aa4056377a092d8787b6e3452faf0ce8390098d02"
-  }
-}
-```
-
 ## Installation
 Since dep works independently of npm, dep has a standalone script to install.
 
@@ -198,8 +181,6 @@ Become a backer and buy us a coffee every month. [[Become a backer][]]
 [c-img]: https://img.shields.io/coveralls/depjs/dep/master.svg
 [c-url]: https://coveralls.io/github/depjs/dep
 [npm]: https://github.com/npm/npm
-[dat]: https://datproject.org/
-[emoji-cli]: https://datproject.org/watilde/emoji-cli
 [git repository]: https://github.com/watilde/emoji-cli
 [twitter]: https://twitter.com/watilde
 [package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
