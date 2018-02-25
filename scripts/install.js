@@ -1,5 +1,4 @@
 const exec = require('child_process').exec
-const execFile = require('child_process').execFile
 const path = require('path')
 const fs = require('fs')
 const execPath = process.execPath
@@ -17,8 +16,5 @@ exec('git clone ' + repository + ' ' + dep, (e) => {
   process.stdout.write(' => ' + path.join(binPath, 'dep') + '\n')
   fs.symlink(bin, path.join(binPath, 'dep'), (e) => {
     if (e) throw e
-    execFile(bin, ['install', 'dat-node', '--only=prod'], {cwd: dep}, (e) => {
-      if (e) throw e
-    })
   })
 })
