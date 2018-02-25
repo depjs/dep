@@ -4,7 +4,6 @@ const exec = require('child_process').exec
 const tree = require('strong-npm-ls')
 const test = require('tap').test
 const skip = [
-  'dat',
   'install-only',
   'install-save'
 ]
