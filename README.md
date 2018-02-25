@@ -8,7 +8,6 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 ###### ToDo
 + Follow the spec of npm's [package-lock.json]
-+ `install [--global]`
 + Installing packages in multiple forked clusters
 
 ### Table of Contents
@@ -52,9 +51,6 @@ You can install either only `dependencies` or `devDependencies` by using `--only
 ```console
 $ dep install --only=prod
 ```
-
-#### `dep install --global`
-ToDo.
 
 ### Lock
 #### `dep lock`
