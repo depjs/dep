@@ -8,7 +8,6 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 ###### ToDo
 + Follow the spec of npm's [package-lock.json]
-+ Installing packages in multiple forked clusters
 
 ### Table of Contents
 
