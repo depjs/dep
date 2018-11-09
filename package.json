@@ -50,7 +50,7 @@
     "npm-path": "^2.0.3",
     "opencollective": "^1.0.3",
     "promise-each": "^2.2.0",
-    "request": "^2.81.0",
+    "request": "^2.88.0",
     "semver": "^5.4.1",
     "tar-fs": "^1.16.0",
     "tar-stream": "^1.5.4",
