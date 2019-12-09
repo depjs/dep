@@ -156,6 +156,8 @@ npmPath.SEPARATOR // ':'
 
 Path lookup code adapted directly from npm.
 
+Thanks to [Jordan Harband](https://github.com/ljharb) for his [hard work](https://github.com/timoxley/npm-path/pulls?q=is%3Apr+author%3Aljharb) adapting this to work on node 0.8.
+
 # License
 
 MIT

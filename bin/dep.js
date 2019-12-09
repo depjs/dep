@@ -9,7 +9,7 @@ const commands = {
   run: require('../lib/run')
 }
 const pkgJSON = require('../package.json')
-const notifier = updateNotifier({pkg: pkgJSON})
+const notifier = updateNotifier({ pkg: pkgJSON })
 
 if (!semver.satisfies(process.version, pkgJSON.engine.node)) {
   process.stderr.write('dep works only on Node.js LTS versions\n')

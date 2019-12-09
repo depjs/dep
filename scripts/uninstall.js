@@ -5,7 +5,7 @@ const binPath = path.dirname(execPath)
 const pkg = path.join(execPath, '../../lib/node_modules/dep')
 const bin = path.join(binPath, 'dep')
 
-const rmdir = (p) => {
+const rmdir = p => {
   if (fs.existsSync(p)) {
     fs.readdirSync(p).forEach((file, index) => {
       const current = path.join(p, file)
@@ -19,19 +19,11 @@ const rmdir = (p) => {
   }
 }
 
-process.stdout.write(
-  'remove: ' + pkg + '\n'
-)
-try {
-  rmdir(pkg)
-} catch (e) {
-  throw e
-}
+process.stdout.write('remove: ' + pkg + '\n')
+rmdir(pkg)
 
-process.stdout.write(
-  'remove: ' + bin + '\n'
-)
-fs.unlink(bin, (e) => {
+process.stdout.write('remove: ' + bin + '\n')
+fs.unlink(bin, e => {
   if (e) throw e
   process.stdout.write('dep was uninstalled successfully\n')
 })

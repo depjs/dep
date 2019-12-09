@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const npmPath = require('../')
+var npmPath = require('../')
 
 console.log(npmPath())
