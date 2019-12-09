@@ -65,7 +65,7 @@
     "tap": "^14.10.2"
   },
   "engine": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "collective": {
     "type": "opencollective",
