@@ -8,6 +8,7 @@ environment:
 install:
   - "npm install -g npm"
   - "npm install"
+  - appveyor-retry call npm install
 test_script:
   # Output useful info for debugging.
   - node --version
