@@ -1,6 +1,13 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.18.2](https://github.com/depjs/dep/compare/v0.18.1...v0.18.2) (2019-12-09)
+
+
+### Bug Fixes
+
+* update supported node version ([ceec064](https://github.com/depjs/dep/commit/ceec064f5a151eb653ef9a4afdd82e523141bf8c))
 
 <a name="0.18.1"></a>
 ## [0.18.1](https://github.com/depjs/dep/compare/v0.18.0...v0.18.1) (2018-05-20)
