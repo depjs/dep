@@ -9,7 +9,7 @@ const pkgJSON = require(path.join(pkg, 'package.json'))
 
 test((t) => {
   const file = 'happy-birthday@' + path.join(__dirname, 'deps/file/happy-birthday-0.6.0')
-  exec(`node ${bin} install --save=prod ${file}`, {cwd: pkg}, (err, stdout, stderr) => {
+  exec(`node ${bin} install --save=prod ${file}`, { cwd: pkg }, (err, stdout, stderr) => {
     t.ifError(err, `${pkgJSON.name}: install ran without error`)
     tree.read(pkg, (err, out) => {
       t.ifError(err, `${pkgJSON.name}: tree could be read`)
@@ -21,7 +21,7 @@ test((t) => {
 })
 
 test((t) => {
-  exec(`node ${bin} install --save=dev text-table`, {cwd: pkg}, (err, stdout, stderr) => {
+  exec(`node ${bin} install --save=dev text-table`, { cwd: pkg }, (err, stdout, stderr) => {
     t.ifError(err, `${pkgJSON.name}: install ran without error`)
     tree.read(pkg, (err, out) => {
       t.ifError(err, `${pkgJSON.name}: tree could be read`)
