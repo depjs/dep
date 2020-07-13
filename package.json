@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "standard": "^14.3.1",
-    "standard-version": "^7.0.1",
+    "standard-version": "^8.0.1",
     "strong-npm-ls": "^1.0.10",
     "tap": "^14.10.2"
   },
