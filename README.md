@@ -110,9 +110,7 @@ Therefore, dep does not make cache files in a local disc for now.
 ### Stability
 Stability is a core value. Having a small set makes keeping the green badges easier.
 
-| Linux | Windows | Node.js LTS | Coverage | Maintainability |
-| :-: | :-: | :-: | :-: | :-: |
-| [![travis][t-img]][t-url] | [![appveyor][a-img]][a-url] | [![Node.js LTS][n-img]][n-url] | [![coverage][c-img]][c-url] | [![codeclimate][c2-img]][c2-url] |
+[![github-actions][g-img]][g-url]
 
 ## Installation
 Since dep works independently of npm, dep has a standalone script to install.
@@ -147,16 +145,8 @@ See [CONTRIBUTING.md][] for more info.
 ## License
 [MIT][]
 
-[t-img]: https://img.shields.io/travis/depjs/dep/master.svg
-[t-url]: https://travis-ci.org/depjs/dep
-[a-img]: https://img.shields.io/appveyor/ci/depjs/dep/master.svg
-[a-url]: https://ci.appveyor.com/project/depjs/dep/branch/master
-[n-img]: https://img.shields.io/node/v/lts.svg
-[n-url]: https://github.com/nodejs/LTS#lts-schedule1
-[c-img]: https://img.shields.io/coveralls/depjs/dep/master.svg
-[c-url]: https://coveralls.io/github/depjs/dep
-[c2-img]: https://img.shields.io/codeclimate/maintainability/depjs/dep.svg
-[c2-url]: https://codeclimate.com/github/depjs/dep
+[g-img]: https://github.com/depjs/dep/workflows/Node.js%20CI/badge.svg
+[g-url]: https://github.com/depjs/dep/actions
 [npm]: https://github.com/npm/npm
 [git repository]: https://github.com/watilde/emoji-cli
 [twitter]: https://twitter.com/watilde
