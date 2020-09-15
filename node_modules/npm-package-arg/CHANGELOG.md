@@ -1,6 +1,17 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [8.0.0](https://github.com/npm/npm-package-arg/compare/v7.0.0...v8.0.0) (2019-12-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Dropping support for node 6 and 8.  It'll probably
+still work on those versions, but they are no longer supported or
+tested, since npm v7 is moving away from them.
+
+* drop support for node 6 and 8 ([ba85e68](https://github.com/npm/npm-package-arg/commit/ba85e68555d6270f672c3d59da17672f744d0376))
 
 <a name="7.0.0"></a>
 # [7.0.0](https://github.com/npm/npm-package-arg/compare/v6.1.1...v7.0.0) (2019-11-11)

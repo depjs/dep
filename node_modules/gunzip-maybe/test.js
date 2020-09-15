@@ -54,3 +54,17 @@ tape('regular input', function (t) {
       t.end()
     }))
 })
+
+tape('limited recursion', function (t) {
+  t.plan(1)
+  fs.createReadStream(__filename)
+    .pipe(zlib.createGzip())
+    .pipe(zlib.createGzip())
+    .pipe(gunzip(1))
+    .on('finish', function () {
+      t.fail('should not finish')
+    })
+    .on('error', function (err) {
+      t.same(err.message, 'Maximum recursion reached')
+    })
+})
