@@ -26,7 +26,7 @@ yargs.usage(pkgJSON.description)
 yargs.help('help')
   .alias('help', 'h')
 
-yargs.version(() => { return pkgJSON.version })
+yargs.version()
   .alias('version', 'v')
   .describe('version', 'Show version information')
 

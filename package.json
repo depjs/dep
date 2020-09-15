@@ -6,8 +6,8 @@
   "scripts": {
     "release": "standard-version",
     "pretest": "standard \"lib/**/*.js\" \"bin/*.js\" \"test/*js\" \"scripts/*.js\"",
-    "test": "tap \"test/*.js\" --timeout 600",
-    "test-ci": "tap --coverage \"test/*.js\" --timeout 600"
+    "test": "tap \"test/*.js\" --timeout 600 --jobs=1",
+    "test-ci": "tap --coverage \"test/*.js\" --timeout 600 --jobs=1"
   },
   "repository": {
     "type": "git",
