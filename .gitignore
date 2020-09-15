@@ -66,7 +66,6 @@ typings/
 !node_modules/npm-path
 !node_modules/promise-each
 !node_modules/request
-!node_modules/require-directory
 !node_modules/semver
 !node_modules/tar-fs
 !node_modules/tar-stream
