@@ -2,8 +2,6 @@
 
 A little Node.js dependency installer with the bare minimum features for module **end-users**.
 
-<a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/dep/backers/badge.svg" /></a> <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/dep/sponsors/badge.svg" />
-
 [<img src="https://raw.githubusercontent.com/depjs/artwork/master/logo-500x500.png" align="right" width="140">](https://github.com/depjs/dep)
 
 ###### ToDo
@@ -146,24 +144,6 @@ $ npm uninstall --global dep
 
 See [CONTRIBUTING.md][] for more info.
 
-### Contributors
-
-The core code of this project exists thanks to all the contributors.
-
-<a href="https://github.com/depjs/dep/graphs/contributors"><img src="https://opencollective.com/dep/contributors.svg?width=890" /></a>
-
-### Sponsors
-
-Be a sponsor and give us a high motivation. [[Become a sponsor][]]
-
-<a href="https://github.com/depjs/dep/graphs/contributors"><img src="https://opencollective.com/dep/sponsors.svg?width=890" /></a>
-
-### Backers
-
-Become a backer and buy us a coffee every month. [[Become a backer][]]
-
-<a href="https://github.com/depjs/dep/graphs/contributors"><img src="https://opencollective.com/dep/backers.svg?width=890" /></a>
-
 ## License
 [MIT][]
 
@@ -183,5 +163,3 @@ Become a backer and buy us a coffee every month. [[Become a backer][]]
 [package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
 [CONTRIBUTING.md]: https://github.com/depjs/dep/blob/master/.github/CONTRIBUTING.md
 [MIT]: https://github.com/depjs/dep/blob/master/LICENSE
-[Become a sponsor]: https://opencollective.com/dep#sponsor
-[Become a backer]: https://opencollective.com/dep#backer
