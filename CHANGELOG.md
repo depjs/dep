@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.18.3](https://github.com/depjs/dep/compare/v0.18.2...v0.18.3) (2020-09-16)
+
+
+### Features
+
+* integrate lock ([c0e4eba](https://github.com/depjs/dep/commit/c0e4ebae1ddb81a73ddd4a26931588ac562e8750))
+
 ### [0.18.2](https://github.com/depjs/dep/compare/v0.18.1...v0.18.2) (2019-12-09)
 
 
