@@ -5,7 +5,7 @@ const bin = path.join(__dirname, '..', 'bin', 'dep.js')
 
 test((t) => {
   exec(`node ${bin} -v`, (err, stdout, stderr) => {
-    t.ifError(err, 'version ran without error')
+    t.error(err, 'version ran without error')
     t.ok(stdout, 'version displayed a message')
     t.end()
   })

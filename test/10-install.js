@@ -14,16 +14,16 @@ const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
   })
 
 test((t) => {
-  var items = 3
-  var count = fixtures.length * items
+  const items = 3
+  const count = fixtures.length * items
   t.plan(count)
   fixtures.forEach(fixture => {
     const pkg = path.join(__dirname, 'deps', fixture)
     const pkgJSON = require(path.join(pkg, 'package.json'))
     exec(`node ${bin} install`, { cwd: pkg }, (err, stdout, stderr) => {
-      t.ifError(err, `${pkgJSON.name}: install ran without error`)
+      t.error(err, `${pkgJSON.name}: install ran without error`)
       tree.read(pkg, (err, out) => {
-        t.ifError(err, `${pkgJSON.name}: tree could be read`)
+        t.error(err, `${pkgJSON.name}: tree could be read`)
         const deps = out.dependencies
         t.ok(Object.keys(deps).length, `${pkgJSON.name}: deps are installed`)
         if (count === 0) t.end()

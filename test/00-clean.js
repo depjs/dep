@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
 
 test((t) => {
-  var count = fixtures.length
+  let count = fixtures.length
   fixtures.forEach(fixture => {
     const modules = path.join(__dirname, 'deps', fixture, 'node_modules')
     const lock = path.join(__dirname, 'deps', fixture, 'node_modules.json')

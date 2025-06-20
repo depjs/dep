@@ -8,9 +8,9 @@ const pkgJSON = require(path.join(pkg, 'package.json'))
 
 test((t) => {
   exec(`node ${bin} install --only=prod`, { cwd: pkg }, (err, stdout, stderr) => {
-    t.ifError(err, `${pkgJSON.name}: install ran without error`)
+    t.error(err, `${pkgJSON.name}: install ran without error`)
     tree.read(pkg, (err, out) => {
-      t.ifError(err, `${pkgJSON.name}: tree could be read`)
+      t.error(err, `${pkgJSON.name}: tree could be read`)
       const deps = out.dependencies
       t.ok(deps['happy-birthday'], `${pkgJSON.name}: deps are installed`)
       t.end()
@@ -20,9 +20,9 @@ test((t) => {
 
 test((t) => {
   exec(`node ${bin} install --only=dev`, { cwd: pkg }, (err, stdout, stderr) => {
-    t.ifError(err, `${pkgJSON.name}: install ran without error`)
+    t.error(err, `${pkgJSON.name}: install ran without error`)
     tree.read(pkg, (err, out) => {
-      t.ifError(err, `${pkgJSON.name}: tree could be read`)
+      t.error(err, `${pkgJSON.name}: tree could be read`)
       const deps = out.devDependencies
       t.ok(deps['quack-array'], `${pkgJSON.name}: deps are installed`)
       t.end()

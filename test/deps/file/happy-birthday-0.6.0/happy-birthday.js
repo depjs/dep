@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-var program = require('commander')
-var hb = require('./')
-var pkg = require('./package.json')
-var message = ''
-var you = ''
+const program = require('commander')
+const hb = require('./')
+const pkg = require('./package.json')
+let message = ''
+let you = ''
 
 program
   .version(pkg.version)
