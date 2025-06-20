@@ -12,14 +12,11 @@ jobs:
         node-version: [20.x]
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
+      - run: git config --system core.longpaths true
       - uses: actions/checkout@v3
-        with:
-          path: s
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-        working-directory: ./s
       - run: npm test
-        working-directory: ./s
