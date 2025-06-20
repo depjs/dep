@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/depjs/dep#readme",
   "bundleDependencies": [
-    "fs-extra",
     "gunzip-maybe",
     "node-gyp",
     "npm-package-arg",
@@ -42,7 +41,7 @@
     "yargs"
   ],
   "dependencies": {
-    "fs-extra": "11.3.0",
+    "fs-extra": "^10.1.0",
     "gunzip-maybe": "^1.4.2",
     "node-gyp": "11.2.0",
     "npm-package-arg": "12.0.2",
