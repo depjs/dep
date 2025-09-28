@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "release": "standard-version",
-    "pretest": "standard \"lib/**/*.js\" \"bin/*.js\" \"test/*js\" \"scripts/*.js\"",
-    "test": "tap \"test/*.js\" --timeout 1000 --jobs=1",
-    "test-ci": "tap --coverage \"test/*.js\" --timeout 1000 --jobs=1"
+    "pretest": "node scripts/run-standard.js \"lib/**/*.js\" \"bin/*.js\" \"test/*js\" \"scripts/*.js\"",
+    "test": "node scripts/run-tap.js \"test/*.js\" --timeout 1000 --jobs=1 --reporter tap",
+    "test-ci": "node scripts/run-tap.js --coverage \"test/*.js\" --timeout 1000 --jobs=1 --reporter tap"
   },
   "repository": {
     "type": "git",
@@ -26,29 +26,14 @@
     "url": "https://github.com/depjs/dep/issues"
   },
   "homepage": "https://github.com/depjs/dep#readme",
-  "bundleDependencies": [
-    "fs-extra",
-    "gunzip-maybe",
-    "node-gyp",
-    "npm-package-arg",
-    "npm-path",
-    "promise-each",
-    "request",
-    "semver",
-    "tar-fs",
-    "tar-stream",
-    "update-notifier",
-    "which",
-    "yargs"
-  ],
   "dependencies": {
     "fs-extra": "^9.0.1",
     "gunzip-maybe": "^1.4.2",
+    "mkdirp": "^3.0.1",
     "node-gyp": "^7.1.0",
     "npm-package-arg": "^8.0.1",
     "npm-path": "^2.0.4",
     "promise-each": "^2.2.0",
-    "request": "^2.88.2",
     "semver": "^7.3.2",
     "tar-fs": "^2.1.0",
     "tar-stream": "^2.1.4",
@@ -63,6 +48,6 @@
     "tap": "^14.10.2"
   },
   "engine": {
-    "node": ">=10.0.0"
+    "node": ">=22.0.0"
   }
 }

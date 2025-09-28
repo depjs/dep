@@ -14,8 +14,8 @@ const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
   })
 
 test((t) => {
-  var items = 3
-  var count = fixtures.length * items
+  const items = 3
+  const count = fixtures.length * items
   t.plan(count)
   fixtures.forEach(fixture => {
     const pkg = path.join(__dirname, 'deps', fixture)

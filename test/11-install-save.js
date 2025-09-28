@@ -33,7 +33,7 @@ test((t) => {
 })
 
 test((t) => {
-  var data = pkgJSON
+  const data = pkgJSON
   delete data.dependencies
   delete data.devDependencies
   fs.writeFileSync(path.join(pkg, 'package.json'), JSON.stringify(data, 2, 2) + '\n')

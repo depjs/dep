@@ -11,9 +11,11 @@ const commands = {
 const pkgJSON = require('../package.json')
 const notifier = updateNotifier({ pkg: pkgJSON })
 
-if (!semver.satisfies(process.version, pkgJSON.engine.node)) {
-  process.stderr.write('dep works only on Node.js LTS versions\n')
-  process.stderr.write('See the schedule: https://github.com/nodejs/LTS#lts-schedule1\n')
+const allowLegacyNode = ['1', 'true', 'yes'].includes((process.env.DEP_ALLOW_OLD_NODE || '').toLowerCase())
+
+if (!allowLegacyNode && !semver.satisfies(process.version, pkgJSON.engine.node)) {
+  process.stderr.write(`dep requires Node.js ${pkgJSON.engine.node} (detected ${process.version})\n`)
+  process.stderr.write('Upgrade Node.js to continue.\n')
   process.exit(1)
 }
 
