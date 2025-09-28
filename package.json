@@ -30,22 +30,22 @@
     "fs-extra": "^9.0.1",
     "gunzip-maybe": "^1.4.2",
     "mkdirp": "^3.0.1",
-    "node-gyp": "^7.1.0",
+    "node-gyp": "^11.4.2",
     "npm-package-arg": "^8.0.1",
     "npm-path": "^2.0.4",
     "promise-each": "^2.2.0",
     "semver": "^7.3.2",
     "tar-fs": "^2.1.0",
     "tar-stream": "^2.1.4",
-    "update-notifier": "^4.1.1",
+    "update-notifier": "^7.3.1",
     "which": "^2.0.2",
     "yargs": "^16.0.3"
   },
   "devDependencies": {
-    "standard": "^14.3.1",
+    "standard": "^17.1.2",
     "standard-version": "^9.0.0",
     "strong-npm-ls": "^1.0.10",
-    "tap": "^14.10.2"
+    "tap": "^21.1.0"
   },
   "engine": {
     "node": ">=22.0.0"

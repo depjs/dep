@@ -3,17 +3,28 @@ const fs = require('fs')
 const path = require('path')
 
 const standardEngine = require('standard-engine')
-const baseOptions = require('standard/options')
 
 const cacheDir = path.join(__dirname, '..', '.cache', 'standard')
 fs.mkdirSync(cacheDir, { recursive: true })
 
-const options = {
-  ...baseOptions,
-  eslintConfig: {
-    ...baseOptions.eslintConfig,
-    cacheLocation: cacheDir + path.sep
-  }
+const loadOptions = async () => {
+  const mod = await import('standard/lib/options.js')
+  return mod.default || mod
 }
 
-standardEngine.cli(options)
+const run = async () => {
+  const baseOptions = await loadOptions()
+  const options = {
+    ...baseOptions,
+    eslintConfig: {
+      ...(baseOptions.eslintConfig || {}),
+      cacheLocation: cacheDir + path.sep
+    }
+  }
+  standardEngine.cli(options)
+}
+
+run().catch((err) => {
+  console.error(err)
+  process.exit(1)
+})

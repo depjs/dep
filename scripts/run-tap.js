@@ -131,7 +131,8 @@ packages.forEach((pkg) => {
   writeMetadata(pkg, tarballPath)
 })
 
-const tapBin = require.resolve('tap/bin/run.js')
+const tapPkgJson = require.resolve('tap/package.json')
+const tapBin = path.join(path.dirname(tapPkgJson), 'dist', 'esm', 'run.mjs')
 const args = process.argv.slice(2)
 
 const child = spawn(process.execPath, [tapBin, ...args], {

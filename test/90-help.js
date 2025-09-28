@@ -5,7 +5,7 @@ const bin = path.join(__dirname, '..', 'bin', 'dep.js')
 
 test((t) => {
   exec(`node ${bin} -h`, (err, stdout, stderr) => {
-    t.ifError(err, 'help ran without error')
+    t.error(err, 'help ran without error')
     t.ok(stdout, 'help displayed a message')
     t.end()
   })
@@ -13,7 +13,7 @@ test((t) => {
 
 test((t) => {
   exec(`node ${bin}`, (err, stdout, stderr) => {
-    t.ifError(err, 'help ran without error')
+    t.error(err, 'help ran without error')
     t.ok(stderr, 'help displayed a message')
     t.end()
   })

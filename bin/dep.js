@@ -2,7 +2,7 @@
 
 const semver = require('semver')
 const yargs = require('yargs')
-const updateNotifier = require('update-notifier')
+const updateNotifier = require('update-notifier').default
 const commands = {
   install: require('../lib/install'),
   lock: require('../lib/lock'),
