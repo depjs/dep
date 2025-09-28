@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const crypto = require('crypto')
 const fs = require('fs')
+const fsExtra = require('fs-extra')
 const path = require('path')
 const { spawn, spawnSync } = require('child_process')
 const { pathToFileURL } = require('url')
@@ -13,9 +14,16 @@ const registryDir = path.join(runtimeFixturesDir, 'registry')
 const tarballDir = path.join(runtimeFixturesDir, 'tarballs')
 
 const ensureDir = (dir) => fs.mkdirSync(dir, { recursive: true })
+const removeDir = (dir) => {
+  if (typeof fs.rmSync === 'function') {
+    fs.rmSync(dir, { recursive: true, force: true })
+  } else {
+    fsExtra.removeSync(dir)
+  }
+}
 
 ensureDir(tmpDir)
-fs.rmSync(runtimeFixturesDir, { recursive: true, force: true })
+removeDir(runtimeFixturesDir)
 ensureDir(runtimeFixturesDir)
 ensureDir(registryDir)
 ensureDir(tarballDir)
