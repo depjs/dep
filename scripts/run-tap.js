@@ -2,6 +2,7 @@
 const crypto = require('crypto')
 const fs = require('fs')
 const fsExtra = require('fs-extra')
+const http = require('http')
 const path = require('path')
 const glob = require('glob')
 const { spawnSync } = require('child_process')
@@ -23,33 +24,7 @@ const removeDir = (dir) => {
   }
 }
 
-ensureDir(tmpDir)
-removeDir(runtimeFixturesDir)
-ensureDir(runtimeFixturesDir)
-ensureDir(registryDir)
-ensureDir(tarballDir)
-
-const registryUrl = pathToFileURL(`${registryDir}${path.sep}`).toString()
-const npmCacheDir = path.join(homeDir, '.npm-cache')
-ensureDir(npmCacheDir)
-
-const env = {
-  ...process.env,
-  HOME: homeDir,
-  USERPROFILE: homeDir,
-  TMPDIR: tmpDir,
-  TEMP: tmpDir,
-  TMP: tmpDir,
-  TAP_NO_ESM: '1',
-  DEP_ALLOW_OLD_NODE: '1',
-  NPM_CONFIG_REGISTRY: registryUrl,
-  npm_config_registry: registryUrl,
-  NPM_CONFIG_CACHE: npmCacheDir,
-  npm_config_cache: npmCacheDir
-}
-
 const npmrcPath = path.join(homeDir, '.npmrc')
-fs.writeFileSync(npmrcPath, `registry=${registryUrl}\n`, 'utf8')
 
 const packages = [
   {
@@ -77,7 +52,7 @@ const packages = [
 
 const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm'
 
-const ensureTarball = (pkg) => {
+const ensureTarball = (pkg, env) => {
   const filename = `${pkg.name}-${pkg.version}.tgz`
   const tarballPath = path.join(tarballDir, filename)
   if (fs.existsSync(tarballPath)) {
@@ -98,13 +73,8 @@ const ensureTarball = (pkg) => {
   return tarballPath
 }
 
-const writeMetadata = (pkg, tarballPath) => {
-  const manifestPath = path.join(pkg.source, 'package.json')
-  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
-  const contents = fs.readFileSync(tarballPath)
-  const shasum = crypto.createHash('sha1').update(contents).digest('hex')
-  const tarballUrl = pathToFileURL(tarballPath).toString()
-  const metadataPath = path.join(registryDir, pkg.name)
+const buildMetadata = (pkg, baseUrl) => {
+  const tarballUrl = `${baseUrl}/tarballs/${encodeURIComponent(pkg.filename)}`
   const metadata = {
     name: pkg.name,
     'dist-tags': {
@@ -115,61 +85,139 @@ const writeMetadata = (pkg, tarballPath) => {
   metadata.versions[pkg.version] = {
     name: pkg.name,
     version: pkg.version,
-    dependencies: manifest.dependencies || {},
+    dependencies: pkg.manifest.dependencies || {},
     dist: {
-      shasum,
+      shasum: pkg.shasum,
       tarball: tarballUrl
     }
   }
   if (pkg.deprecated) {
     metadata.versions[pkg.version].deprecated = pkg.deprecated
   }
-  fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2))
+  return metadata
 }
 
-packages.forEach((pkg) => {
-  const tarballPath = ensureTarball(pkg)
-  writeMetadata(pkg, tarballPath)
-})
+const startRegistryServer = (packageData) => {
+  const metadataByName = new Map()
+  const tarballByFile = new Map()
 
-Object.assign(process.env, env)
+  const server = http.createServer((req, res) => {
+    try {
+      if (req.method !== 'GET') {
+        res.writeHead(405)
+        res.end()
+        return
+      }
+      const requestUrl = new URL(req.url, 'http://127.0.0.1')
+      const pathname = requestUrl.pathname
 
-const { patterns, options } = parseCliArgs(process.argv.slice(2))
+      if (pathname.startsWith('/tarballs/')) {
+        const tarballName = decodeURIComponent(pathname.slice('/tarballs/'.length))
+        const pkg = tarballByFile.get(tarballName)
+        if (!pkg) {
+          res.writeHead(404)
+          res.end()
+          return
+        }
+        const stream = fs.createReadStream(pkg.tarballPath)
+        stream.on('error', () => {
+          res.writeHead(500)
+          res.end()
+        })
+        res.writeHead(200, { 'Content-Type': 'application/octet-stream' })
+        stream.pipe(res)
+        return
+      }
 
-if (options.reporter) {
-  process.env.TAP_REPORTER = options.reporter
+      if (pathname.startsWith('/-/package/') && pathname.endsWith('/dist-tags')) {
+        const encodedName = pathname.slice('/-/package/'.length, -'/dist-tags'.length)
+        const packageName = decodeURIComponent(encodedName)
+        const metadata = metadataByName.get(packageName)
+        if (!metadata) {
+          res.writeHead(404)
+          res.end()
+          return
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' })
+        res.end(JSON.stringify(metadata['dist-tags']))
+        return
+      }
+
+      const packageName = decodeURIComponent(pathname.replace(/^\/+/, ''))
+      const metadata = metadataByName.get(packageName)
+      if (!packageName || !metadata) {
+        res.writeHead(404)
+        res.end()
+        return
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' })
+      res.end(JSON.stringify(metadata))
+    } catch (error) {
+      res.writeHead(500)
+      res.end()
+    }
+  })
+
+  return new Promise((resolve, reject) => {
+    server.on('error', reject)
+    try {
+      server.listen(0, '127.0.0.1', () => {
+        const address = server.address()
+        const baseUrl = `http://127.0.0.1:${address.port}`
+        packageData.forEach((pkg) => {
+          const metadata = buildMetadata(pkg, baseUrl)
+          metadataByName.set(pkg.name, metadata)
+          tarballByFile.set(pkg.filename, pkg)
+        })
+        const registryUrl = `${baseUrl}/`
+        resolve({
+          registryUrl,
+          close: () => new Promise((_resolve, _reject) => {
+            server.close((err) => (err ? _reject(err) : _resolve()))
+          })
+        })
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
 }
 
-if (options.coverage) {
-  process.env.TAP_COVERAGE = '1'
-}
+const setupFileRegistry = (packageData) => {
+  packageData.forEach((pkg) => {
+    const metadata = {
+      name: pkg.name,
+      'dist-tags': {
+        latest: pkg.version
+      },
+      versions: {}
+    }
+    metadata.versions[pkg.version] = {
+      name: pkg.name,
+      version: pkg.version,
+      dependencies: pkg.manifest.dependencies || {},
+      dist: {
+        shasum: pkg.shasum,
+        tarball: pathToFileURL(pkg.tarballPath).toString()
+      }
+    }
+    if (pkg.deprecated) {
+      metadata.versions[pkg.version].deprecated = pkg.deprecated
+    }
+    const metadataPath = path.join(registryDir, pkg.name)
+    fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2))
+  })
 
-const tap = require('tap')
-
-if (options.timeout != null) {
-  const timeout = Math.max(options.timeout, 5000)
-  tap.setTimeout(timeout)
-}
-
-if (options.jobs != null) {
-  tap.jobs = options.jobs
-}
-
-const testFiles = resolveTestFiles(patterns, projectRoot)
-
-if (testFiles.length === 0) {
-  console.error('No test files matched the provided pattern(s).')
-  process.exit(1)
-}
-
-tap.on('complete', (results) => {
-  if (!results.ok) {
-    process.exitCode = 1
+  const fileUrl = pathToFileURL(`${registryDir}${path.sep}`).toString()
+  const url = new URL(fileUrl)
+  if (!url.host) {
+    url.host = 'localhost'
   }
-})
 
-for (const file of testFiles) {
-  require(file)
+  return {
+    registryUrl: url.toString(),
+    close: () => Promise.resolve()
+  }
 }
 
 function parseCliArgs (argv) {
@@ -237,3 +285,111 @@ function resolveTestFiles (patterns, root) {
 
   return Array.from(files).sort((a, b) => a.localeCompare(b))
 }
+
+async function main () {
+  ensureDir(tmpDir)
+  removeDir(runtimeFixturesDir)
+  ensureDir(runtimeFixturesDir)
+  ensureDir(registryDir)
+  ensureDir(tarballDir)
+
+  const npmCacheDir = path.join(homeDir, '.npm-cache')
+  ensureDir(npmCacheDir)
+
+  const env = {
+    ...process.env,
+    HOME: homeDir,
+    USERPROFILE: homeDir,
+    TMPDIR: tmpDir,
+    TEMP: tmpDir,
+    TMP: tmpDir,
+    TAP_NO_ESM: '1',
+    DEP_ALLOW_OLD_NODE: '1',
+    NPM_CONFIG_CACHE: npmCacheDir,
+    npm_config_cache: npmCacheDir
+  }
+
+  const packageData = packages.map((pkg) => {
+    const tarballPath = ensureTarball(pkg, env)
+    const manifestPath = path.join(pkg.source, 'package.json')
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
+    const filename = `${pkg.name}-${pkg.version}.tgz`
+    const contents = fs.readFileSync(tarballPath)
+    const shasum = crypto.createHash('sha1').update(contents).digest('hex')
+    return {
+      ...pkg,
+      filename,
+      manifest,
+      shasum,
+      tarballPath
+    }
+  })
+
+  let registrySetup
+  try {
+    registrySetup = await startRegistryServer(packageData)
+  } catch (error) {
+    if (error && (error.code === 'EPERM' || error.code === 'EACCES')) {
+      registrySetup = setupFileRegistry(packageData)
+    } else {
+      throw error
+    }
+  }
+
+  const { registryUrl, close } = registrySetup
+
+  env.NPM_CONFIG_REGISTRY = registryUrl
+  env.npm_config_registry = registryUrl
+
+  fs.writeFileSync(npmrcPath, `registry=${registryUrl}\n`, 'utf8')
+  Object.assign(process.env, env)
+
+  const { patterns, options } = parseCliArgs(process.argv.slice(2))
+
+  if (options.reporter) {
+    process.env.TAP_REPORTER = options.reporter
+  }
+
+  if (options.coverage) {
+    process.env.TAP_COVERAGE = '1'
+  }
+
+  const tap = require('tap')
+
+  if (options.timeout != null) {
+    const timeout = Math.max(options.timeout, 5000)
+    tap.setTimeout(timeout)
+  }
+
+  if (options.jobs != null) {
+    tap.jobs = options.jobs
+  }
+
+  const testFiles = resolveTestFiles(patterns, projectRoot)
+
+  if (testFiles.length === 0) {
+    await close()
+    console.error('No test files matched the provided pattern(s).')
+    process.exit(1)
+  }
+
+  tap.on('complete', (results) => {
+    if (!results.ok) {
+      process.exitCode = 1
+    }
+  })
+
+  tap.teardown(() => close().catch((error) => {
+    console.error(error)
+    process.exitCode = 1
+  }))
+
+  for (const file of testFiles) {
+    require(file)
+  }
+}
+
+main().catch((error) => {
+  console.error(error)
+  process.exit(1)
+})
