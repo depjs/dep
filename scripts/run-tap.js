@@ -3,7 +3,8 @@ const crypto = require('crypto')
 const fs = require('fs')
 const fsExtra = require('fs-extra')
 const path = require('path')
-const { spawn, spawnSync } = require('child_process')
+const glob = require('glob')
+const { spawnSync } = require('child_process')
 const { pathToFileURL } = require('url')
 
 const projectRoot = path.join(__dirname, '..')
@@ -131,24 +132,108 @@ packages.forEach((pkg) => {
   writeMetadata(pkg, tarballPath)
 })
 
-const tapPkgJson = require.resolve('tap/package.json')
-const tapBin = path.join(path.dirname(tapPkgJson), 'dist', 'esm', 'run.mjs')
-const args = process.argv.slice(2)
+Object.assign(process.env, env)
 
-const child = spawn(process.execPath, [tapBin, ...args], {
-  stdio: 'inherit',
-  env
-})
+const { patterns, options } = parseCliArgs(process.argv.slice(2))
 
-child.on('exit', (code, signal) => {
-  if (signal) {
-    process.kill(process.pid, signal)
-  } else {
-    process.exit(code ?? 0)
+if (options.reporter) {
+  process.env.TAP_REPORTER = options.reporter
+}
+
+if (options.coverage) {
+  process.env.TAP_COVERAGE = '1'
+}
+
+const tap = require('tap')
+
+if (options.timeout != null) {
+  const timeout = Math.max(options.timeout, 5000)
+  tap.setTimeout(timeout)
+}
+
+if (options.jobs != null) {
+  tap.jobs = options.jobs
+}
+
+const testFiles = resolveTestFiles(patterns, projectRoot)
+
+if (testFiles.length === 0) {
+  console.error('No test files matched the provided pattern(s).')
+  process.exit(1)
+}
+
+tap.on('complete', (results) => {
+  if (!results.ok) {
+    process.exitCode = 1
   }
 })
 
-child.on('error', (error) => {
-  console.error(error)
-  process.exitCode = 1
-})
+for (const file of testFiles) {
+  require(file)
+}
+
+function parseCliArgs (argv) {
+  const patterns = []
+  const options = {
+    coverage: false,
+    jobs: null,
+    reporter: null,
+    timeout: null
+  }
+
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i]
+
+    if (arg === '--timeout') {
+      options.timeout = readNumericArg(argv[++i], '--timeout')
+    } else if (arg?.startsWith('--timeout=')) {
+      options.timeout = readNumericArg(arg.split('=')[1], '--timeout')
+    } else if (arg === '--jobs') {
+      options.jobs = readNumericArg(argv[++i], '--jobs')
+    } else if (arg?.startsWith('--jobs=')) {
+      options.jobs = readNumericArg(arg.split('=')[1], '--jobs')
+    } else if (arg === '--reporter') {
+      options.reporter = argv[++i]
+    } else if (arg?.startsWith('--reporter=')) {
+      options.reporter = arg.split('=')[1]
+    } else if (arg === '--coverage') {
+      options.coverage = true
+    } else if (arg === '--no-coverage') {
+      options.coverage = false
+    } else if (arg === '--') {
+      patterns.push(...argv.slice(i + 1))
+      break
+    } else if (arg?.startsWith('-')) {
+      // Ignore unknown flags to stay compatible with tap CLI invocations
+    } else if (arg) {
+      patterns.push(arg)
+    }
+  }
+
+  return { patterns, options }
+}
+
+function readNumericArg (value, flag) {
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed)) {
+    console.error(`Invalid value provided for ${flag}: ${value}`)
+    process.exit(1)
+  }
+  return parsed
+}
+
+function resolveTestFiles (patterns, root) {
+  const globPatterns = patterns.length > 0 ? patterns : ['test/**/*.js']
+  const files = new Set()
+
+  globPatterns.forEach((pattern) => {
+    glob.sync(pattern, {
+      cwd: root,
+      nodir: true
+    }).forEach((match) => {
+      files.add(path.resolve(root, match))
+    })
+  })
+
+  return Array.from(files).sort((a, b) => a.localeCompare(b))
+}
