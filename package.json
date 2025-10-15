@@ -6,8 +6,8 @@
   "scripts": {
     "release": "standard-version",
     "pretest": "node scripts/run-standard.js \"lib/**/*.js\" \"bin/*.js\" \"test/*js\" \"scripts/*.js\"",
-    "test": "node scripts/run-tap.js \"test/*.js\" --timeout 10000 --jobs=1 --reporter spec --no-coverage",
-    "test-ci": "node scripts/run-tap.js --coverage \"test/*.js\" --timeout 1000 --jobs=1 --reporter tap --verbose"
+    "test": "node scripts/run-tap.js \"test/*.js\" --timeout 10000 --jobs=1 --reporter spec --no-coverage --verbose",
+    "test-ci": "node scripts/run-tap.js --coverage \"test/*.js\" --timeout 1000 --jobs=1 --reporter tap --no-coverage --verbose"
   },
   "repository": {
     "type": "git",
