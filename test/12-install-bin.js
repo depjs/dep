@@ -18,15 +18,33 @@ test((t) => {
     const binPath = resolveBinPath()
     t.ok(fs.existsSync(binPath), `${packageJson.name}: happy-birthday bin exists`)
 
-    if (process.platform !== 'win32') {
-      const linkStats = fs.lstatSync(binPath)
-      t.ok(linkStats.isSymbolicLink(), `${packageJson.name}: bin entry is a symlink`)
-    }
+    const binStats = fs.lstatSync(binPath)
 
-    const resolved = fs.realpathSync(binPath)
-    t.equal(resolved, resolveBinTarget(), `${packageJson.name}: bin resolves to package script`)
+    if (binStats.isSymbolicLink()) {
+      const resolved = fs.realpathSync(binPath)
+      t.equal(resolved, resolveBinTarget(), `${packageJson.name}: bin resolves to package script`)
 
-    if (process.platform !== 'win32') {
+      const stat = fs.statSync(binPath)
+      t.ok(isExecutable(stat.mode), `${packageJson.name}: bin entry is executable`)
+    } else if (process.platform === 'win32') {
+      const cmdShim = `${binPath}.cmd`
+      const psShim = `${binPath}.ps1`
+      t.ok(fs.existsSync(cmdShim), `${packageJson.name}: cmd shim exists`)
+      t.ok(fs.existsSync(psShim), `${packageJson.name}: powershell shim exists`)
+      const target = resolveBinTarget()
+      const shimContent = fs.readFileSync(cmdShim, 'utf8')
+      t.match(
+        shimContent.replace(/\\/g, '/'),
+        target.replace(/\\/g, '/'),
+        `${packageJson.name}: cmd shim points to target script`
+      )
+      const binContent = fs.readFileSync(binPath, 'utf8')
+      const targetContent = fs.readFileSync(target, 'utf8')
+      t.equal(binContent, targetContent, `${packageJson.name}: fallback bin matches target content`)
+    } else {
+      const resolved = fs.realpathSync(binPath)
+      t.equal(resolved, resolveBinTarget(), `${packageJson.name}: bin resolves to package script`)
+
       const stat = fs.statSync(binPath)
       t.ok(isExecutable(stat.mode), `${packageJson.name}: bin entry is executable`)
     }
