@@ -227,7 +227,8 @@ function parseCliArgs (argv) {
     jobs: null,
     reporter: null,
     timeout: null,
-    verbose: false
+    verbose: false,
+    logFile: null
   }
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -253,6 +254,12 @@ function parseCliArgs (argv) {
       options.verbose = true
     } else if (arg === '--no-verbose') {
       options.verbose = false
+    } else if (arg === '--log-file') {
+      options.logFile = argv[++i]
+    } else if (arg?.startsWith('--log-file=')) {
+      options.logFile = arg.split('=')[1]
+    } else if (arg === '--no-log-file') {
+      options.logFile = null
     } else if (arg === '--') {
       patterns.push(...argv.slice(i + 1))
       break
@@ -362,8 +369,50 @@ async function main () {
   const tap = require('tap')
 
   if (options.verbose) {
-    process.env.TAP_VERBOSE = '1'
-    process.env.TAP_DEV_SHORTSTACK = '0'
+   process.env.TAP_VERBOSE = '1'
+   process.env.TAP_DEV_SHORTSTACK = '0'
+  }
+
+  let logStream = null
+  if (options.logFile) {
+    const logPath = path.resolve(projectRoot, options.logFile)
+    ensureDir(path.dirname(logPath))
+    logStream = fs.createWriteStream(logPath, { flags: 'w' })
+
+    const originalStdoutWrite = process.stdout.write.bind(process.stdout)
+    const originalStderrWrite = process.stderr.write.bind(process.stderr)
+
+    const writeToLog = (chunk) => {
+      if (!logStream) return
+      if (typeof chunk === 'string') {
+        logStream.write(chunk)
+      } else if (chunk != null) {
+        logStream.write(Buffer.from(chunk))
+      }
+    }
+
+    process.stdout.write = (chunk, encoding, callback) => {
+      writeToLog(chunk)
+      return originalStdoutWrite(chunk, encoding, callback)
+    }
+
+    process.stderr.write = (chunk, encoding, callback) => {
+      writeToLog(chunk)
+      return originalStderrWrite(chunk, encoding, callback)
+    }
+
+    const closeLog = () => {
+      if (logStream) {
+        logStream.end()
+        logStream = null
+      }
+    }
+
+    process.on('exit', closeLog)
+    process.on('SIGINT', () => {
+      closeLog()
+      process.exit(1)
+    })
   }
 
   if (options.timeout != null) {
