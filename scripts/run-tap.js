@@ -226,7 +226,8 @@ function parseCliArgs (argv) {
     coverage: false,
     jobs: null,
     reporter: null,
-    timeout: null
+    timeout: null,
+    verbose: false
   }
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -248,6 +249,10 @@ function parseCliArgs (argv) {
       options.coverage = true
     } else if (arg === '--no-coverage') {
       options.coverage = false
+    } else if (arg === '--verbose') {
+      options.verbose = true
+    } else if (arg === '--no-verbose') {
+      options.verbose = false
     } else if (arg === '--') {
       patterns.push(...argv.slice(i + 1))
       break
@@ -355,6 +360,11 @@ async function main () {
   }
 
   const tap = require('tap')
+
+  if (options.verbose) {
+    process.env.TAP_VERBOSE = '1'
+    process.env.TAP_DEV_SHORTSTACK = '0'
+  }
 
   if (options.timeout != null) {
     const timeout = Math.max(options.timeout, 5000)
