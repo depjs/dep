@@ -369,8 +369,8 @@ async function main () {
   const tap = require('tap')
 
   if (options.verbose) {
-   process.env.TAP_VERBOSE = '1'
-   process.env.TAP_DEV_SHORTSTACK = '0'
+    process.env.TAP_VERBOSE = '1'
+    process.env.TAP_DEV_SHORTSTACK = '0'
   }
 
   let logStream = null
