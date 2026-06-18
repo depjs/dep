@@ -1,19 +1,20 @@
-const path = require('path')
-const exec = require('child_process').exec
-const test = require('tap').test
-const pkg = path.join(__dirname, 'deps', 'run')
-const bin = path.join(__dirname, '..', 'bin', 'dep.js')
+import path from 'path'
+import { exec } from 'child_process'
+import tap from 'tap'
 
-test((t) => {
+const pkg = path.join(import.meta.dirname, 'deps', 'run')
+const bin = path.join(import.meta.dirname, '..', 'bin', 'dep.js')
+
+tap.test((t) => {
   exec(`node ${bin} run`, { cwd: pkg }, (err, stdout, stderr) => {
-    t.ifError(err, 'run without error')
+    t.error(err, 'run without error')
     t.end()
   })
 })
 
-test((t) => {
+tap.test((t) => {
   exec(`node ${bin} run test`, { cwd: pkg }, (err, stdout, stderr) => {
-    t.ifError(err, 'run test without error')
+    t.error(err, 'run test without error')
     t.end()
   })
 })
