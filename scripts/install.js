@@ -12,9 +12,13 @@ process.stdout.write(
 )
 exec('git clone ' + repository + ' ' + dep, (e) => {
   if (e) throw e
-  process.stdout.write('link: ' + bin + '\n')
-  process.stdout.write(' => ' + path.join(binPath, 'dep') + '\n')
-  fs.symlink(bin, path.join(binPath, 'dep'), (e) => {
+  process.stdout.write('exec: npm install --omit=dev\n')
+  exec('npm install --omit=dev', { cwd: dep }, (e) => {
     if (e) throw e
+    process.stdout.write('link: ' + bin + '\n')
+    process.stdout.write(' => ' + path.join(binPath, 'dep') + '\n')
+    fs.symlink(bin, path.join(binPath, 'dep'), (e) => {
+      if (e) throw e
+    })
   })
 })

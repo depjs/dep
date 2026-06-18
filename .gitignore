@@ -9,22 +9,7 @@ coverage
 *.tgz
 
 # Dependency directories
-node_modules/*
-
-# bundleDependencies
-!node_modules/fs-extra/*
-!node_modules/gunzip-maybe/*
-!node_modules/node-gyp/*
-!node_modules/npm-package-arg/*
-!node_modules/npm-path/*
-!node_modules/promise-each/*
-!node_modules/request/*
-!node_modules/semver/*
-!node_modules/tar-fs/*
-!node_modules/tar-stream/*
-!node_modules/update-notifier/*
-!node_modules/which/*
-!node_modules/yargs/*
+node_modules
 
 # Python cache (from bundled node-gyp)
 __pycache__
