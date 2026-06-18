@@ -4,9 +4,6 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 [<img src="https://raw.githubusercontent.com/depjs/artwork/master/logo-500x500.png" align="right" width="140">](https://github.com/depjs/dep)
 
-###### ToDo
-+ Follow the spec of npm's [package-lock.json]
-
 ### Table of Contents
 
 <li><a href="#features">Features</a></li>
@@ -51,9 +48,14 @@ $ dep install --only=prod
 
 ### Lock
 #### `dep lock`
-ToDo.
+Resolve the dependencies defined in a local package.json and write a
+`package-lock.json` that follows the spec of npm's [package-lock.json]
+(`lockfileVersion: 3`). The lockfile records each package's resolved version,
+`resolved` URL and `integrity`, so it can be read by npm as well.
 
-It will follow the spec of npm's [package-lock.json].
+```console
+$ dep lock
+```
 
 ### Run
 #### `dep run [script] -- <args>`
@@ -113,6 +115,8 @@ Stability is a core value. Having a small set makes keeping the green badges eas
 [![github-actions][g-img]][g-url]
 
 ## Installation
+dep requires Node.js `>=20.19.0`.
+
 Since dep works independently of npm, dep has a standalone script to install.
 
 ### Standalone script

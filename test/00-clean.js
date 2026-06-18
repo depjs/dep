@@ -1,15 +1,18 @@
-const path = require('path')
-const test = require('tap').test
-const fs = require('fs-extra')
-const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
+import path from 'path'
+import tap from 'tap'
+import fs from 'fs-extra'
 
-test((t) => {
-  var count = fixtures.length
+const fixtures = fs.readdirSync(path.join(import.meta.dirname, 'deps'))
+
+tap.test((t) => {
+  let count = fixtures.length
   fixtures.forEach(fixture => {
-    const modules = path.join(__dirname, 'deps', fixture, 'node_modules')
-    const lock = path.join(__dirname, 'deps', fixture, 'node_modules.json')
+    const modules = path.join(import.meta.dirname, 'deps', fixture, 'node_modules')
+    const lock = path.join(import.meta.dirname, 'deps', fixture, 'node_modules.json')
+    const pkgLock = path.join(import.meta.dirname, 'deps', fixture, 'package-lock.json')
     fs.removeSync(modules)
     fs.removeSync(lock)
+    fs.removeSync(pkgLock)
     count -= 1
     if (count === 0) t.end()
   })

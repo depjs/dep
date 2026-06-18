@@ -1,27 +1,25 @@
-// const fs = require('fs')
-// const path = require('path')
-// const exec = require('child_process').exec
-const test = require('tap').test
-// const fixtures = fs.readdirSync(path.join(__dirname, 'deps'))
-// const bin = path.join(__dirname, '..', 'bin', 'dep.js')
+import fs from 'fs'
+import path from 'path'
+import { exec } from 'child_process'
+import tap from 'tap'
 
-test((t) => {
-  // lock is not implemented yet
-  t.end()
-  /*
-  var items = 2
-  var count = fixtures.length * items
-  t.plan(count)
-  fixtures.forEach(fixture => {
-    const pkg = path.join(__dirname, 'deps', fixture)
-    const pkgJSON = require(path.join(pkg, 'package.json'))
-    exec(`node ${bin} lock`, {cwd: pkg}, (err, stdout, stderr) => {
-      t.ifError(err, `${pkgJSON.name}: lock ran without error`)
-      const lock = require(path.join(pkg, 'node_modules.json'))
-      const deps = lock.dependencies
-      t.ok(Object.keys(deps).length, `${pkgJSON.name}: deps are locked`)
-      if (count === 0) t.end()
-    })
+const bin = path.join(import.meta.dirname, '..', 'bin', 'dep.js')
+const pkg = path.join(import.meta.dirname, 'deps', 'registry')
+
+tap.test((t) => {
+  const lockPath = path.join(pkg, 'package-lock.json')
+  exec(`node ${bin} lock`, { cwd: pkg }, (err, stdout, stderr) => {
+    t.error(err, 'lock ran without error')
+    const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'))
+    t.equal(lock.lockfileVersion, 3, 'lockfileVersion is 3')
+    t.ok(lock.packages[''], 'root package entry exists')
+    t.equal(lock.packages[''].name, 'registry', 'root name matches package.json')
+    const dep = lock.packages['node_modules/happy-birthday']
+    t.ok(dep, 'dependency is locked under its install path')
+    t.ok(dep.version, 'locked dependency has a version')
+    t.ok(dep.resolved, 'locked dependency has a resolved url')
+    t.ok(dep.integrity, 'locked dependency has integrity')
+    fs.unlinkSync(lockPath)
+    t.end()
   })
-  */
 })
