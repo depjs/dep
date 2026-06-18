@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/depjs/dep#readme",
   "bundleDependencies": [
+    "cmd-shim",
     "fs-extra",
     "gunzip-maybe",
     "node-gyp",
@@ -43,6 +44,7 @@
     "yargs"
   ],
   "dependencies": {
+    "cmd-shim": "^9.0.1",
     "fs-extra": "^11.3.5",
     "gunzip-maybe": "^1.4.2",
     "node-gyp": "^13.0.0",
