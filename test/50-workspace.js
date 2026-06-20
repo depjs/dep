@@ -141,21 +141,25 @@ tap.test('install <pkg> -w <workspace> adds dep to that workspace and hoists it'
   write('packages/b/package.json', { name: 'pkg-b', version: '1.0.0' })
   t.teardown(() => fs.rmSync(root, { recursive: true, force: true }))
 
+  // Bare names (no version) keep `^` out of the shell command — cmd.exe on
+  // Windows treats `^` as an escape character. saver then writes the resolved
+  // `^<version>`, exercising the save-prefix path too.
+
   // by name, default save target is dependencies
-  exec(`node ${bin} install is-odd@^3.0.0 -w @scope/a`, { cwd: root }, (err) => {
+  exec(`node ${bin} install is-odd -w @scope/a`, { cwd: root }, (err) => {
     t.error(err, 'install -w (by name) ran without error')
     const a = JSON.parse(fs.readFileSync(path.join(root, 'packages', 'a', 'package.json')))
-    t.equal(a.dependencies && a.dependencies['is-odd'], '^3.0.0', 'dep written to the target workspace')
+    t.match(a.dependencies && a.dependencies['is-odd'], /^\^3\./, 'dep written to the target workspace')
     t.ok(fs.existsSync(path.join(root, 'node_modules', 'is-odd', 'package.json')), 'dep hoisted into root node_modules')
     t.notOk(fs.existsSync(path.join(root, 'packages', 'b', 'package.json')) &&
       JSON.parse(fs.readFileSync(path.join(root, 'packages', 'b', 'package.json'))).dependencies,
     'other workspace untouched')
 
     // by path + --save-dev
-    exec(`node ${bin} install is-number@^7.0.0 -w packages/b --save-dev`, { cwd: root }, (err2) => {
+    exec(`node ${bin} install is-number -w packages/b --save-dev`, { cwd: root }, (err2) => {
       t.error(err2, 'install -w (by path) ran without error')
       const b = JSON.parse(fs.readFileSync(path.join(root, 'packages', 'b', 'package.json')))
-      t.equal(b.devDependencies && b.devDependencies['is-number'], '^7.0.0', '--save-dev writes to the workspace devDependencies')
+      t.match(b.devDependencies && b.devDependencies['is-number'], /^\^7\./, '--save-dev writes to the workspace devDependencies')
 
       // unknown workspace fails
       exec(`node ${bin} install left-pad -w nope`, { cwd: root }, (err3) => {

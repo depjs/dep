@@ -54,7 +54,7 @@ tap.test((t) => {
 
 tap.test((t) => {
   const name = '@watilde/hello-scoped-package'
-  exec(`node ${bin} install ${name}@^1.0.1 --save`, { cwd: pkg }, (err, stdout, stderr) => {
+  exec(`node ${bin} install ${name} --save`, { cwd: pkg }, (err, stdout, stderr) => {
     t.error(err, `${pkgJSON.name}: scoped --save ran without error`)
     const json = JSON.parse(fs.readFileSync(path.join(pkg, 'package.json')))
     t.ok(json.dependencies && json.dependencies[name], `${pkgJSON.name}: scoped pkg saved under its full name`)
