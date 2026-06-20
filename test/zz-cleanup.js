@@ -1,4 +1,4 @@
-import fs from 'fs-extra'
+import fs from 'fs'
 import path from 'path'
 import tap from 'tap'
 
@@ -10,9 +10,9 @@ tap.test((t) => {
     const modules = path.join(import.meta.dirname, 'deps', fixture, 'node_modules')
     const lock = path.join(import.meta.dirname, 'deps', fixture, 'node_modules.json')
     const pkgLock = path.join(import.meta.dirname, 'deps', fixture, 'package-lock.json')
-    fs.removeSync(modules)
-    fs.removeSync(lock)
-    fs.removeSync(pkgLock)
+    fs.rmSync(modules, { recursive: true, force: true })
+    fs.rmSync(lock, { recursive: true, force: true })
+    fs.rmSync(pkgLock, { recursive: true, force: true })
     count -= 1
     if (count === 0) t.end()
   })

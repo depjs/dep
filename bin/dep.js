@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 
 import { readFileSync } from 'fs'
-import semver from 'semver'
-import yargs from 'yargs'
-import { hideBin } from 'yargs/helpers'
-import updateNotifier from 'update-notifier'
+import { parseArgs } from 'util'
+import semver from '../lib/utils/semver.js'
+import updateNotifier from '../lib/utils/update-notifier.js'
 import install from '../lib/install.js'
 import lock from '../lib/lock.js'
 import run from '../lib/run.js'
 
-const commands = { install, lock, run }
 const pkgJSON = JSON.parse(
   readFileSync(new URL('../package.json', import.meta.url))
 )
@@ -20,24 +18,68 @@ if (!semver.satisfies(process.version, pkgJSON.engines.node)) {
   process.exit(1)
 }
 
-const notifier = updateNotifier({ pkg: pkgJSON })
-if (notifier.update) {
-  notifier.notify()
+updateNotifier({ name: pkgJSON.name, version: pkgJSON.version })
+
+// Map every command name and alias to its module.
+const modules = [install, lock, run]
+const commands = {}
+for (const mod of modules) {
+  commands[mod.command] = mod
+  for (const alias of mod.aliases || []) commands[alias] = mod
 }
 
-const parser = yargs(hideBin(process.argv))
-  .scriptName('dep')
-  .usage(pkgJSON.description)
-  .help('help')
-  .alias('help', 'h')
-  .version(pkgJSON.version)
-  .alias('version', 'v')
-  .describe('version', 'Show version information')
+const help = () => {
+  const rows = modules.map((mod) => {
+    const names = [mod.command, ...(mod.aliases || [])].join(', ')
+    return `  ${names.padEnd(14)}${mod.describe}`
+  })
+  return [
+    pkgJSON.description,
+    '',
+    'Usage: dep <command> [options]',
+    '',
+    'Commands:',
+    ...rows,
+    '',
+    'Options:',
+    '  --save             Save to dependencies (--save=dev for devDependencies)',
+    '  --save-dev         Save to devDependencies',
+    '  --only=prod|dev    Install only prod or dev dependencies',
+    '  -h, --help         Show help',
+    '  -v, --version      Show version information',
+    ''
+  ].join('\n')
+}
 
-Object.keys(commands).forEach((i) => {
-  parser.command(commands[i])
+// strict:false keeps unknown flags from throwing (e.g. flags meant for a
+// `run` script); defined options still resolve with their declared types.
+const { values, positionals } = parseArgs({
+  args: process.argv.slice(2),
+  strict: false,
+  allowPositionals: true,
+  options: {
+    help: { type: 'boolean', short: 'h' },
+    version: { type: 'boolean', short: 'v' },
+    only: { type: 'string' },
+    save: { type: 'string' },
+    'save-dev': { type: 'boolean' }
+  }
 })
 
-const argv = await parser.argv
+// Normalise the save target: --save/--save=prod -> dependencies,
+// --save=dev/--save-dev -> devDependencies, otherwise don't save.
+const save = values['save-dev'] || values.save === 'dev'
+  ? 'dev'
+  : (values.save ? 'prod' : null)
 
-if (!argv._handled) parser.showHelp()
+const command = commands[positionals[0]]
+
+if (values.version) {
+  process.stdout.write(pkgJSON.version + '\n')
+} else if (values.help) {
+  process.stdout.write(help() + '\n')
+} else if (command) {
+  command.handler({ _: positionals, only: values.only, save })
+} else {
+  process.stderr.write(help() + '\n')
+}

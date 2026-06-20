@@ -34,6 +34,25 @@ tap.test((t) => {
 })
 
 tap.test((t) => {
+  const file = 'happy-birthday@' + path.join(import.meta.dirname, 'deps/file/happy-birthday-0.6.0')
+  exec(`node ${bin} install --save ${file}`, { cwd: pkg }, (err, stdout, stderr) => {
+    t.error(err, `${pkgJSON.name}: bare --save ran without error`)
+    const json = JSON.parse(fs.readFileSync(path.join(pkg, 'package.json')))
+    t.ok(json.dependencies && json.dependencies['happy-birthday'], `${pkgJSON.name}: bare --save writes to dependencies`)
+    t.end()
+  })
+})
+
+tap.test((t) => {
+  exec(`node ${bin} install --save-dev text-table`, { cwd: pkg }, (err, stdout, stderr) => {
+    t.error(err, `${pkgJSON.name}: --save-dev ran without error`)
+    const json = JSON.parse(fs.readFileSync(path.join(pkg, 'package.json')))
+    t.ok(json.devDependencies && json.devDependencies['text-table'], `${pkgJSON.name}: --save-dev writes to devDependencies`)
+    t.end()
+  })
+})
+
+tap.test((t) => {
   const data = pkgJSON
   delete data.dependencies
   delete data.devDependencies
