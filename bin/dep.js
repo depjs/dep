@@ -42,11 +42,12 @@ const help = () => {
     ...rows,
     '',
     'Options:',
-    '  --save             Save to dependencies (--save=dev for devDependencies)',
-    '  --save-dev         Save to devDependencies',
-    '  --only=prod|dev    Install only prod or dev dependencies',
-    '  -h, --help         Show help',
-    '  -v, --version      Show version information',
+    '  --save                  Save to dependencies (--save=dev for devDependencies)',
+    '  --save-dev              Save to devDependencies',
+    '  --only=prod|dev         Install only prod or dev dependencies',
+    '  -w, --workspace <name>  Add the package(s) to the named workspace(s)',
+    '  -h, --help              Show help',
+    '  -v, --version           Show version information',
     ''
   ].join('\n')
 }
@@ -62,7 +63,8 @@ const { values, positionals } = parseArgs({
     version: { type: 'boolean', short: 'v' },
     only: { type: 'string' },
     save: { type: 'string' },
-    'save-dev': { type: 'boolean' }
+    'save-dev': { type: 'boolean' },
+    workspace: { type: 'string', short: 'w', multiple: true }
   }
 })
 
@@ -79,7 +81,7 @@ if (values.version) {
 } else if (values.help) {
   process.stdout.write(help() + '\n')
 } else if (command) {
-  command.handler({ _: positionals, only: values.only, save })
+  command.handler({ _: positionals, only: values.only, save, workspace: values.workspace })
 } else {
   process.stderr.write(help() + '\n')
 }
