@@ -1,6 +1,6 @@
 # dep
 
-A little Node.js dependency installer with the bare minimum features for module **end-users**.
+A little Node.js dependency installer for module **end-users**.
 
 [<img src="https://raw.githubusercontent.com/depjs/artwork/master/logo-500x500.png" align="right" width="140">](https://github.com/depjs/dep)
 
@@ -246,27 +246,11 @@ variable, default `16`) to avoid exhausting sockets and file handles.
 ## Installation
 dep requires Node.js `>=20.19.0`.
 
-Since dep works independently of npm, dep has a standalone script to install.
-
-### Standalone script
-```console
-$ curl -L https://github.com/depjs/dep/raw/master/scripts/install.js | node
-```
-
-### via npm
 ```console
 $ npm install --global dep
 ```
 
 ## Uninstallation
-Also for uninstallation.
-
-### Standalone script
-```console
-$ curl -L https://github.com/depjs/dep/raw/master/scripts/uninstall.js | node
-```
-
-### via npm
 ```console
 $ npm uninstall --global dep
 ```
