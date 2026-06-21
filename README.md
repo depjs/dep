@@ -167,7 +167,13 @@ intentionally left out.
 | `engines` / `os` / `cpu` | ✅ Supported | On install, a required dep whose `os`/`cpu` doesn't match fails (optional ones are skipped); `engines.node` mismatches warn, or fail under `engine-strict`. The lockfile stays cross-platform. |
 | Integrity verification | ✅ Supported | Registry tarballs are hashed and checked against `integrity` (SRI sha512) or the legacy `shasum` before extraction; a mismatch fails the install. |
 | `bundledDependencies` | ✅ Supported | A package's bundled deps ship inside its tarball, so they aren't re-fetched or hoisted out. |
-| Audit / fund / dedupe / outdated | ➖ Out of scope | dep targets install/lock/run only. |
+| Dependency sources | ✅ Supported | Registry ranges/tags, git URLs (`git+https`, with `#commit`/`#semver:`), remote tarball URLs, and local file/directory paths. |
+| `.npmrc` config | 🟡 Partial | Reads `registry`, `save-prefix`, and `engine-strict` from `~/.npmrc`. No auth tokens, scoped registries, or most other config keys. |
+| Private / authed registries | ➖ Out of scope | Requests are unauthenticated; only an open registry is supported. |
+| `overrides` | ➖ Out of scope | Dependency version overrides are ignored. |
+| Aliased specifiers (`pkg@npm:other`) | ➖ Out of scope | npm package aliases are not resolved. |
+| `npm-shrinkwrap.json` | ➖ Out of scope | dep reads and writes `package-lock.json` only. |
+| Commands beyond install/lock/run | ➖ Out of scope | No `ci`, `update`, `uninstall`, `dedupe`, `audit`, `fund`, `outdated`, `publish`, `version`, `exec`/`npx`, etc. |
 
 ✅ Supported &nbsp;·&nbsp; 🟡 Partial &nbsp;·&nbsp; ➖ Intentionally out of scope
 
