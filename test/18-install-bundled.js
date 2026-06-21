@@ -1,4 +1,4 @@
-import tap from 'tap'
+import tap from './helpers/tap.js'
 import resolveTree from '../lib/utils/resolve-tree.js'
 
 // bundledDependencies ship inside a package's tarball, so the resolver must not

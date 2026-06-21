@@ -1,4 +1,4 @@
-import tap from 'tap'
+import tap from './helpers/tap.js'
 import packument from '../lib/utils/packument.js'
 
 // Resolution downloads the abbreviated ("corgi") packument by default — much

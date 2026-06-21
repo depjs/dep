@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
-import tap from 'tap'
+import tap from './helpers/tap.js'
 
 const bin = path.join(import.meta.dirname, '..', 'bin', 'dep.js')
 const pkg = path.join(import.meta.dirname, 'deps', 'registry')

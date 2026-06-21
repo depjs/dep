@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
-import tree from 'strong-npm-ls'
-import tap from 'tap'
+import tree from './helpers/tree.js'
+import tap from './helpers/tap.js'
 
 const skip = [
   'install-only',

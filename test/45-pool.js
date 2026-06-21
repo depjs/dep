@@ -1,4 +1,4 @@
-import tap from 'tap'
+import tap from './helpers/tap.js'
 import pool from '../lib/utils/pool.js'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))

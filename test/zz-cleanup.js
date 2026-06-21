@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import tap from 'tap'
+import tap from './helpers/tap.js'
 
 const fixtures = fs.readdirSync(path.join(import.meta.dirname, 'deps'))
 

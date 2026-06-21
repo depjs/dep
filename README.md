@@ -92,7 +92,7 @@ Available scripts via `dep run`
 dep run build:
   webpack src/index.js
 dep run test:
-  tap "test/*.js"
+  node --test "test/*.js"
 ```
 
 ## Workspaces
@@ -241,7 +241,7 @@ Node.js standard library — and resolves the dependency tree deterministically,
 with bounded concurrency (tunable via the `DEP_CONCURRENCY` environment
 variable, default `16`) to avoid exhausting sockets and file handles.
 
-[![github-actions][g-img]][g-url]
+[![github-actions][g-img]][g-url] [![codecov][c-img]][c-url]
 
 ## Installation
 dep requires Node.js `>=20.19.0`.
@@ -264,6 +264,8 @@ See [CONTRIBUTING.md][] for more info.
 
 [g-img]: https://github.com/depjs/dep/workflows/Node.js%20CI/badge.svg
 [g-url]: https://github.com/depjs/dep/actions
+[c-img]: https://codecov.io/gh/depjs/dep/branch/master/graph/badge.svg
+[c-url]: https://codecov.io/gh/depjs/dep
 [package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
 [CONTRIBUTING.md]: https://github.com/depjs/dep/blob/master/.github/CONTRIBUTING.md
 [MIT]: https://github.com/depjs/dep/blob/master/LICENSE

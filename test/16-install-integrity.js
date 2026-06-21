@@ -3,7 +3,7 @@ import os from 'os'
 import path from 'path'
 import crypto from 'crypto'
 import { exec } from 'child_process'
-import tap from 'tap'
+import tap from './helpers/tap.js'
 import verifyIntegrity from '../lib/utils/integrity.js'
 
 const bin = path.join(import.meta.dirname, '..', 'bin', 'dep.js')

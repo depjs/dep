@@ -1,7 +1,7 @@
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import tap from 'tap'
+import tap from './helpers/tap.js'
 import nodeGyp from '../lib/utils/node-gyp.js'
 import which from '../lib/utils/which.js'
 

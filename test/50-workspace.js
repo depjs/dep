@@ -2,7 +2,7 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import { exec } from 'child_process'
-import tap from 'tap'
+import tap from './helpers/tap.js'
 import { findWorkspaces, resolveWorkspace } from '../lib/utils/workspaces.js'
 
 const bin = path.join(import.meta.dirname, '..', 'bin', 'dep.js')

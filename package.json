@@ -6,9 +6,10 @@
   "main": "lib/install.js",
   "scripts": {
     "release": "standard-version",
-    "pretest": "standard \"lib/**/*.js\" \"bin/*.js\" \"test/*.js\" \"scripts/*.js\"",
-    "test": "tap \"test/*.js\" --timeout 1000 --jobs=1 --disable-coverage",
-    "test-ci": "tap \"test/*.js\" --timeout 1000 --jobs=1 --allow-incomplete-coverage"
+    "pretest": "standard \"lib/**/*.js\" \"bin/*.js\" \"test/*.js\" \"test/helpers/*.js\" \"scripts/*.js\"",
+    "test": "node scripts/test.js",
+    "test-ci": "node scripts/test.js --coverage",
+    "coverage": "node scripts/test.js --lcov"
   },
   "repository": {
     "type": "git",
@@ -30,9 +31,7 @@
   "dependencies": {},
   "devDependencies": {
     "standard": "^17.1.2",
-    "standard-version": "^9.5.0",
-    "strong-npm-ls": "^1.0.10",
-    "tap": "^21.7.4"
+    "standard-version": "^9.5.0"
   },
   "engines": {
     "node": ">=20.19.0"

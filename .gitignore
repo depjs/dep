@@ -1,9 +1,9 @@
 # Logs
 *.log
 
-# Coverage and tap working directory
+# Coverage
 coverage
-.tap
+lcov.info
 
 # Output of 'npm pack'
 *.tgz
