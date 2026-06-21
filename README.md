@@ -11,6 +11,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 - [Workspaces](#workspaces)
 - [Usage](#usage)
 - [npm compatibility](#npm-compatibility)
+- [Benchmark](#benchmark)
 - [Concepts](#concepts)
 - [Installation](#installation)
 - [Uninstallation](#uninstallation)
@@ -180,6 +181,48 @@ intentionally left out.
 | Commands beyond install/lock/run | ➖ Out of scope | No `ci`, `update`, `uninstall`, `dedupe`, `audit`, `fund`, `outdated`, `publish`, `version`, `exec`/`npx`, etc. |
 
 ✅ Supported &nbsp;·&nbsp; 🟡 Partial &nbsp;·&nbsp; ➖ Intentionally out of scope
+
+## Benchmark
+Installing a 12-dependency app (`express`, `lodash`, `rxjs`, `axios`,
+`chokidar`, …), with yarn pinned to the `node-modules` linker so all four
+produce a comparable `node_modules`. Lower is better.
+
+**Cold** — no lockfile, a fresh isolated cache for every run:
+
+| Tool | Cold install | Relative |
+| --- | --- | --- |
+| npm 11 | ~3.0s | 1.0× |
+| yarn 4 | ~1.25s | ~2.4× faster |
+| pnpm 11 | ~0.95s | ~3.2× faster |
+| **dep** | **~0.77s** | **~3.9× faster** |
+
+**Warm** — lockfile present and cache/store warm; only `node_modules` is removed
+before each run (the usual reinstall / cached-CI case). For dep this is a
+`package-lock.json`-driven install (`npm ci` for npm, `--immutable` for yarn,
+`--frozen-lockfile` for pnpm):
+
+| Tool | Warm install | Relative |
+| --- | --- | --- |
+| npm 11 | ~1.45s | 1.0× |
+| yarn 4 | ~0.80s | ~1.8× faster |
+| pnpm 11 | ~0.55s | ~2.6× faster |
+| **dep** | **~0.46s** | **~3.1× faster** |
+
+<sub>avg of 5 runs on one Linux machine, Node 24, against the public registry —
+numbers vary by machine, network, and dependency set.</sub>
+
+Reproduce it yourself:
+
+```console
+$ node scripts/benchmark.js
+```
+
+**Caveat:** dep keeps **no local cache** by design (see
+[Save spaces](#save-spaces)). Even in the warm case it *re-downloads* tarballs
+(it only skips re-resolving the tree from the lockfile), so its warm speed is
+network-bound. pnpm/npm/yarn serve cached packages from disk and can even
+install offline — on a slow or offline network they stay fast while dep does
+not. These numbers reflect a fast connection to the registry.
 
 ## Concepts
 

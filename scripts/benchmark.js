@@ -1,8 +1,11 @@
-// Cold-install benchmark: npm vs yarn vs pnpm vs dep.
+// Install benchmark: npm vs yarn vs pnpm vs dep, in two scenarios.
 //
-// Each run uses a fresh project directory and a fresh, isolated cache/store, so
-// every install starts from a truly cold cache with no lockfile. yarn is pinned
-// to the node-modules linker so all four produce a comparable node_modules.
+//   cold  — fresh project, no lockfile, fresh isolated cache for every run.
+//   warm  — lockfile present and cache/store warm; only node_modules is removed
+//           before each run (the usual reinstall / cached-CI case).
+//
+// yarn is pinned to the node-modules linker so all four produce a comparable
+// node_modules. Lower is better.
 //
 // Usage: node scripts/benchmark.js   (RUNS=5 by default; set RUNS to change)
 import { execSync } from 'child_process'
@@ -37,23 +40,31 @@ const pkg = JSON.stringify({
 const tools = [
   {
     name: 'npm',
-    cmd: () => 'npm install --no-audit --no-fund --no-package-lock',
-    env: (cache) => ({ npm_config_cache: cache })
+    env: (cache) => ({ npm_config_cache: cache }),
+    cold: 'npm install --no-audit --no-fund --no-package-lock',
+    warmSetup: 'npm install --no-audit --no-fund',
+    warm: 'npm ci --no-audit --no-fund'
   },
   {
     name: 'yarn',
-    cmd: () => 'yarn install --no-immutable',
-    env: (cache) => ({ YARN_ENABLE_GLOBAL_CACHE: 'false', YARN_NODE_LINKER: 'node-modules', YARN_CACHE_FOLDER: cache })
+    env: (cache) => ({ YARN_ENABLE_GLOBAL_CACHE: 'false', YARN_NODE_LINKER: 'node-modules', YARN_CACHE_FOLDER: cache }),
+    cold: 'yarn install --no-immutable',
+    warmSetup: 'yarn install --no-immutable',
+    warm: 'yarn install --immutable'
   },
   {
     name: 'pnpm',
-    cmd: (cache) => `pnpm install --no-lockfile --store-dir ${path.join(cache, 'store')}`,
-    env: () => ({})
+    env: (cache) => ({ npm_config_cache: cache }),
+    cold: (cache) => `pnpm install --no-lockfile --store-dir ${path.join(cache, 'store')}`,
+    warmSetup: (cache) => `pnpm install --store-dir ${path.join(cache, 'store')}`,
+    warm: (cache) => `pnpm install --frozen-lockfile --store-dir ${path.join(cache, 'store')}`
   },
   {
     name: 'dep',
-    cmd: () => `node ${depBin} install`,
-    env: () => ({ NO_UPDATE_NOTIFIER: '1' })
+    env: () => ({ NO_UPDATE_NOTIFIER: '1' }),
+    cold: `node ${depBin} install`,
+    warmSetup: `node ${depBin} lock`,
+    warm: `node ${depBin} install`
   }
 ]
 
@@ -66,25 +77,64 @@ const installed = (name) => {
   }
 }
 
-for (const tool of tools) {
-  if (tool.name !== 'dep' && !installed(tool.name)) {
-    console.log(`${tool.name}: not installed, skipped`)
-    continue
-  }
+const resolve = (cmd, cache) => (typeof cmd === 'function' ? cmd(cache) : cmd)
+
+const time = (cmd, opts) => {
+  const start = process.hrtime.bigint()
+  execSync(cmd, opts)
+  return Number(process.hrtime.bigint() - start) / 1e9
+}
+
+// cold: a fresh project + fresh cache for every run.
+const cold = (tool) => {
   let total = 0
   let best = Infinity
   for (let i = 0; i < RUNS; i++) {
-    const work = mkdtempSync(path.join(os.tmpdir(), `bench-${tool.name}-`))
+    const work = mkdtempSync(path.join(os.tmpdir(), `cold-${tool.name}-`))
     const cache = path.join(work, 'cache')
     mkdirSync(cache, { recursive: true })
     writeFileSync(path.join(work, 'package.json'), pkg)
     const env = Object.assign({}, process.env, tool.env(cache))
-    const start = process.hrtime.bigint()
-    execSync(tool.cmd(cache), { cwd: work, env, stdio: 'ignore' })
-    const sec = Number(process.hrtime.bigint() - start) / 1e9
+    const sec = time(resolve(tool.cold, cache), { cwd: work, env, stdio: 'ignore' })
     total += sec
     best = Math.min(best, sec)
     rmSync(work, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
   }
-  console.log(`${tool.name.padEnd(6)} avg ${(total / RUNS).toFixed(2)}s   best ${best.toFixed(2)}s`)
+  return { avg: total / RUNS, best }
 }
+
+// warm: a persistent project + cache; warm up once, then only remove
+// node_modules before each measured run.
+const warm = (tool) => {
+  const work = mkdtempSync(path.join(os.tmpdir(), `warm-${tool.name}-`))
+  const cache = path.join(work, 'cache')
+  mkdirSync(cache, { recursive: true })
+  writeFileSync(path.join(work, 'package.json'), pkg)
+  const env = Object.assign({}, process.env, tool.env(cache))
+  execSync(resolve(tool.warmSetup, cache), { cwd: work, env, stdio: 'ignore' })
+  let total = 0
+  let best = Infinity
+  for (let i = 0; i < RUNS; i++) {
+    rmSync(path.join(work, 'node_modules'), { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
+    const sec = time(resolve(tool.warm, cache), { cwd: work, env, stdio: 'ignore' })
+    total += sec
+    best = Math.min(best, sec)
+  }
+  rmSync(work, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
+  return { avg: total / RUNS, best }
+}
+
+const report = (label, fn) => {
+  console.log(`\n${label} (avg of ${RUNS} runs)`)
+  for (const tool of tools) {
+    if (tool.name !== 'dep' && !installed(tool.name)) {
+      console.log(`  ${tool.name.padEnd(6)} not installed, skipped`)
+      continue
+    }
+    const r = fn(tool)
+    console.log(`  ${tool.name.padEnd(6)} avg ${r.avg.toFixed(2)}s   best ${r.best.toFixed(2)}s`)
+  }
+}
+
+report('cold install (no cache, no lockfile)', cold)
+report('warm install (lockfile + warm cache, node_modules removed)', warm)
