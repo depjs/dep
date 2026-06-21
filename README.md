@@ -7,6 +7,7 @@ A little Node.js dependency installer with the bare minimum features for module 
 ### Table of Contents
 
 <li><a href="#features">Features</a></li>
+<li><a href="#workspaces">Workspaces</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#concepts">Concepts</a></li>
 <li><a href="#installation">Installation</a></li>
@@ -18,8 +19,9 @@ A little Node.js dependency installer with the bare minimum features for module 
 + **<a href="#install">Install</a>** the dependencies defined in a local package.json.
 + **<a href="#lock">Lock</a>** the dependencies installed in a local node_modules.
 + **<a href="#run">Run</a>** an arbitrary command from scripts in a local package.json.
++ **<a href="#workspaces">Workspaces</a>** in a monorepo, installed and locked together.
 
-dep is trying to have a similar/same interface of the features with npm, but there are some slightly different implementations internally.
+dep is trying to have a similar/same interface of the features with npm, but there are some slightly different implementations internally. It ships with **zero runtime dependencies**.
 
 ### Install
 #### `dep install`
@@ -32,11 +34,15 @@ You can install a package as like `npm install`.
 $ dep install webpack
 ```
 
-#### `dep install --save={dev|prod} <package name>(@{version|resource})`
-You can install the package and save it to either `dependencies` or `devDependencies` by using `--only={dev|prod}`.
+#### `dep install --save[={dev|prod}] <package name>(@{version|resource})`
+You can install the package and save it to your package.json. `--save` (or
+`--save=prod`) writes to `dependencies`; `--save=dev` or `--save-dev` writes to
+`devDependencies`. When no version is given, the resolved version is saved with
+the `^` prefix.
 
 ```console
-$ dep install webpack --save=dev
+$ dep install webpack --save
+$ dep install webpack --save-dev
 ```
 
 #### `dep install --only={dev|prod}`
@@ -84,19 +90,63 @@ dep run test:
   tap "test/*.js"
 ```
 
+## Workspaces
+dep supports monorepos through the npm-style `workspaces` field in the root
+package.json (an array of globs, or `{ "packages": [...] }`).
+
+```json
+{
+  "name": "monorepo",
+  "private": true,
+  "workspaces": ["packages/*"]
+}
+```
+
+#### `dep install`
+Running install at the root resolves and **hoists** every workspace's
+dependencies into the root `node_modules`, and **symlinks** each workspace
+package into `node_modules` (with its bins) so cross-workspace imports resolve.
+
+#### `dep install <package name> -w <workspace>`
+Add a package to a specific workspace. The workspace is matched by its name or
+by its path relative to the root, and the package is saved to that workspace's
+package.json. Use `--save-dev` to save it to `devDependencies`, and repeat `-w`
+to target several workspaces.
+
+```console
+$ dep install lodash -w @scope/a
+$ dep install tap -w packages/b --save-dev
+```
+
+#### `dep lock [-w <workspace>]`
+`dep lock` records workspaces in `package-lock.json` the npm way: a source entry
+at each workspace's path plus a `link` entry under `node_modules`. Pass
+`-w <workspace>` to narrow the lockfile to the given workspace(s).
+
+```console
+$ dep lock
+$ dep lock -w @scope/a
+```
+
 ## Usage
 ```console
 $ dep -h
 A little Node.js dependency installer
 
+Usage: dep <command> [options]
+
 Commands:
-  install  Install dependencies defined in package.json             [aliases: i]
-  lock     Lock dependencies installed in node_modules              [aliases: l]
-  run      Run an arbitrary command from scripts in package.json    [aliases: r]
+  install, i    Install dependencies defined in package.json
+  lock, l       Lock dependencies installed in node_modules
+  run, r        Run an arbitrary command from scripts in package.json
 
 Options:
-  --help, -h     Show help                                             [boolean]
-  --version, -v  Show version information                              [boolean]
+  --save                  Save to dependencies (--save=dev for devDependencies)
+  --save-dev              Save to devDependencies
+  --only=prod|dev         Install only prod or dev dependencies
+  -w, --workspace <name>  Add the package(s) to the named workspace(s)
+  -h, --help              Show help
+  -v, --version           Show version information
 ```
 
 ## Concepts
@@ -110,7 +160,11 @@ Speed and local disk capacity are a trade-off. To take the both benefits, it wou
 Therefore, dep does not make cache files in a local disc for now.
 
 ### Stability
-Stability is a core value. Having a small set makes keeping the green badges easier.
+Stability is a core value. Having a small set makes keeping the green badges
+easier. dep has **zero runtime dependencies** — everything is built on the
+Node.js standard library — and resolves the dependency tree deterministically,
+with bounded concurrency (tunable via the `DEP_CONCURRENCY` environment
+variable, default `16`) to avoid exhausting sockets and file handles.
 
 [![github-actions][g-img]][g-url]
 
