@@ -149,6 +149,28 @@ Options:
   -v, --version           Show version information
 ```
 
+## npm compatibility
+dep deliberately implements a focused subset of npm. The table below is the
+honest state of each feature — what works, what works partially, and what is
+intentionally left out.
+
+| Feature | Status | Notes |
+| --- | --- | --- |
+| `dependencies` | ✅ Supported | Resolved (deterministic, hoisted) and installed. |
+| `devDependencies` | ✅ Supported | Root package only. Filter with `--only`, save with `--save-dev`. |
+| `optionalDependencies` | 🟡 Partial | Root-level optional deps are installed; a native build that fails is dropped. Transitive `optionalDependencies` are not followed, but they are recorded in the lockfile. |
+| `peerDependencies` | 🟡 Partial | Recorded in `package-lock.json`, but not auto-installed. |
+| `workspaces` | ✅ Supported | Globs (and `{ "packages": [...] }`). Hoisted install + symlinks, npm-style lockfile entries, and `-w, --workspace`. |
+| `package-lock.json` (v3) | ✅ Supported | `dep lock` emits an npm-compatible `lockfileVersion: 3`, and a plain `dep install` reproduces it (skipping registry resolution). A stale lock, installing a specific package, `-w`, or `--only` falls back to a fresh resolve. |
+| `bin` | ✅ Supported | Symlinks on POSIX; `.cmd`/`.ps1`/sh shims on Windows. |
+| Lifecycle scripts | ✅ Supported | Dependencies run `preinstall`/`install`/`postinstall`. The local project and each workspace run the full `npm install` sequence: `preinstall` → (deps) → `install` → `postinstall` → `prepublish` → `prepare`. |
+| `engines` / `os` / `cpu` | ➖ Out of scope | Recorded in the lockfile, but not enforced during install. |
+| Integrity verification | ➖ Out of scope | `integrity`/`shasum` are recorded in the lockfile but tarballs are not verified on install (see [Save spaces](#save-spaces)). |
+| `bundledDependencies` | ➖ Out of scope | Not handled. |
+| Audit / fund / dedupe / outdated | ➖ Out of scope | dep targets install/lock/run only. |
+
+✅ Supported &nbsp;·&nbsp; 🟡 Partial &nbsp;·&nbsp; ➖ Intentionally out of scope
+
 ## Concepts
 
 ### End users
