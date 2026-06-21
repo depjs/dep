@@ -6,14 +6,16 @@ A little Node.js dependency installer with the bare minimum features for module 
 
 ### Table of Contents
 
-<li><a href="#features">Features</a></li>
-<li><a href="#workspaces">Workspaces</a></li>
-<li><a href="#usage">Usage</a></li>
-<li><a href="#concepts">Concepts</a></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#uninstallation">Uninstallation</a></li>
-<li><a href="#contributing">Contributing</a></li>
-<li><a href="#license">License</a></li>
+- [Features](#features)
+- [Commands](#commands)
+- [Workspaces](#workspaces)
+- [Usage](#usage)
+- [npm compatibility](#npm-compatibility)
+- [Concepts](#concepts)
+- [Installation](#installation)
+- [Uninstallation](#uninstallation)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 + **<a href="#install">Install</a>** the dependencies defined in a local package.json.
@@ -22,6 +24,8 @@ A little Node.js dependency installer with the bare minimum features for module 
 + **<a href="#workspaces">Workspaces</a>** in a monorepo, installed and locked together.
 
 dep is trying to have a similar/same interface of the features with npm, but there are some slightly different implementations internally. It ships with **zero runtime dependencies**.
+
+## Commands
 
 ### Install
 #### `dep install`
@@ -233,9 +237,6 @@ See [CONTRIBUTING.md][] for more info.
 
 [g-img]: https://github.com/depjs/dep/workflows/Node.js%20CI/badge.svg
 [g-url]: https://github.com/depjs/dep/actions
-[npm]: https://github.com/npm/npm
-[git repository]: https://github.com/watilde/emoji-cli
-[twitter]: https://twitter.com/watilde
 [package-lock.json]: https://github.com/npm/npm/blob/latest/doc/spec/package-lock.md
 [CONTRIBUTING.md]: https://github.com/depjs/dep/blob/master/.github/CONTRIBUTING.md
 [MIT]: https://github.com/depjs/dep/blob/master/LICENSE
