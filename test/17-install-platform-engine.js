@@ -17,7 +17,7 @@ const mkProject = (deps) => {
 // fsevents is darwin-only; as a *required* dependency it must fail off-darwin.
 tap.test('a required dependency for another platform fails the install', { skip: process.platform === 'darwin' ? 'on darwin fsevents is supported' : false }, (t) => {
   const dir = mkProject({ fsevents: '^2.3.2' })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: dir }, (err, stdout, stderr) => {
     t.ok(err, 'install exits non-zero')

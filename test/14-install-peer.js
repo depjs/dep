@@ -16,7 +16,7 @@ const mkProject = (deps) => {
 // ajv-keywords@5 declares a (non-optional) peerDependency on ajv@^8.
 tap.test('install auto-installs non-optional peerDependencies at the top level', (t) => {
   const dir = mkProject({ 'ajv-keywords': '^5.1.0' })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install ran without error')
@@ -29,7 +29,7 @@ tap.test('install auto-installs non-optional peerDependencies at the top level',
 
 tap.test('lock records the auto-installed peer as a package and keeps peerDependencies', (t) => {
   const dir = mkProject({ 'ajv-keywords': '^5.1.0' })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock`, { cwd: dir }, (err) => {
     t.error(err, 'lock ran without error')

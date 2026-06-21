@@ -30,7 +30,7 @@ tap.test('verifyIntegrity accepts a matching hash and rejects a bad one', (t) =>
 
 tap.test('install verifies tarball integrity and succeeds for valid packages', (t) => {
   const dir = mkProject()
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install ran without error')
     t.ok(fs.existsSync(path.join(dir, 'node_modules', 'is-odd', 'package.json')), 'package extracted after passing verification')
@@ -40,7 +40,7 @@ tap.test('install verifies tarball integrity and succeeds for valid packages', (
 
 tap.test('a tampered lockfile integrity fails the install before writing files', (t) => {
   const dir = mkProject()
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock`, { cwd: dir }, (err) => {
     t.error(err, 'lock ran without error')

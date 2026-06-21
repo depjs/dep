@@ -17,7 +17,7 @@ const mkProject = (pkg) => {
 // non-darwin platform it must be skipped without failing the install.
 tap.test('install follows transitive optionalDependencies but skips platform mismatches', (t) => {
   const dir = mkProject({ dependencies: { chokidar: '^3.6.0' } })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install ran without error')
@@ -38,7 +38,7 @@ tap.test('a missing/unresolvable optional dependency does not fail the install',
     dependencies: { 'is-odd': '^3.0.0' },
     optionalDependencies: { 'dep-nonexistent-optional-xyz': '^1.0.0' }
   })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install succeeds despite an unresolvable optional dep')
@@ -50,7 +50,7 @@ tap.test('a missing/unresolvable optional dependency does not fail the install',
 
 tap.test('lock keeps platform-specific optionals and marks them optional', (t) => {
   const dir = mkProject({ dependencies: { chokidar: '^3.6.0' } })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock`, { cwd: dir }, (err) => {
     t.error(err, 'lock ran without error')

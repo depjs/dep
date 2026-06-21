@@ -29,7 +29,7 @@ tap.test('install runs the full root lifecycle in order', (t) => {
       prepare: marker('4-prepare')
     }
   })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install ran without error')
@@ -44,7 +44,7 @@ tap.test('install runs the full root lifecycle in order', (t) => {
 
 tap.test('install does nothing extra when there are no lifecycle scripts', (t) => {
   const dir = mkProject({ dependencies: { 'is-odd': '^3.0.0' } })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install ran without error')
@@ -63,7 +63,7 @@ tap.test('install runs each workspace lifecycle', (t) => {
   write('package.json', { name: 'root', version: '1.0.0', private: true, workspaces: ['packages/*'] })
   write('packages/a/life.js', "require('fs').writeFileSync(process.argv[2], 'ok')\n")
   write('packages/a/package.json', { name: '@scope/a', version: '1.0.0', scripts: { postinstall: marker('ran.txt'), prepare: marker('prepared.txt') } })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install ran without error')

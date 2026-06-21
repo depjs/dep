@@ -37,7 +37,7 @@ tap.test('node-gyp builds a native addon via shell-out', {
     JSON.stringify({ private: true, name: 'addon', version: '1.0.0' })
   )
 
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   t.doesNotThrow(
     () => nodeGyp({ cwd: dir, stdio: 'ignore' }),

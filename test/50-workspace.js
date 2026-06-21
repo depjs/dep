@@ -27,7 +27,7 @@ tap.test('findWorkspaces discovers packages by glob, honouring excludes', (t) =>
     path.join(root, 'packages', 'ignored', 'package.json'),
     JSON.stringify({ name: 'ignored', version: '1.0.0' })
   )
-  t.teardown(() => fs.rmSync(root, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   const all = findWorkspaces(root, ['packages/*'])
   t.same(all.map((w) => w.name).sort(), ['@scope/a', 'ignored', 'pkg-b'], 'globs every package dir')
@@ -39,7 +39,7 @@ tap.test('findWorkspaces discovers packages by glob, honouring excludes', (t) =>
 
 tap.test('install links workspaces, hoists shared deps and nests conflicts', (t) => {
   const root = mkMonorepo()
-  t.teardown(() => fs.rmSync(root, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: root }, (err) => {
     t.error(err, 'workspace install ran without error')
@@ -65,7 +65,7 @@ tap.test('install links workspaces, hoists shared deps and nests conflicts', (t)
 
 tap.test('lock records workspaces as npm-style link + source entries', (t) => {
   const root = mkMonorepo()
-  t.teardown(() => fs.rmSync(root, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock`, { cwd: root }, (err) => {
     t.error(err, 'workspace lock ran without error')
@@ -99,7 +99,7 @@ tap.test('lock -w <workspace> narrows the lockfile to that workspace', (t) => {
   write('package.json', { name: 'root', version: '1.0.0', private: true, workspaces: ['packages/*'], dependencies: { 'left-pad': '^1.3.0' } })
   write('packages/a/package.json', { name: '@scope/a', version: '1.0.0', dependencies: { 'is-odd': '^3.0.0' } })
   write('packages/b/package.json', { name: 'pkg-b', version: '1.0.0', dependencies: { 'is-number': '^7.0.0' } })
-  t.teardown(() => fs.rmSync(root, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock -w @scope/a`, { cwd: root }, (err) => {
     t.error(err, 'scoped lock ran without error')
@@ -120,7 +120,7 @@ tap.test('lock -w <workspace> narrows the lockfile to that workspace', (t) => {
 
 tap.test('resolveWorkspace matches by name and by path', (t) => {
   const root = mkMonorepo()
-  t.teardown(() => fs.rmSync(root, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
   const workspaces = findWorkspaces(root, ['packages/*'])
 
   t.equal(resolveWorkspace(workspaces, root, '@scope/a').dir, path.join(root, 'packages', 'a'), 'resolves by package name')
@@ -139,7 +139,7 @@ tap.test('install <pkg> -w <workspace> adds dep to that workspace and hoists it'
   write('package.json', { name: 'root', version: '1.0.0', private: true, workspaces: ['packages/*'] })
   write('packages/a/package.json', { name: '@scope/a', version: '1.0.0' })
   write('packages/b/package.json', { name: 'pkg-b', version: '1.0.0' })
-  t.teardown(() => fs.rmSync(root, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   // Bare names (no version) keep `^` out of the shell command — cmd.exe on
   // Windows treats `^` as an escape character. saver then writes the resolved

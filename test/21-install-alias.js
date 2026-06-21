@@ -29,7 +29,7 @@ tap.test('npa parses npm: aliases to the target package', (t) => {
 
 tap.test('install resolves an alias under its own name', (t) => {
   const dir = mkProject({ odd: 'npm:is-odd@^3.0.0' })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install ran without error')
@@ -42,7 +42,7 @@ tap.test('install resolves an alias under its own name', (t) => {
 
 tap.test('lock records the alias with the real package name (npm style)', (t) => {
   const dir = mkProject({ odd: 'npm:is-odd@^3.0.0' })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock`, { cwd: dir }, (err) => {
     t.error(err, 'lock ran without error')

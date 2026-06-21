@@ -16,7 +16,7 @@ const mkProject = (deps) => {
 
 tap.test('lockTree rebuilds the hoisted tree from package-lock.json', (t) => {
   const dir = mkProject({ 'is-odd': '^3.0.0' })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock`, { cwd: dir }, (err) => {
     t.error(err, 'lock ran without error')
@@ -32,7 +32,7 @@ tap.test('lockTree rebuilds the hoisted tree from package-lock.json', (t) => {
 
 tap.test('install uses the lockfile and skips registry resolution', (t) => {
   const dir = mkProject({ 'is-odd': '^3.0.0' })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock`, { cwd: dir }, (err) => {
     t.error(err, 'lock ran without error')
@@ -56,7 +56,7 @@ tap.test('install uses the lockfile and skips registry resolution', (t) => {
 
 tap.test('a stale lock falls back to a fresh resolve', (t) => {
   const dir = mkProject({ 'is-odd': '^3.0.0' })
-  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true }))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
   exec(`node ${bin} lock`, { cwd: dir }, (err) => {
     t.error(err, 'lock ran without error')
