@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/depjs/dep/compare/v1.3.0...v1.4.0) (2026-06-21)
+
+
+### Features
+
+* fully support optionalDependencies (transitive, platform-aware, fault-tolerant) ([e224cb0](https://github.com/depjs/dep/commit/e224cb008043e70ea25eaf57cfbe1d9414ce767e))
+* improve npm compat ([9dcadd7](https://github.com/depjs/dep/commit/9dcadd7ce69cf7f4e6930bb5851cc3d48ce508cf))
+* support overrides and alias ([eb37e29](https://github.com/depjs/dep/commit/eb37e29f2632c8d30982889af47ae36658901d81))
+* support prepare ([dbf740e](https://github.com/depjs/dep/commit/dbf740e474502e5d1a78ec7f87dcf43dced46839))
+
 ## [1.3.0](https://github.com/depjs/dep/compare/v1.2.0...v1.3.0) (2026-06-21)
 
 ### Features
