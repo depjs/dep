@@ -164,9 +164,9 @@ intentionally left out.
 | `package-lock.json` (v3) | ✅ Supported | `dep lock` emits an npm-compatible `lockfileVersion: 3`, and a plain `dep install` reproduces it (skipping registry resolution). A stale lock, installing a specific package, `-w`, or `--only` falls back to a fresh resolve. |
 | `bin` | ✅ Supported | Symlinks on POSIX; `.cmd`/`.ps1`/sh shims on Windows. |
 | Lifecycle scripts | ✅ Supported | Dependencies run `preinstall`/`install`/`postinstall`. The local project and each workspace run the full `npm install` sequence: `preinstall` → (deps) → `install` → `postinstall` → `prepublish` → `prepare`. |
-| `engines` / `os` / `cpu` | ➖ Out of scope | Recorded in the lockfile, but not enforced during install. |
-| Integrity verification | ➖ Out of scope | `integrity`/`shasum` are recorded in the lockfile but tarballs are not verified on install (see [Save spaces](#save-spaces)). |
-| `bundledDependencies` | ➖ Out of scope | Not handled. |
+| `engines` / `os` / `cpu` | ✅ Supported | On install, a required dep whose `os`/`cpu` doesn't match fails (optional ones are skipped); `engines.node` mismatches warn, or fail under `engine-strict`. The lockfile stays cross-platform. |
+| Integrity verification | ✅ Supported | Registry tarballs are hashed and checked against `integrity` (SRI sha512) or the legacy `shasum` before extraction; a mismatch fails the install. |
+| `bundledDependencies` | ✅ Supported | A package's bundled deps ship inside its tarball, so they aren't re-fetched or hoisted out. |
 | Audit / fund / dedupe / outdated | ➖ Out of scope | dep targets install/lock/run only. |
 
 ✅ Supported &nbsp;·&nbsp; 🟡 Partial &nbsp;·&nbsp; ➖ Intentionally out of scope
