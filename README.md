@@ -158,8 +158,8 @@ intentionally left out.
 | --- | --- | --- |
 | `dependencies` | ✅ Supported | Resolved (deterministic, hoisted) and installed. |
 | `devDependencies` | ✅ Supported | Root package only. Filter with `--only`, save with `--save-dev`. |
-| `optionalDependencies` | 🟡 Partial | Root-level optional deps are installed; a native build that fails is dropped. Transitive `optionalDependencies` are not followed, but they are recorded in the lockfile. |
-| `peerDependencies` | 🟡 Partial | Recorded in `package-lock.json`, but not auto-installed. |
+| `optionalDependencies` | ✅ Supported | Followed (including transitively); skipped without failing the install when they can't be resolved, fail to build, or don't match the current `os`/`cpu`. The lockfile keeps every platform's optionals, marked `optional`. |
+| `peerDependencies` | ✅ Supported | Non-optional peers are auto-installed and hoisted (npm v7+ style); peers marked `optional` in `peerDependenciesMeta` are skipped. Recorded in `package-lock.json`. |
 | `workspaces` | ✅ Supported | Globs (and `{ "packages": [...] }`). Hoisted install + symlinks, npm-style lockfile entries, and `-w, --workspace`. |
 | `package-lock.json` (v3) | ✅ Supported | `dep lock` emits an npm-compatible `lockfileVersion: 3`, and a plain `dep install` reproduces it (skipping registry resolution). A stale lock, installing a specific package, `-w`, or `--only` falls back to a fresh resolve. |
 | `bin` | ✅ Supported | Symlinks on POSIX; `.cmd`/`.ps1`/sh shims on Windows. |
