@@ -25,6 +25,9 @@ tap.test('verifyIntegrity accepts a matching hash and rejects a bad one', (t) =>
   t.doesNotThrow(() => verifyIntegrity(buf, {}), 'no expected hash is a no-op')
   t.throws(() => verifyIntegrity(buf, { integrity: 'sha512-' + Buffer.from('nope').toString('base64') }), /Integrity check failed/, 'bad sha512 throws')
   t.throws(() => verifyIntegrity(buf, { shasum: 'deadbeef' }), /Checksum check failed/, 'bad sha1 throws')
+  t.throws(() => verifyIntegrity(buf, { integrity: 'notahash-AAAA' }), /Integrity check failed/, 'an unknown algorithm fails the check')
+  t.throws(() => verifyIntegrity(buf, { integrity: 'no_dash_entry' }, 'is-odd'), /Integrity check failed for is-odd/, 'a malformed entry fails and the name is reported')
+  t.doesNotThrow(() => verifyIntegrity(buf, { integrity: 'badalgo-AAAA ' + sri }), 'any matching alternative in a multi-entry integrity passes')
   t.end()
 })
 
