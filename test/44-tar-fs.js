@@ -9,6 +9,32 @@ import { extract } from '../lib/utils/tar-fs.js'
 // containing a directory, a regular file and a symlink so the per-type branches
 // (and the `strip` prefix dropping) are all exercised.
 
+const BLOCK = 512
+// Minimal tar block builder — enough for the parser, which only reads
+// name/size/type/linkname (no magic/checksum). Used to emit GNU 'L'/'K'
+// long-name entries portably, without depending on the host tar's formats.
+const tarHeader = ({ name = '', type, size = 0, linkname = '' }) => {
+  const b = Buffer.alloc(BLOCK)
+  b.write(name, 0, 100)
+  b.write('0000644', 100, 7)
+  b.write(size.toString(8).padStart(11, '0'), 124, 11)
+  b[156] = type.charCodeAt(0)
+  b.write(linkname, 157, 100)
+  return b
+}
+const tarBody = (str) => {
+  const raw = Buffer.from(str, 'utf8')
+  return Buffer.concat([raw, Buffer.alloc(Math.ceil(raw.length / BLOCK) * BLOCK - raw.length)])
+}
+const gnuEntry = ({ longName, longLink, name, type, content = '', linkname = '' }) => {
+  const parts = []
+  if (longName) parts.push(tarHeader({ name: '././@LongLink', type: 'L', size: longName.length }), tarBody(longName))
+  if (longLink) parts.push(tarHeader({ name: '././@LongLink', type: 'K', size: longLink.length }), tarBody(longLink))
+  parts.push(tarHeader({ name, type, size: content.length, linkname }))
+  if (content) parts.push(tarBody(content))
+  return Buffer.concat(parts)
+}
+
 tap.test('tar-fs extracts dirs, files and symlinks and applies strip', (t) => {
   const src = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-tar-src-'))
   const dest = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-tar-dest-'))
@@ -42,30 +68,26 @@ tap.test('tar-fs extracts dirs, files and symlinks and applies strip', (t) => {
 })
 
 tap.test('tar-fs handles GNU long names and long link targets', (t) => {
-  const src = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-tar-src-'))
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-tar-out-'))
   const dest = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-tar-dest-'))
-  t.teardown(() => {
-    for (const d of [src, out, dest]) fs.rmSync(d, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
-  })
+  t.teardown(() => fs.rmSync(dest, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
 
-  // Names/targets over 100 bytes force GNU 'L'/'K' extended-header entries.
-  const longName = path.join('d'.repeat(120), 'f'.repeat(120) + '.js')
-  fs.mkdirSync(path.join(src, path.dirname(longName)), { recursive: true })
-  fs.writeFileSync(path.join(src, longName), 'x\n')
-  fs.symlinkSync('t'.repeat(130), path.join(src, 'longlink'))
-
-  const tarball = path.join(out, 'archive.tar')
-  execFileSync('tar', ['cf', tarball, '--format=gnu', '-C', src, '.'])
+  // Names/targets over 100 bytes are carried by GNU 'L'/'K' extended headers.
+  const longName = 'd'.repeat(120) + '/' + 'f'.repeat(120) + '.js'
+  const longLink = 't'.repeat(130)
+  const archive = Buffer.concat([
+    gnuEntry({ longName, name: 'short', type: '0', content: 'x\n' }),
+    gnuEntry({ longLink, name: 'longlink', type: '2', linkname: 'short' }),
+    Buffer.alloc(BLOCK * 2) // end-of-archive
+  ])
 
   const parser = extract(dest, {})
   parser.on('error', (e) => { t.error(e, 'extract emitted no error'); t.end() })
   parser.on('finish', () => {
-    t.equal(fs.readFileSync(path.join(dest, longName), 'utf8'), 'x\n', 'long file name (GNU L) extracted')
+    t.equal(fs.readFileSync(path.join(dest, ...longName.split('/')), 'utf8'), 'x\n', 'long file name (GNU L) extracted')
     t.equal(fs.readlinkSync(path.join(dest, 'longlink')).length, 130, 'long symlink target (GNU K) extracted')
     t.end()
   })
-  parser.end(fs.readFileSync(tarball))
+  parser.end(archive)
 })
 
 tap.test('tar-fs surfaces a write failure as a stream error', (t) => {

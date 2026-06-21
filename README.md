@@ -2,7 +2,7 @@
 
 A little Node.js dependency installer for module **end-users**.
 
-[<img src="https://raw.githubusercontent.com/depjs/artwork/master/logo-500x500.png" align="right" width="140">](https://github.com/depjs/dep)
+[<img src="logo.png" align="right" width="140">](https://github.com/depjs/dep)
 
 ### Table of Contents
 
