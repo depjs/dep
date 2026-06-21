@@ -170,9 +170,9 @@ intentionally left out.
 | Dependency sources | ✅ Supported | Registry ranges/tags, git URLs (`git+https`, with `#commit`/`#semver:`), remote tarball URLs, and local file/directory paths. |
 | `.npmrc` config | 🟡 Partial | Reads `registry`, `save-prefix`, and `engine-strict` from `~/.npmrc`. No auth tokens, scoped registries, or most other config keys. |
 | Private / authed registries | ➖ Out of scope | Requests are unauthenticated; only an open registry is supported. |
-| `overrides` | ➖ Out of scope | Dependency version overrides are ignored. |
-| Aliased specifiers (`pkg@npm:other`) | ➖ Out of scope | npm package aliases are not resolved. |
-| `npm-shrinkwrap.json` | ➖ Out of scope | dep reads and writes `package-lock.json` only. |
+| `overrides` | ✅ Supported | Global (`{ "foo": "1.2.3" }`), parent-scoped nesting (`{ "parent": { "child": "1" } }`), and `$`-references. Version-qualified targets (`"foo@2"`) are ignored. |
+| Aliased specifiers (`pkg@npm:other`) | ✅ Supported | Installs the target package under the alias name; the lockfile records the real `name`. (Registry targets only.) |
+| `npm-shrinkwrap.json` | ➖ Out of scope | Intentionally unsupported as a legacy format: dep reads and writes `package-lock.json` exclusively and ignores any `npm-shrinkwrap.json`. |
 | Commands beyond install/lock/run | ➖ Out of scope | No `ci`, `update`, `uninstall`, `dedupe`, `audit`, `fund`, `outdated`, `publish`, `version`, `exec`/`npx`, etc. |
 
 ✅ Supported &nbsp;·&nbsp; 🟡 Partial &nbsp;·&nbsp; ➖ Intentionally out of scope
