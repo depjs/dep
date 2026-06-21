@@ -4,7 +4,7 @@ import { test } from 'node:test'
 import assert from 'node:assert'
 
 function run (name, opts, fn) {
-  const body = () => new Promise((resolve, reject) => {
+  const body = (ctx) => new Promise((resolve, reject) => {
     let planned = null
     let count = 0
     let done = false
@@ -61,6 +61,7 @@ function run (name, opts, fn) {
         fail(m || 'expected to reject', { operator: 'rejects' })
       },
       pass: (m) => pass(),
+      skip: (m) => { try { ctx.skip(m) } catch (e) {} finish() },
       plan: (n) => { planned = n; if (count >= n) finish() },
       teardown: (fn2) => teardowns.push(fn2),
       end: () => finish()
