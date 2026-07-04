@@ -191,10 +191,10 @@ produce a comparable `node_modules`. Lower is better.
 
 | Tool | Cold install | Relative |
 | --- | --- | --- |
-| npm 11 | ~3.0s | 1.0× |
-| yarn 4 | ~1.25s | ~2.4× faster |
-| pnpm 11 | ~0.95s | ~3.2× faster |
-| **dep** | **~0.77s** | **~3.9× faster** |
+| npm 11 | ~2.9s | 1.0× |
+| yarn 4 | ~1.25s | ~2.3× faster |
+| pnpm 11 | ~0.95s | ~3.0× faster |
+| **dep** | **~0.79s** | **~3.6× faster** |
 
 **Warm** — lockfile present and cache/store warm; only `node_modules` is removed
 before each run (the usual reinstall / cached-CI case). For dep this is a
@@ -204,9 +204,9 @@ before each run (the usual reinstall / cached-CI case). For dep this is a
 | Tool | Warm install | Relative |
 | --- | --- | --- |
 | npm 11 | ~1.45s | 1.0× |
-| yarn 4 | ~0.80s | ~1.8× faster |
+| yarn 4 | ~0.75s | ~1.9× faster |
 | pnpm 11 | ~0.55s | ~2.6× faster |
-| **dep** | **~0.46s** | **~3.1× faster** |
+| **dep** | **~0.44s** | **~3.3× faster** |
 
 <sub>avg of 5 runs on one Linux machine, Node 24, against the public registry —
 numbers vary by machine, network, and dependency set.</sub>
@@ -238,8 +238,10 @@ Therefore, dep does not make cache files in a local disc for now.
 Stability is a core value. Having a small set makes keeping the green badges
 easier. dep has **zero runtime dependencies** — everything is built on the
 Node.js standard library — and resolves the dependency tree deterministically,
-with bounded concurrency (tunable via the `DEP_CONCURRENCY` environment
-variable, default `16`) to avoid exhausting sockets and file handles.
+with bounded concurrency to avoid exhausting sockets and file handles:
+downloads/extractions run 16-wide and metadata resolution 64-wide by default
+(tunable via the `DEP_CONCURRENCY` and `DEP_RESOLVE_CONCURRENCY` environment
+variables; an explicit `DEP_CONCURRENCY` throttles both).
 
 [![github-actions][g-img]][g-url] [![codecov][c-img]][c-url]
 

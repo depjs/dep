@@ -39,6 +39,33 @@ tap.test('lockTree classifies git and registry entries and nests them', (t) => {
   t.end()
 })
 
+tap.test('lockTree skips entries nested under a link and prunes orphan placeholders', (t) => {
+  const dir = withLock(t, {
+    lockfileVersion: 3,
+    packages: {
+      '': { name: 'root' },
+      'node_modules/reg': { version: '1.0.0', resolved: 'https://registry/reg.tgz' },
+      'node_modules/wslink': { link: true, resolved: 'packages/ws' },
+      'packages/ws': { name: 'ws' },
+      // npm nests a workspace's conflicting dep below the link's location; it
+      // belongs to the workspace source tree, not to node_modules.
+      'node_modules/wslink/node_modules/conflict': { version: '2.0.0', resolved: 'https://registry/conflict.tgz' },
+      // a nested location whose parent has no entry of its own must not leave
+      // a typeless placeholder behind (the installer cannot fetch it)
+      'node_modules/ghost/node_modules/orphan': { version: '3.0.0', resolved: 'https://registry/orphan.tgz' }
+    }
+  })
+  const tree = lockTree(dir, ['reg'])
+
+  t.equal(tree.reg.type, 'registry', 'real entries are kept')
+  t.notOk(tree.wslink, 'no node is materialised below a link location')
+  t.notOk(tree.ghost, 'an orphan placeholder is pruned')
+  Object.keys(tree).forEach((name) => {
+    t.ok(tree[name].type, `${name} has a fetchable type`)
+  })
+  t.end()
+})
+
 tap.test('lockTree returns null for a missing, non-v3, or stale lockfile', (t) => {
   t.equal(lockTree(withLock(t, null), ['a']), null, 'missing lockfile')
   t.equal(lockTree(withLock(t, { lockfileVersion: 2, packages: {} }), []), null, 'wrong lockfile version')
