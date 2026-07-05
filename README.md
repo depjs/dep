@@ -238,8 +238,8 @@ honest state of each feature — what works, what works partially, and what the
 | Dependency sources | ✅ Supported | Registry ranges/tags, git URLs (`git+https`, with `#commit`/`#semver:`), remote tarball URLs, and local file/directory paths. |
 | `overrides` | ✅ Supported | Global (`{ "foo": "1.2.3" }`), parent-scoped nesting (`{ "parent": { "child": "1" } }`), and `$`-references. Version-qualified targets (`"foo@2"`) are ignored. |
 | Aliased specifiers (`pkg@npm:other`) | ✅ Supported | Installs the target package under the alias name; the lockfile records the real `name`. (Registry targets only.) |
-| `.npmrc` config | 🟡 Partial | Reads `registry`, `save-prefix`, and `engine-strict` from `~/.npmrc`. No auth tokens, scoped registries, or most other config keys. |
-| Private / authed registries | ➖ By design | Follows from the thin client: credentials and access control live at the registry proxy, which authenticates upstream on behalf of every client. dep itself sends unauthenticated requests. |
+| Private / authed registries | ✅ Supported | Registry-level token auth via standard `.npmrc`: `//host/:_authToken=<token>` (Bearer) or the legacy `//host/:_auth` (Basic), with `${NPM_TOKEN}`-style env expansion. Tokens are matched by host (and path prefix) and never sent elsewhere. No login command, no scoped registries. |
+| `.npmrc` config | 🟡 Partial | Reads `registry`, `save-prefix`, `engine-strict`, and the auth keys above; a project-local `.npmrc` overrides `~/.npmrc`. No scoped registries or most other config keys. |
 | Local package cache | ➖ By design | Caching belongs to infrastructure: point dep at a caching proxy (Verdaccio, Nexus, Artifactory) via `registry` in `~/.npmrc`. See [Why dep has no cache](#why-dep-has-no-cache). |
 | `npm-shrinkwrap.json` | ➖ By design | One lock format, npm's current one: dep reads and writes `package-lock.json` (v3) exclusively and ignores any `npm-shrinkwrap.json`. |
 | Commands beyond install/lock/run | ➖ By design | Follows from the end-user scope: no `publish`, `version`, `audit`, `fund`, `outdated`, `exec`/`npx`, and no `ci`, `update`, `uninstall`, `dedupe`, etc. |
@@ -468,6 +468,14 @@ at the same time:
 $ echo 'registry=http://localhost:4873/' >> ~/.npmrc
 ```
 
+If your proxy requires a token (Nexus and Artifactory usually do), add npm's
+standard auth line next to it — dep expands `${NPM_TOKEN}` from the
+environment:
+
+```console
+$ echo '//npm-proxy.internal.example.com/:_authToken=${NPM_TOKEN}' >> ~/.npmrc
+```
+
 That's the entire migration. The first install populates the proxy; every
 install after that is served from your own disk (or your team's server, if
 you run it on the network instead of localhost) — with standard HTTP
@@ -480,8 +488,12 @@ and set the registry line in the job:
 
 ```yaml
 steps:
-  - run: echo "registry=https://npm-proxy.internal.example.com/" >> ~/.npmrc
+  - run: |
+      echo 'registry=https://npm-proxy.internal.example.com/' >> ~/.npmrc
+      echo '//npm-proxy.internal.example.com/:_authToken=${NPM_TOKEN}' >> ~/.npmrc
   - run: npx dep install --only=prod
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
 
 Every job then installs at LAN speed with zero cache upload/download/restore
