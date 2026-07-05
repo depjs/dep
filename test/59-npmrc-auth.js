@@ -10,6 +10,10 @@ import tap from './helpers/tap.js'
 const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-auth-home-'))
 const project = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-auth-proj-'))
 
+// npm's ${VAR} env-reference syntax, assembled by concatenation so the
+// literals don't trip standard's no-template-curly-in-string rule.
+const ref = (name) => '${' + name + '}'
+
 fs.writeFileSync(path.join(home, '.npmrc'), [
   'save-prefix=~',
   '# comments and blank lines are skipped',
@@ -19,9 +23,9 @@ fs.writeFileSync(path.join(home, '.npmrc'), [
   '//basic.example.com/:_auth=YWxhZGRpbjpzZXNhbWU=',
   '//both.example.com/:_auth=basic-loses',
   '//both.example.com/:_authToken=token-wins',
-  '//env.example.com/:_authToken=${DEP_TEST_TOKEN}',
-  '//unset.example.com/:_authToken=${DEP_TEST_UNSET}',
-  '//unset2.example.com/:_auth=${DEP_TEST_UNSET}',
+  '//env.example.com/:_authToken=' + ref('DEP_TEST_TOKEN'),
+  '//unset.example.com/:_authToken=' + ref('DEP_TEST_UNSET'),
+  '//unset2.example.com/:_auth=' + ref('DEP_TEST_UNSET'),
   '//path.example.com/npm/:_authToken=scoped-to-path',
   '//port.example.com:4873/:_authToken=with-port'
 ].join('\n'))
@@ -73,12 +77,12 @@ tap.test('_authToken becomes Bearer, _auth becomes Basic, token wins over both',
   t.end()
 })
 
-tap.test('${VAR} values expand from the environment', (t) => {
+tap.test('values referencing an env var expand from the environment', (t) => {
   t.equal(authHeaderFor('https://env.example.com/pkg'), 'Bearer expanded')
   t.end()
 })
 
-tap.test('an unset ${VAR} drops the credential and warns once', (t) => {
+tap.test('an unset env var reference drops the credential and warns once', (t) => {
   t.equal(authHeaderFor('https://unset.example.com/pkg'), undefined,
     'no header for a credential whose variable is unset')
   t.equal(authHeaderFor('https://unset2.example.com/pkg'), undefined,
