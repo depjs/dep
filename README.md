@@ -16,6 +16,7 @@ internals small: it ships with **zero runtime dependencies**.
 
 ### Table of Contents
 
+- [Design principles](#design-principles)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Commands](#commands)
@@ -25,9 +26,36 @@ internals small: it ships with **zero runtime dependencies**.
 - [Workspaces](#workspaces)
 - [npm compatibility](#npm-compatibility)
 - [Benchmark](#benchmark)
-- [Concepts](#concepts)
+- [Why dep has no cache](#why-dep-has-no-cache)
+- [Stability](#stability)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Design principles
+
+**A thin client.** dep resolves a dependency tree, downloads it, verifies it,
+and links it — nothing else. Less code and less state mean fewer failure modes.
+
+**npm-compatible where it counts.** Same package.json, same `package-lock.json`
+(v3), same `node_modules` layout. Try dep on an existing project today and
+switch back tomorrow; nothing to migrate either way.
+
+**Zero runtime dependencies.** Everything is built on the Node.js standard
+library, so the installer can't be compromised through its own dependency
+tree — and the whole codebase is small enough to audit in an afternoon.
+
+**Caching belongs to infrastructure.** dep keeps no local package cache: a
+caching registry proxy (Verdaccio, Nexus, Artifactory) serves the whole team
+with standard HTTP semantics, instead of a mutable store duplicated on every
+machine. See [Why dep has no cache](#why-dep-has-no-cache) for the rationale
+and a two-minute proxy setup.
+
+**Built for end-users, not library authors.** dep is for people who build
+things *with* `node_modules`, not people who publish packages. It installs,
+locks, and runs — publishing, versioning, and auditing belong to other tools.
+
+These principles decide what's in and what's out — see the
+[npm compatibility](#npm-compatibility) table for the honest consequences.
 
 ## Installation
 
@@ -191,8 +219,8 @@ $ dep lock -w @scope/a
 ## npm compatibility
 
 dep deliberately implements a focused subset of npm. The table below is the
-honest state of each feature — what works, what works partially, and what is
-intentionally left out.
+honest state of each feature — what works, what works partially, and what the
+[design principles](#design-principles) place out of scope.
 
 | Feature | Status | Notes |
 | --- | --- | --- |
@@ -211,11 +239,12 @@ intentionally left out.
 | `overrides` | ✅ Supported | Global (`{ "foo": "1.2.3" }`), parent-scoped nesting (`{ "parent": { "child": "1" } }`), and `$`-references. Version-qualified targets (`"foo@2"`) are ignored. |
 | Aliased specifiers (`pkg@npm:other`) | ✅ Supported | Installs the target package under the alias name; the lockfile records the real `name`. (Registry targets only.) |
 | `.npmrc` config | 🟡 Partial | Reads `registry`, `save-prefix`, and `engine-strict` from `~/.npmrc`. No auth tokens, scoped registries, or most other config keys. |
-| Private / authed registries | ➖ Out of scope | Requests are unauthenticated; only an open registry is supported. |
-| `npm-shrinkwrap.json` | ➖ Out of scope | Intentionally unsupported as a legacy format: dep reads and writes `package-lock.json` exclusively and ignores any `npm-shrinkwrap.json`. |
-| Commands beyond install/lock/run | ➖ Out of scope | No `ci`, `update`, `uninstall`, `dedupe`, `audit`, `fund`, `outdated`, `publish`, `version`, `exec`/`npx`, etc. |
+| Private / authed registries | ➖ By design | Follows from the thin client: credentials and access control live at the registry proxy, which authenticates upstream on behalf of every client. dep itself sends unauthenticated requests. |
+| Local package cache | ➖ By design | Caching belongs to infrastructure: point dep at a caching proxy (Verdaccio, Nexus, Artifactory) via `registry` in `~/.npmrc`. See [Why dep has no cache](#why-dep-has-no-cache). |
+| `npm-shrinkwrap.json` | ➖ By design | One lock format, npm's current one: dep reads and writes `package-lock.json` (v3) exclusively and ignores any `npm-shrinkwrap.json`. |
+| Commands beyond install/lock/run | ➖ By design | Follows from the end-user scope: no `publish`, `version`, `audit`, `fund`, `outdated`, `exec`/`npx`, and no `ci`, `update`, `uninstall`, `dedupe`, etc. |
 
-✅ Supported &nbsp;·&nbsp; 🟡 Partial &nbsp;·&nbsp; ➖ Intentionally out of scope
+✅ Supported &nbsp;·&nbsp; 🟡 Partial &nbsp;·&nbsp; ➖ By design — a consequence of the [principles](#design-principles)
 
 ## Benchmark
 
@@ -253,36 +282,238 @@ Reproduce it yourself:
 $ node scripts/benchmark.js
 ```
 
-**Caveat:** dep keeps **no local cache** by design (see
-[Save spaces](#save-spaces)). Even in the warm case it *re-downloads* tarballs
-(it only skips re-resolving the tree from the lockfile), so its warm speed is
-network-bound. pnpm/npm/yarn serve cached packages from disk and can even
-install offline — on a slow or offline network they stay fast while dep does
-not. These numbers reflect a fast connection to the registry.
+**Caveat:** dep keeps **no local cache** — see
+[Why dep has no cache](#why-dep-has-no-cache) below. Even in the warm case it
+*re-downloads* tarballs (it only skips re-resolving the tree from the
+lockfile), so its warm speed is network-bound. pnpm/npm/yarn serve cached
+packages from disk and can even install offline — on a slow or offline network
+they stay fast while dep does not. These numbers reflect a fast connection to
+the registry; with a caching registry proxy on your network, every install
+runs at LAN speed.
 
-## Concepts
+## Why dep has no cache
 
-### End users
+Every Node.js package manager ships a cache. npm has `~/.npm` and the cacache
+content-addressable store. yarn has its cache directory and, in Berry, a whole
+zip-based offline mirror. pnpm's global store is the centerpiece of its design.
+The assumption is so universal that it reads like a requirement: a package
+manager *is* a downloader plus a cache.
 
-The target user is the module **end-user**: someone who builds things *with*
-`node_modules` rather than publishing packages. The goal of this project is to
-reproduce the features those end-users rely on day to day.
+dep has no cache. Not "no cache yet" — no cache on purpose. Every install
+downloads every tarball from the registry, verifies it against the lockfile,
+and extracts it into `node_modules`. That's the whole lifecycle.
 
-### Save spaces
+This sounds like a limitation. This section makes the case that it's a
+feature, and that the cache you actually want belongs somewhere else entirely.
 
-Speed and local disk capacity are a trade-off. To get the best of both, caching
-belongs in a proxy layer rather than on the local machine — so dep does not
-write cache files to the local disk, for now.
+<details>
+<summary><b>Read the full rationale</b> — what client caches cost, the trade-offs, and a two-minute proxy recipe</summary>
 
-### Stability
+### What client-side caches actually cost
+
+`npm cache clean --force` is a meme for a reason. It's the
+"turn it off and on again" of the Node ecosystem — the first reply under every
+`EINTEGRITY` error, every `sha512 integrity checksum failed... but expected`,
+every mysteriously half-extracted package. The command even makes you say
+`--force`, npm's own acknowledgment that you shouldn't need to do this, and
+yet everyone eventually does.
+
+That's not an npm-specific failure. It's what a client-side cache *is*: a
+long-lived, mutable, concurrently-written database sitting on thousands of
+machines, maintained by a tool whose primary job is something else. The
+failure modes are structural:
+
+- **Corruption.** An interrupted download, a full disk, or a crashed process
+  leaves a truncated tarball behind. The next install trusts the cache and
+  fails with an integrity error that looks like a registry problem — the
+  wrongness surfaces far from its cause.
+- **Concurrency.** Two package-manager processes writing the same store need
+  locking, and locking across processes on three operating systems is where
+  bugs live. Every mainstream package manager has shipped, and fixed, races
+  in its cache layer.
+- **Permissions.** One `sudo npm install` and parts of your cache are owned
+  by root. Everything works until it doesn't, days later, in a different
+  project.
+- **Complexity in the client.** cacache alone — the thing that makes npm's
+  cache safe(ish) — is a nontrivial content-addressable store with SRI
+  indexing, garbage collection, and its own dependency tree. That machinery
+  has to be shipped, versioned, and debugged inside every client install.
+- **Duplication.** The same `react` tarball sits in the cache of every laptop
+  on your team and gets rebuilt into every CI runner. In CI it's often worse
+  than useless: uploading and restoring hundreds of megabytes through
+  `actions/cache`, with hand-rolled cache keys, regularly costs more time
+  than the downloads it was supposed to save.
+
+None of this means caches are bad. It means a *per-machine cache inside the
+client* is an expensive place to put one.
+
+### Caching is an infrastructure concern
+
+Here's the thing about npm packages: a published version is immutable.
+`lodash@4.17.21` will never change. This is the single easiest caching
+problem in computing — cache forever, never invalidate — and we've had
+boring, battle-tested software for exactly that problem for decades: HTTP
+proxies.
+
+A caching registry proxy — [Verdaccio](https://verdaccio.org), Nexus,
+Artifactory — gives you everything the client-side cache promised, in a
+better place:
+
+- **Shared, not duplicated.** The first person to install a package pays the
+  registry round-trip; everyone else on the team, and every CI job, gets it
+  from the local network. A per-machine cache can never do this.
+- **Standard semantics.** It's HTTP. You can observe it, size it, and reason
+  about it with tools you already know, instead of spelunking through a
+  package manager's store format.
+- **Offline resilience where it matters.** When the public registry has an
+  outage, your CI keeps working as long as the proxy has the tarballs. That's
+  the offline scenario that actually costs money — not the laptop on a plane.
+- **One cache, owned by the layer that owns caching.** Your proxy doesn't
+  also resolve semver or run lifecycle scripts. Separation of concerns cuts
+  both ways.
+
+And here's the part that makes this less radical than it sounds: **most
+companies already run one.** If your team uses Nexus or Artifactory — for
+private packages, for compliance, for audit trails — then every client-side
+cache in your fleet is a *second* cache layered on top of the one you
+already operate. For that environment, dep's model isn't a workaround; it's
+the shape the system already had.
+
+The obvious objection: *"you didn't remove the complexity, you just moved
+it."* Yes — deliberately. Moved, not duplicated: one cache per team instead
+of one per machine, run by software whose entire job is caching, instead of
+being a side quest inside an installer. "Move the hard part to the layer
+that owns it" is the whole argument.
+
+### What dep buys with the space
+
+Deleting the cache isn't just deleting code. It changes what the client can be.
+
+**Zero runtime dependencies.** dep is built entirely on the Node.js standard
+library. No cacache, no tar chain, no store implementation — and therefore no
+way to compromise the installer through its own dependency tree. In a year
+when npm supply-chain attacks are a recurring news item, the installer being
+small enough to audit in an afternoon is not a vanity metric.
+
+**No state to corrupt.** dep's writable state is `node_modules` and
+`package-lock.json`. Both are visible, versionable, and disposable.
+`rm -rf node_modules && dep install` is a *complete* reset — there is no
+hidden store that can stay poisoned. There is no dep equivalent of
+`npm cache clean --force`, because there is nothing to clean.
+
+**Verification on every install.** Every tarball is hashed off the wire and
+checked against the lockfile's `integrity` before extraction, every time.
+There is no "trusted because it was cached" path, so there is no cache-
+poisoning path either.
+
+**Predictability.** Every install does the same thing. No warm-versus-cold
+behavioral differences, no "works after clearing the cache" class of bug
+report. When something fails, the failure is about the network, the
+registry, or the lockfile — things you can see.
+
+### The trade-offs, plainly
+
+This design has real costs, and they belong here in the README rather than
+in a footnote.
+
+**Cold installs on a laptop without a proxy re-download everything.** If you
+create scratch projects all day on a hotel wifi connection, dep will feel
+slower than a warm pnpm, full stop. dep is fast per install — it benchmarks
+ahead of npm, yarn, and pnpm on cold installs with the network in the
+picture — but it re-pays the network cost that a local cache would amortize.
+
+**There is no offline mode out of the box.** No network, no proxy, no
+install. pnpm can install a known project on a plane; dep cannot.
+
+**pnpm's store also deduplicates disk.** Content-addressable storage plus
+hard links means twenty projects share one copy of each package on disk.
+That's a genuine benefit dep does not have and will not grow — disk-level
+dedup is a store feature, and dep doesn't have a store.
+
+**Most solo developers don't run a registry proxy.** True. If you're solo,
+on a metered connection, installing frequently, and unwilling to run one
+container — npm or pnpm will serve you better, and that's fine. dep is
+opinionated about *where* caching belongs, and if that layer doesn't exist
+in your setup, you're outside the opinion. The recipe below is for everyone
+who's willing to spend two minutes changing that.
+
+### The recipe: a caching proxy in two minutes
+
+Verdaccio proxies the public registry and caches every tarball it serves.
+One file:
+
+```yaml
+# docker-compose.yml
+services:
+  verdaccio:
+    image: verdaccio/verdaccio:6
+    ports:
+      - "4873:4873"
+    volumes:
+      - verdaccio-storage:/verdaccio/storage
+
+volumes:
+  verdaccio-storage:
+```
+
+```console
+$ docker compose up -d
+```
+
+Then point your client at it. dep reads the standard `registry` key from
+`~/.npmrc`, so this one line configures dep — and npm, yarn, and pnpm —
+at the same time:
+
+```console
+$ echo 'registry=http://localhost:4873/' >> ~/.npmrc
+```
+
+That's the entire migration. The first install populates the proxy; every
+install after that is served from your own disk (or your team's server, if
+you run it on the network instead of localhost) — with standard HTTP
+behavior you can inspect at `http://localhost:4873`.
+
+**In CI**, the same idea pays off most when the proxy *persists across
+jobs*: run Verdaccio (or use your existing Nexus/Artifactory) as a
+long-lived service on your network or alongside your self-hosted runners,
+and set the registry line in the job:
+
+```yaml
+steps:
+  - run: echo "registry=https://npm-proxy.internal.example.com/" >> ~/.npmrc
+  - run: npx dep install --only=prod
+```
+
+Every job then installs at LAN speed with zero cache upload/download/restore
+steps and zero cache keys to bust. (A per-job ephemeral Verdaccio container
+starts empty each run, so it only helps jobs that install more than once —
+prefer the persistent proxy.)
+
+### Do one thing well
+
+dep resolves a dependency tree, downloads it, verifies it, and links it.
+That's the whole job, so that's the whole program.
+
+Caching is real work, but it's *cross-cutting* work — it serves every client
+on the network equally, it has its own operational lifecycle, and it's been
+solved well by dedicated software for longer than npm has existed. Pulling
+it into every client multiplies the state, the code, and the failure modes
+by the number of machines you own. Pushing it to the layer that owns it
+leaves the client small enough to read, to audit, and to trust.
+
+dep has no cache for the same reason your text editor has no filesystem:
+someone else already does that, better, one layer down.
+
+</details>
+
+## Stability
 
 Stability is a core value, and a small feature set makes keeping the green
-badges easier. dep has **zero runtime dependencies** — everything is built on
-the Node.js standard library — and resolves the dependency tree
-deterministically, with bounded concurrency to avoid exhausting sockets and
-file handles: downloads/extractions run 16-wide and metadata resolution 64-wide
-by default (tunable via the `DEP_CONCURRENCY` and `DEP_RESOLVE_CONCURRENCY`
-environment variables; an explicit `DEP_CONCURRENCY` throttles both).
+badges easier. dep resolves the dependency tree deterministically, with bounded
+concurrency to avoid exhausting sockets and file handles: downloads/extractions
+run 16-wide and metadata resolution 64-wide by default (tunable via the
+`DEP_CONCURRENCY` and `DEP_RESOLVE_CONCURRENCY` environment variables; an
+explicit `DEP_CONCURRENCY` throttles both).
 
 ## Contributing
 
