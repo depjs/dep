@@ -30,3 +30,33 @@ tap.test('pick-version tolerates a document without tags or versions', (t) => {
   t.equal(pick({}, '^1.0.0'), undefined, 'no dist-tags and no versions yields undefined')
   t.end()
 })
+
+tap.test('pick-version avoids versions published past the latest tag', (t) => {
+  // Mirrors @mui/joy: one-off dev prereleases sort above the tagged beta
+  // ('dev' > 'beta'), but npm never picks past the latest tag while anything
+  // else satisfies.
+  const joy = {
+    'dist-tags': { latest: '5.0.0-beta.52' },
+    versions: {
+      '5.0.0-beta.51': {},
+      '5.0.0-beta.52': {},
+      '5.0.0-dev.240424162023-9968b4889d': {}
+    }
+  }
+  t.equal(pick(joy, '^5.0.0-beta.52'), '5.0.0-beta.52',
+    'the latest tag wins over a higher-sorting dev prerelease')
+  t.equal(pick(joy, '5.0.0-dev.240424162023-9968b4889d'),
+    '5.0.0-dev.240424162023-9968b4889d',
+    'an exactly pinned past-latest version is still honoured')
+
+  const maintained = {
+    'dist-tags': { latest: '1.9.0' },
+    versions: { '1.8.0': {}, '1.9.0': {}, '2.0.0': {} }
+  }
+  t.equal(pick(maintained, '^1.0.0'), '1.9.0', 'latest wins when it satisfies')
+  t.equal(pick(maintained, '^2.0.0'), '2.0.0',
+    'a version past latest is picked when nothing else satisfies')
+  t.equal(pick(maintained, '^1.8.0 <1.9.0'), '1.8.0',
+    'the highest not-past-latest match is used when latest does not satisfy')
+  t.end()
+})
