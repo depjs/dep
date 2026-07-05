@@ -38,8 +38,17 @@ tap.test('bin strips the scope when a scoped package has a string bin', async (t
   t.ok(fs.existsSync(linked), 'links as .bin/parser, not .bin/@babel/parser')
   t.notOk(fs.existsSync(path.join(dotbin, '@babel')),
     'no @babel subdir is created under .bin')
-  t.equal(fs.readlinkSync(linked), path.join(target, 'bin', 'babel-parser.js'),
-    'symlink points at the package bin')
+  const source = path.join(target, 'bin', 'babel-parser.js')
+  if (process.platform === 'win32') {
+    // On Windows bin() writes cmd-shim scripts, not symlinks: assert the sh
+    // shim references the source by relative path and the .cmd twin exists.
+    const rel = path.relative(dotbin, source).split(path.sep).join('/')
+    t.ok(fs.readFileSync(linked, 'utf8').includes(rel),
+      'shim points at the package bin')
+    t.ok(fs.existsSync(linked + '.cmd'), 'creates the .cmd shim')
+  } else {
+    t.equal(fs.readlinkSync(linked), source, 'symlink points at the package bin')
+  }
   t.end()
 })
 
