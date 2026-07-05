@@ -23,3 +23,17 @@ tap.test((t) => {
     t.end()
   })
 })
+
+tap.test('lock succeeds when an existing package-lock.json is malformed', (t) => {
+  // The prefetch warm-up reads the previous lockfile; a broken one must be
+  // ignored, never fail the lock.
+  const lockPath = path.join(pkg, 'package-lock.json')
+  fs.writeFileSync(lockPath, '{ not json')
+  exec(`node ${bin} lock`, { cwd: pkg }, (err) => {
+    t.error(err, 'lock ran without error')
+    const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'))
+    t.equal(lock.lockfileVersion, 3, 'the malformed lockfile is replaced')
+    fs.unlinkSync(lockPath)
+    t.end()
+  })
+})
