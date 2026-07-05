@@ -19,6 +19,7 @@ internals small: it ships with **zero runtime dependencies**.
 - [Design principles](#design-principles)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Registry auth](#registry-auth)
 - [Commands](#commands)
   - [Install](#install)
   - [Lock](#lock)
@@ -93,9 +94,41 @@ Options:
   -v, --version           Show version information
 ```
 
+## Registry auth
+
+dep reads npm's standard registry credentials from `.npmrc` (a project-local
+`.npmrc` overrides `~/.npmrc`) — no login command needed:
+
+```console
+$ echo 'registry=https://npm-proxy.internal.example.com/' >> ~/.npmrc
+$ echo '//npm-proxy.internal.example.com/:_authToken=${NPM_TOKEN}' >> ~/.npmrc
+```
+
+<details>
+<summary><b>Details</b> — header formats, env expansion, token scoping, and why there is no login or scoped-registry support</summary>
+
+`//host/:_authToken=<token>` sends `Authorization: Bearer` to that registry
+(the legacy `//host/:_auth=<base64>` sends Basic). `${NPM_TOKEN}` is expanded
+from the environment at run time, so the token itself never has to be written
+to disk — set the variable in your shell or CI secrets. Credentials are
+matched by host (and path prefix) and are never sent to any other host, no
+matter where a lockfile's `resolved` URLs point.
+
+Scoped registries (`@scope:registry=...`) are intentionally unsupported: dep
+talks to **one** registry, and routing scopes to different upstreams is the
+proxy's job — Verdaccio, Nexus, and Artifactory all route `@company/*` to an
+internal registry through their uplink config, so the client never needs to.
+It's the same reasoning as [Why dep has no cache](#why-dep-has-no-cache):
+push cross-cutting concerns to the layer that owns them.
+
+</details>
+
 ## Commands
 
 ### Install
+
+<details>
+<summary><code>dep install [pkg][@spec] [--save[=dev|prod]] [--only=dev|prod]</code></summary>
 
 #### `dep install`
 
@@ -129,7 +162,12 @@ Install only `dependencies` or only `devDependencies`:
 $ dep install --only=prod
 ```
 
+</details>
+
 ### Lock
+
+<details>
+<summary><code>dep lock</code> — write an npm-compatible <code>package-lock.json</code></summary>
 
 #### `dep lock`
 
@@ -142,7 +180,12 @@ Resolve the dependencies defined in a local package.json and write a
 $ dep lock
 ```
 
+</details>
+
 ### Run
+
+<details>
+<summary><code>dep run [script] [-- args]</code> — run or list package.json scripts</summary>
 
 #### `dep run <script> [-- <args>]`
 
@@ -174,6 +217,8 @@ dep run test:
   node --test "test/*.js"
 ```
 
+</details>
+
 ## Workspaces
 
 dep supports monorepos through the npm-style `workspaces` field in the root
@@ -186,6 +231,9 @@ package.json (an array of globs, or `{ "packages": [...] }`).
   "workspaces": ["packages/*"]
 }
 ```
+
+<details>
+<summary><b>Workspace commands</b> — hoisted root install, <code>-w</code> targeting, workspace-aware lock</summary>
 
 #### `dep install`
 
@@ -216,11 +264,16 @@ $ dep lock
 $ dep lock -w @scope/a
 ```
 
+</details>
+
 ## npm compatibility
 
 dep deliberately implements a focused subset of npm. The table below is the
 honest state of each feature — what works, what works partially, and what the
 [design principles](#design-principles) place out of scope.
+
+<details>
+<summary><b>Feature-by-feature table</b> — 15 supported, 1 partial, 3 by design</summary>
 
 | Feature | Status | Notes |
 | --- | --- | --- |
@@ -238,7 +291,7 @@ honest state of each feature — what works, what works partially, and what the
 | Dependency sources | ✅ Supported | Registry ranges/tags, git URLs (`git+https`, with `#commit`/`#semver:`), remote tarball URLs, and local file/directory paths. |
 | `overrides` | ✅ Supported | Global (`{ "foo": "1.2.3" }`), parent-scoped nesting (`{ "parent": { "child": "1" } }`), and `$`-references. Version-qualified targets (`"foo@2"`) are ignored. |
 | Aliased specifiers (`pkg@npm:other`) | ✅ Supported | Installs the target package under the alias name; the lockfile records the real `name`. (Registry targets only.) |
-| Private / authed registries | ✅ Supported | Registry-level token auth via standard `.npmrc`: `//host/:_authToken=<token>` (Bearer) or the legacy `//host/:_auth` (Basic), with `${NPM_TOKEN}`-style env expansion. Tokens are matched by host (and path prefix) and never sent elsewhere. No login command, no scoped registries. |
+| Private / authed registries | ✅ Supported | Registry-level token auth via standard `.npmrc`: `//host/:_authToken=<token>` (Bearer) or the legacy `//host/:_auth` (Basic), with `${NPM_TOKEN}`-style env expansion — see [Registry auth](#registry-auth). No login command, no scoped registries. |
 | `.npmrc` config | 🟡 Partial | Reads `registry`, `save-prefix`, `engine-strict`, and the auth keys above; a project-local `.npmrc` overrides `~/.npmrc`. No scoped registries or most other config keys. |
 | Local package cache | ➖ By design | Caching belongs to infrastructure: point dep at a caching proxy (Verdaccio, Nexus, Artifactory) via `registry` in `~/.npmrc`. See [Why dep has no cache](#why-dep-has-no-cache). |
 | `npm-shrinkwrap.json` | ➖ By design | One lock format, npm's current one: dep reads and writes `package-lock.json` (v3) exclusively and ignores any `npm-shrinkwrap.json`. |
@@ -246,11 +299,19 @@ honest state of each feature — what works, what works partially, and what the
 
 ✅ Supported &nbsp;·&nbsp; 🟡 Partial &nbsp;·&nbsp; ➖ By design — a consequence of the [principles](#design-principles)
 
+</details>
+
 ## Benchmark
 
 Installing a 12-dependency app (`express`, `lodash`, `rxjs`, `axios`,
 `chokidar`, …), with yarn pinned to the `node-modules` linker so all four
-produce a comparable `node_modules`. Lower is better.
+produce a comparable `node_modules` — dep is the fastest of the four, cold
+and warm.
+
+<details>
+<summary><b>The numbers</b> — vs npm 11, yarn 4, pnpm 11, and how to reproduce them</summary>
+
+Lower is better.
 
 **Cold** — no lockfile, a fresh isolated cache for every run:
 
@@ -281,6 +342,8 @@ Reproduce it yourself:
 ```console
 $ node scripts/benchmark.js
 ```
+
+</details>
 
 **Caveat:** dep keeps **no local cache** — see
 [Why dep has no cache](#why-dep-has-no-cache) below. Even in the warm case it
