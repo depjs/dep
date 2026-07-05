@@ -1,6 +1,10 @@
+import fs from 'fs'
+import os from 'os'
+import path from 'path'
 import tap from './helpers/tap.js'
 import resolveTree from '../lib/utils/resolve-tree.js'
 import parseOverrides from '../lib/utils/overrides.js'
+import lockTree from '../lib/install/lock-tree.js'
 
 // Fixed metadata graph: root -> a, b; both a and b -> c.
 const metas = {
@@ -57,5 +61,44 @@ tap.test('parseOverrides ignores version-qualified keys', (t) => {
   const map = parseOverrides({ 'foo@2': { bar: '1.0.0' }, baz: '3.0.0' }, {})
   t.notOk(map.has('foo@2'), 'version-qualified target is ignored')
   t.ok(map.has('baz'), 'plain target is kept')
+  t.end()
+})
+
+tap.test('a lockfile that predates the overrides is treated as stale', (t) => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-ovr-lock-'))
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
+  const write = (yauzlEntries) => fs.writeFileSync(path.join(dir, 'package-lock.json'), JSON.stringify({
+    lockfileVersion: 3,
+    packages: {
+      '': { name: 't' },
+      'node_modules/extract-zip': { version: '2.0.1', resolved: 'https://r/x.tgz' },
+      ...yauzlEntries
+    }
+  }))
+  const rules = parseOverrides({ 'extract-zip': { yauzl: '^3.2.0' } }, {})
+
+  write({ 'node_modules/yauzl': { version: '2.10.0', resolved: 'https://r/y.tgz' } })
+  t.equal(lockTree(dir, ['extract-zip'], rules), null,
+    'a lock violating a nested override forces a fresh resolve')
+  t.ok(lockTree(dir, ['extract-zip'], new Map()),
+    'the same lock is reused when there are no overrides')
+
+  write({ 'node_modules/yauzl': { version: '3.4.0', resolved: 'https://r/y.tgz' } })
+  t.ok(lockTree(dir, ['extract-zip'], rules), 'a satisfying lock is reused')
+
+  write({
+    'node_modules/yauzl': { version: '3.4.0', resolved: 'https://r/y.tgz' },
+    'node_modules/other/node_modules/yauzl': { version: '2.10.0', resolved: 'https://r/y2.tgz' }
+  })
+  t.ok(lockTree(dir, ['extract-zip'], rules),
+    'one satisfying copy accepts other legitimately un-overridden copies')
+
+  write({ 'node_modules/yauzl': { version: '2.10.0', resolved: 'https://r/y.tgz' } })
+  const globalRules = parseOverrides({ yauzl: '^3.2.0' }, {})
+  t.equal(lockTree(dir, ['extract-zip'], globalRules), null,
+    'a lock violating a global override forces a fresh resolve')
+  const gitRules = parseOverrides({ yauzl: 'git+https://github.com/x/yauzl.git' }, {})
+  t.ok(lockTree(dir, ['extract-zip'], gitRules),
+    'a non-semver override value is not checked')
   t.end()
 })
