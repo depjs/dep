@@ -54,6 +54,27 @@ tap.test('install uses the lockfile and skips registry resolution', (t) => {
   })
 })
 
+tap.test('a lock-driven install reinstalls local directory deps by copying', (t) => {
+  const dir = mkProject({ 'plain-local': 'file:./pkg' })
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
+  fs.mkdirSync(path.join(dir, 'pkg'))
+  fs.writeFileSync(path.join(dir, 'pkg', 'package.json'),
+    JSON.stringify({ name: 'plain-local', version: '2.0.0' }))
+
+  exec(`node ${bin} lock`, { cwd: dir }, (err) => {
+    t.error(err, 'lock ran without error')
+
+    exec(`node ${bin} install`, { cwd: dir }, (err2, stdout) => {
+      t.error(err2, 'install ran without error')
+      t.match(stdout, /Using package-lock\.json/, 'install reports it used the lockfile')
+      const installed = JSON.parse(
+        fs.readFileSync(path.join(dir, 'node_modules', 'plain-local', 'package.json')))
+      t.equal(installed.version, '2.0.0', 'the local package is copied into node_modules')
+      t.end()
+    })
+  })
+})
+
 tap.test('a stale lock falls back to a fresh resolve', (t) => {
   const dir = mkProject({ 'is-odd': '^3.0.0' })
   t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
