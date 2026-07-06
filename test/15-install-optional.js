@@ -45,6 +45,7 @@ tap.test('a dep listed in both dependencies and optionalDependencies stays optio
   exec(`node ${bin} install`, { cwd: dir }, (err) => {
     t.error(err, 'install ran without error')
     t.ok(fs.existsSync(path.join(dir, 'node_modules', 'jest-haste-map')), 'the package is installed')
+    t.notOk(fs.existsSync(path.join(dir, 'node_modules', '.dep-staging')), 'the prefetch staging area is cleaned up')
     if (process.platform !== 'darwin') {
       t.notOk(fs.existsSync(path.join(dir, 'node_modules', 'fsevents')), 'darwin-only optional dep skipped off-darwin')
     } else {
