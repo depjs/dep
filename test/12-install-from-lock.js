@@ -75,6 +75,30 @@ tap.test('a lock-driven install reinstalls local directory deps by copying', (t)
   })
 })
 
+// The lockfile records every platform's optional variants (npm-compatible);
+// the install must materialise only the current platform's.
+tap.test('a lock-driven install skips optional deps for other platforms', (t) => {
+  const dir = mkProject({ chokidar: '^3.6.0' })
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
+
+  exec(`node ${bin} lock`, { cwd: dir }, (err) => {
+    t.error(err, 'lock ran without error')
+    const lock = JSON.parse(fs.readFileSync(path.join(dir, 'package-lock.json')))
+    t.ok(lock.packages['node_modules/fsevents'], 'the lock keeps the darwin-only optional entry')
+
+    exec(`node ${bin} install`, { cwd: dir }, (err2, stdout) => {
+      t.error(err2, 'install ran without error')
+      t.match(stdout, /Using package-lock\.json/, 'install reports it used the lockfile')
+      t.ok(fs.existsSync(path.join(dir, 'node_modules', 'chokidar', 'package.json')), 'chokidar is installed')
+      t.equal(
+        fs.existsSync(path.join(dir, 'node_modules', 'fsevents', 'package.json')),
+        process.platform === 'darwin',
+        'the darwin-only optional dep is installed only on darwin')
+      t.end()
+    })
+  })
+})
+
 tap.test('a stale lock falls back to a fresh resolve', (t) => {
   const dir = mkProject({ 'is-odd': '^3.0.0' })
   t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))

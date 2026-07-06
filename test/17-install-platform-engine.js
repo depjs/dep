@@ -47,6 +47,20 @@ tap.test('os/cpu mismatch is enforced for required deps but skipped for optional
   global.dependenciesTree = {}
   await Promise.all([resolveTree({ x: '^1.0.0' }, fake, { skipPlatform: true, optional: new Set(['x']) })])
   t.notOk(global.dependenciesTree.x, 'optional platform mismatch is skipped')
+
+  // libc is matched like os/cpu (the current libc is glibc/musl on Linux and
+  // absent elsewhere, so a bogus family mismatches everywhere)
+  const fakeLibc = async (name) => ({
+    type: 'registry',
+    version: '1.0.0',
+    os: [process.platform],
+    cpu: [process.arch],
+    libc: ['definitely-not-this-libc'],
+    tarball: 'http://example.invalid/x.tgz'
+  })
+  global.dependenciesTree = {}
+  await Promise.all([resolveTree({ x: '^1.0.0' }, fakeLibc, { skipPlatform: true, optional: new Set(['x']) })])
+  t.notOk(global.dependenciesTree.x, 'optional libc mismatch is skipped')
   t.end()
 })
 
