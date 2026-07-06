@@ -90,6 +90,36 @@ tap.test('tar-fs handles GNU long names and long link targets', (t) => {
   parser.end(archive)
 })
 
+tap.test('tar-fs extracts a large entry delivered in many small chunks', (t) => {
+  const dest = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-tar-dest-'))
+  t.teardown(() => fs.rmSync(dest, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
+
+  // A single multi-megabyte entry arriving in gunzip-sized (16KB) chunks is
+  // how the @next/swc-* binaries land; the parser must accumulate the chunks
+  // without re-copying its whole buffer on each write.
+  const content = Buffer.alloc(5 * 1024 * 1024)
+  for (let i = 0; i < content.length; i++) content[i] = i % 251
+  const padding = Buffer.alloc(Math.ceil(content.length / BLOCK) * BLOCK - content.length)
+  const archive = Buffer.concat([
+    tarHeader({ name: 'big.bin', type: '0', size: content.length }),
+    content, padding,
+    Buffer.alloc(BLOCK * 2) // end-of-archive
+  ])
+
+  const parser = extract(dest, {})
+  parser.on('error', (e) => { t.error(e, 'extract emitted no error'); t.end() })
+  parser.on('finish', () => {
+    const extracted = fs.readFileSync(path.join(dest, 'big.bin'))
+    t.ok(extracted.equals(content), 'large chunked entry extracted byte-for-byte')
+    t.end()
+  })
+  const CHUNK = 16 * 1024
+  for (let off = 0; off < archive.length; off += CHUNK) {
+    parser.write(archive.subarray(off, off + CHUNK))
+  }
+  parser.end()
+})
+
 tap.test('tar-fs surfaces a write failure as a stream error', (t) => {
   const src = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-tar-src-'))
   const dest = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-tar-dest-'))

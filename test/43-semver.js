@@ -19,6 +19,17 @@ tap.test('semver satisfies hyphen ranges', (t) => {
   t.end()
 })
 
+tap.test('semver tolerates whitespace between an operator and its version', (t) => {
+  t.ok(semver.validRange('>= 12.0.0'), 'a spaced range is valid')
+  t.ok(semver.satisfies('24.16.0', '>= 12.0.0'), 'spaced >= admits a higher version')
+  t.notOk(semver.satisfies('9.0.0', '>= 12.0.0'), 'spaced >= excludes a lower version')
+  t.ok(semver.satisfies('2.5.0', '>= 2.1.2 < 3.0.0'), 'spaced compound range admits a version inside')
+  t.notOk(semver.satisfies('3.0.0', '>= 2.1.2 < 3.0.0'), 'spaced compound range excludes a version outside')
+  t.ok(semver.satisfies('1.2.5', '~ 1.2.3'), 'spaced tilde admits a patch bump')
+  t.ok(semver.satisfies('1.9.0', '^ 1.2.3'), 'spaced caret admits a minor bump')
+  t.end()
+})
+
 tap.test('semver satisfies x-ranges', (t) => {
   t.ok(semver.satisfies('0.5.9', '0.5.x'), '0.5.x admits a matching patch (0.x widening)')
   t.notOk(semver.satisfies('0.6.0', '0.5.x'), '0.5.x excludes the next minor')
