@@ -26,7 +26,6 @@ internals small: it ships with **zero runtime dependencies**.
   - [Run](#run)
 - [Workspaces](#workspaces)
 - [npm compatibility](#npm-compatibility)
-- [Benchmark](#benchmark)
 - [Why dep has no cache](#why-dep-has-no-cache)
 - [Stability](#stability)
 - [Contributing](#contributing)
@@ -301,59 +300,6 @@ honest state of each feature — what works, what works partially, and what the
 
 </details>
 
-## Benchmark
-
-Installing a 12-dependency app (`express`, `lodash`, `rxjs`, `axios`,
-`chokidar`, …), with yarn pinned to the `node-modules` linker so all four
-produce a comparable `node_modules` — dep is the fastest of the four, cold
-and warm.
-
-<details>
-<summary><b>The numbers</b> — vs npm 11, yarn 4, pnpm 11, and how to reproduce them</summary>
-
-Lower is better.
-
-**Cold** — no lockfile, a fresh isolated cache for every run:
-
-| Tool | Cold install | Relative |
-| --- | --- | --- |
-| npm 11 | ~2.9s | 1.0× |
-| yarn 4 | ~1.25s | ~2.3× faster |
-| pnpm 11 | ~0.95s | ~3.0× faster |
-| **dep** | **~0.79s** | **~3.6× faster** |
-
-**Warm** — lockfile present and cache/store warm; only `node_modules` is removed
-before each run (the usual reinstall / cached-CI case). For dep this is a
-`package-lock.json`-driven install (`npm ci` for npm, `--immutable` for yarn,
-`--frozen-lockfile` for pnpm):
-
-| Tool | Warm install | Relative |
-| --- | --- | --- |
-| npm 11 | ~1.45s | 1.0× |
-| yarn 4 | ~0.75s | ~1.9× faster |
-| pnpm 11 | ~0.55s | ~2.6× faster |
-| **dep** | **~0.44s** | **~3.3× faster** |
-
-<sub>avg of 5 runs on one Linux machine, Node 24, against the public registry —
-numbers vary by machine, network, and dependency set.</sub>
-
-Reproduce it yourself:
-
-```console
-$ node scripts/benchmark.js
-```
-
-</details>
-
-**Caveat:** dep keeps **no local cache** — see
-[Why dep has no cache](#why-dep-has-no-cache) below. Even in the warm case it
-*re-downloads* tarballs (it only skips re-resolving the tree from the
-lockfile), so its warm speed is network-bound. pnpm/npm/yarn serve cached
-packages from disk and can even install offline — on a slow or offline network
-they stay fast while dep does not. These numbers reflect a fast connection to
-the registry; with a caching registry proxy on your network, every install
-runs at LAN speed.
-
 ## Why dep has no cache
 
 Every Node.js package manager ships a cache. npm has `~/.npm` and the cacache
@@ -481,9 +427,10 @@ in a footnote.
 
 **Cold installs on a laptop without a proxy re-download everything.** If you
 create scratch projects all day on a hotel wifi connection, dep will feel
-slower than a warm pnpm, full stop. dep is fast per install — it benchmarks
-ahead of npm, yarn, and pnpm on cold installs with the network in the
-picture — but it re-pays the network cost that a local cache would amortize.
+slower than a warm pnpm, full stop. dep is fast per install — it
+[benchmarks ahead](https://github.com/depjs/canary) of npm, yarn, and pnpm
+on cold installs with the network in the picture — but it re-pays the
+network cost that a local cache would amortize.
 
 **There is no offline mode out of the box.** No network, no proxy, no
 install. pnpm can install a known project on a plane; dep cannot.
