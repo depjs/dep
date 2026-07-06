@@ -33,6 +33,38 @@ tap.test('install follows transitive optionalDependencies but skips platform mis
   })
 })
 
+// npm merges optionalDependencies into dependencies when publishing, so a
+// package like jest-haste-map lists fsevents (darwin-only) in BOTH fields of
+// its registry metadata. The optionalDependencies entry overrides the
+// dependencies one (npm semantics): the platform mismatch must be skipped,
+// not treated as a required dep that fails the install.
+tap.test('a dep listed in both dependencies and optionalDependencies stays optional', (t) => {
+  const dir = mkProject({ dependencies: { 'jest-haste-map': '^29.7.0' } })
+  t.teardown(() => fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }))
+
+  exec(`node ${bin} install`, { cwd: dir }, (err) => {
+    t.error(err, 'install ran without error')
+    t.ok(fs.existsSync(path.join(dir, 'node_modules', 'jest-haste-map')), 'the package is installed')
+    if (process.platform !== 'darwin') {
+      t.notOk(fs.existsSync(path.join(dir, 'node_modules', 'fsevents')), 'darwin-only optional dep skipped off-darwin')
+    } else {
+      t.pass('on darwin fsevents may be installed')
+    }
+    exec(`node ${bin} lock`, { cwd: dir }, (err) => {
+      t.error(err, 'lock ran without error')
+      const pkgs = JSON.parse(fs.readFileSync(path.join(dir, 'package-lock.json'), 'utf8')).packages
+      t.ok(pkgs['node_modules/fsevents'] && pkgs['node_modules/fsevents'].optional,
+        'the lockfile keeps fsevents and marks it optional')
+      fs.rmSync(path.join(dir, 'node_modules'), { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
+      exec(`node ${bin} install`, { cwd: dir }, (err) => {
+        t.error(err, 'a lock-driven install also skips the mismatch')
+        t.ok(fs.existsSync(path.join(dir, 'node_modules', 'jest-haste-map')), 'the package is installed from the lock')
+        t.end()
+      })
+    })
+  })
+})
+
 tap.test('a missing/unresolvable optional dependency does not fail the install', (t) => {
   const dir = mkProject({
     dependencies: { 'is-odd': '^3.0.0' },
