@@ -39,6 +39,28 @@ tap.test('lockTree classifies git and registry entries and nests them', (t) => {
   t.end()
 })
 
+// npm omits `resolved` (and `integrity`) for packages installed from its
+// local cache; the registry tarball URL must be rebuilt from name and version
+// instead of producing an unfetchable empty-url node.
+tap.test('lockTree rebuilds the tarball url when resolved is omitted', (t) => {
+  const dir = withLock(t, {
+    lockfileVersion: 3,
+    packages: {
+      '': { name: 'root', dependencies: { plain: '^1.0.0', '@scope/pkg': '^2.0.0', aliased: 'npm:real-name@^3.0.0' } },
+      'node_modules/plain': { version: '1.0.0' },
+      'node_modules/@scope/pkg': { version: '2.0.0' },
+      'node_modules/aliased': { name: 'real-name', version: '3.0.0' }
+    }
+  })
+  const tree = lockTree(dir, ['plain', '@scope/pkg', 'aliased'])
+
+  t.equal(tree.plain.type, 'registry', 'entry without resolved is still a registry node')
+  t.match(tree.plain.tarball, /^https:\/\/.+\/plain\/-\/plain-1\.0\.0\.tgz$/, 'tarball url rebuilt from name and version')
+  t.match(tree['@scope/pkg'].tarball, /\/@scope\/pkg\/-\/pkg-2\.0\.0\.tgz$/, 'scoped tarball basename drops the scope')
+  t.match(tree.aliased.tarball, /\/real-name\/-\/real-name-3\.0\.0\.tgz$/, 'alias uses the entry\'s real package name')
+  t.end()
+})
+
 tap.test('lockTree skips entries nested under a link and prunes orphan placeholders', (t) => {
   const dir = withLock(t, {
     lockfileVersion: 3,
