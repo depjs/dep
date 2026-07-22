@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.8](https://github.com/depjs/dep/compare/v1.5.7...v1.5.8) (2026-07-22)
+
+
+### Bug Fixes
+
+* drop the default git user from scheme:// git urls ([0059c1f](https://github.com/depjs/dep/commit/0059c1fabd38c97f8b41aa162c1bad61fb1d7f9d))
+* match npm when os/cpu/libc is a scalar or "any" ([6a0f03f](https://github.com/depjs/dep/commit/6a0f03f33df7a00c61e057f0da896ffabddd9337))
+* resolve the user .npmrc without $HOME on Windows ([e0e3f0d](https://github.com/depjs/dep/commit/e0e3f0dfb1ba31b97e7c1de556ceab4907128474))
+* **test:** set %USERPROFILE% when faking a home directory ([b2ec56b](https://github.com/depjs/dep/commit/b2ec56b0df36fcec74bfa7c9cf399ca76982b084))
+
 ### [1.4.2](https://github.com/depjs/dep/compare/v1.4.1...v1.4.2) (2026-06-21)
 
 ### [1.4.1](https://github.com/depjs/dep/compare/v1.4.0...v1.4.1) (2026-06-21)
