@@ -1,6 +1,7 @@
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
+import { spawnSync } from 'child_process'
 import tap from './helpers/tap.js'
 
 // npmrc/auth resolve ~/.npmrc and the project-local .npmrc once at import
@@ -106,5 +107,23 @@ tap.test('tokens never leave their configured host or path prefix', (t) => {
     'the same host without the port does not match')
   t.equal(authHeaderFor('not a url'), undefined, 'an unparsable URL gets no header')
   teardown(t)
+  t.end()
+})
+
+// npmrc resolves the user config at import time, so reaching for $HOME
+// directly crashed the whole CLI on Windows, where cmd.exe and PowerShell
+// set only %USERPROFILE%. A child process with no $HOME stands in for that.
+tap.test('the user .npmrc resolves without $HOME in the environment', (t) => {
+  const url = new URL('../lib/utils/npmrc.js', import.meta.url).href
+  const env = { ...process.env }
+  delete env.HOME
+  delete env.USERPROFILE
+
+  const r = spawnSync(process.execPath,
+    ['-e', `import(${JSON.stringify(url)}).then((m) => console.log(m.default.registry))`],
+    { env, encoding: 'utf8' })
+
+  t.equal(r.status, 0, 'importing npmrc does not crash without $HOME')
+  t.match(r.stdout, /^https?:\/\//, 'the config still loads its defaults')
   t.end()
 })
