@@ -4,6 +4,7 @@ import path from 'path'
 import { exec } from 'child_process'
 import tap from './helpers/tap.js'
 import resolveTree from '../lib/utils/resolve-tree.js'
+import matchesPlatform from '../lib/utils/platform.js'
 
 const bin = path.join(import.meta.dirname, '..', 'bin', 'dep.js')
 
@@ -61,6 +62,30 @@ tap.test('os/cpu mismatch is enforced for required deps but skipped for optional
   global.dependenciesTree = {}
   await Promise.all([resolveTree({ x: '^1.0.0' }, fakeLibc, { skipPlatform: true, optional: new Set(['x']) })])
   t.notOk(global.dependenciesTree.x, 'optional libc mismatch is skipped')
+  t.end()
+})
+
+// npm accepts a scalar os/cpu/libc (sass-embedded-linux-x64 ships
+// `"libc": "glibc"`) and treats a lone "any" as no restriction at all.
+tap.test('scalar and "any" platform fields are matched like npm does', async (t) => {
+  t.ok(matchesPlatform({ libc: 'definitely-not-this-libc' }) === false, 'a scalar libc mismatches without throwing')
+  t.ok(matchesPlatform({ os: process.platform }), 'a scalar os matches the current platform')
+  t.ok(matchesPlatform({ os: 'definitely-not-this-os' }) === false, 'a scalar os mismatches')
+  t.ok(matchesPlatform({ os: ['any'], cpu: ['any'] }), '"any" imposes no restriction')
+  t.ok(matchesPlatform({ os: 'any' }), 'a scalar "any" imposes no restriction')
+
+  // the scalar form used to throw out of the tree walk, aborting the install
+  const fake = async (name) => ({
+    type: 'registry',
+    version: '1.0.0',
+    os: process.platform,
+    cpu: process.arch,
+    libc: 'any',
+    tarball: 'http://example.invalid/x.tgz'
+  })
+  global.dependenciesTree = {}
+  await Promise.all([resolveTree({ x: '^1.0.0' }, fake, { skipPlatform: true })])
+  t.ok(global.dependenciesTree.x, 'a matching package with scalar fields installs')
   t.end()
 })
 
