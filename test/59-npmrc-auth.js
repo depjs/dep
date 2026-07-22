@@ -35,10 +35,25 @@ fs.writeFileSync(path.join(project, '.npmrc'),
 
 process.env.DEP_TEST_TOKEN = 'expanded'
 delete process.env.DEP_TEST_UNSET
+// os.homedir() reads $HOME on posix but %USERPROFILE% on Windows, so faking a
+// home means setting both (as 12-install-from-lock.js does for its child).
 const HOME = process.env.HOME
+const USERPROFILE = process.env.USERPROFILE
 const cwd = process.cwd()
+const restore = (key, value) => {
+  if (value === undefined) delete process.env[key]
+  else process.env[key] = value
+}
 process.env.HOME = home
+process.env.USERPROFILE = home
 process.chdir(project)
+
+// Guard the fake home. If os.homedir() stops following these variables the
+// scratch config is silently ignored and every assertion below fails against
+// dep's built-in defaults, which says nothing about the actual cause.
+if (os.homedir() !== home) {
+  throw new Error(`test setup: os.homedir() is ${os.homedir()}, expected ${home}`)
+}
 
 // The unset-variable warning is written to stderr while auth.js loads.
 let warnings = ''
@@ -48,7 +63,8 @@ const { default: authHeaderFor } = await import('../lib/utils/auth.js')
 const { default: npmrc } = await import('../lib/utils/npmrc.js')
 process.stderr.write = write
 
-process.env.HOME = HOME
+restore('HOME', HOME)
+restore('USERPROFILE', USERPROFILE)
 process.chdir(cwd)
 
 const teardown = (t) => t.teardown(() => {

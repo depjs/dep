@@ -64,8 +64,8 @@ const registry = (requireAuth) => new Promise((resolve) => {
     resolve({ server, seen, port: server.address().port }))
 })
 
-// A scratch project depending on authpkg, plus a scratch HOME whose .npmrc
-// holds the given lines — the child dep process picks it up via env.HOME.
+// A scratch project depending on authpkg, plus a scratch home whose .npmrc
+// holds the given lines — the child dep process resolves it via os.homedir().
 const mkProject = (t, npmrcLines) => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-auth-h-'))
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dep-auth-p-'))
@@ -76,7 +76,8 @@ const mkProject = (t, npmrcLines) => {
     fs.rmSync(home, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
     fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
   })
-  const env = { ...process.env, HOME: home, NO_UPDATE_NOTIFIER: '1' }
+  // os.homedir() reads %USERPROFILE% on Windows, $HOME elsewhere: set both.
+  const env = { ...process.env, HOME: home, USERPROFILE: home, NO_UPDATE_NOTIFIER: '1' }
   return { dir, env }
 }
 
